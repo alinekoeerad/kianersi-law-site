@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# مسدود کردن مسیرهای احتمالی که نیازی به ایندکس ندارند
+Disallow: /api/
+Disallow: /admin/
+
+# معرفی آدرس نقشه سایت به ربات‌ها
+Sitemap: https://yourwebsite.com/sitemap.xml
