@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
 
-# مسدود کردن مسیرهای احتمالی که نیازی به ایندکس ندارند
+# Block potential paths that do not need indexing
 Disallow: /api/
 Disallow: /admin/
 
-# معرفی آدرس نقشه سایت به ربات‌ها
-Sitemap: https://yourwebsite.com/sitemap.xml
+# Define Sitemap URL for crawlers
+Sitemap: https://vakilkianersi.ir/sitemap.xml
