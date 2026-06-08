@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block potential paths that do not need indexing
+Disallow: /api/
+Disallow: /admin/
+
+# Define Sitemap URL for crawlers
+Sitemap: https://vakilkianersi.ir/sitemap.xml

@@ -1,0 +1,352 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* تعریف فونت یکپارچه وزیرمتن */
+    --font-vazir: 'Vazirmatn', system-ui, sans-serif;
+    
+    /* New Dark Theme */
+    --color-cream: #020f1a;         
+    --color-cream-dark: #031825;    
+    --color-coal: #ffffff;          
+    --color-gold: #0e7490;          
+    --color-gold-light: #7dd3fc;    
+    --color-wine: #065f46;          
+    --color-warm-gray: #9ca3af;     
+  }
+
+  * {
+    box-sizing: border-box;
+    /* این خط باعث می‌شود تمام استایل‌های فونت داخل فایل‌های TSX نادیده گرفته شوند */
+    font-family: var(--font-vazir) !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-coal);
+    direction: rtl;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Drop Cap Effect */
+.drop-cap::first-letter {
+  font-size: 4.5rem;
+  font-weight: 700;
+  line-height: 0.8;
+  float: right;
+  margin-left: 0.12em;
+  margin-top: 0.05em;
+  color: var(--color-gold-light);
+}
+
+/* Newspaper Column Layout */
+.newspaper-columns {
+  column-count: 2;
+  column-gap: 2.5rem;
+  column-rule: 1px solid rgba(14, 116, 144, 0.3);
+}
+
+@media (max-width: 768px) {
+  .newspaper-columns {
+    column-count: 1;
+  }
+}
+
+.newspaper-columns-3 {
+  column-count: 3;
+  column-gap: 2rem;
+  column-rule: 1px solid rgba(14, 116, 144, 0.3);
+}
+
+@media (max-width: 900px) {
+  .newspaper-columns-3 {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .newspaper-columns-3 {
+    column-count: 1;
+  }
+}
+
+/* Ornamental Divider */
+.ornament-line {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ornament-line::before,
+.ornament-line::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--color-gold), transparent);
+}
+
+/* Pull Quote */
+.pull-quote {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--color-gold-light);
+  border-right: 4px solid var(--color-gold);
+  padding-right: 1.5rem;
+  font-style: italic;
+}
+
+/* Section Label */
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* Masthead Title */
+.masthead-title {
+  color: var(--color-coal);
+}
+
+/* Article Title */
+.article-title {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-coal);
+}
+
+/* Body text */
+.body-text {
+  font-weight: 400;
+  line-height: 2;
+  color: #e2e8f0;
+}
+
+/* Gold border decoration */
+.gold-border-top {
+  border-top: 3px solid var(--color-gold);
+}
+
+.gold-border-bottom {
+  border-bottom: 1px solid var(--color-gold);
+}
+
+/* Expertise card hover */
+.expertise-card {
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.expertise-card:hover {
+  border-color: var(--color-gold);
+  background-color: rgba(14, 116, 144, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Wine accent box */
+.wine-accent {
+  background-color: var(--color-wine);
+  color: #ffffff;
+}
+
+/* ── Image frame ── */
+.editorial-frame {
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .editorial-frame::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: -12px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-gold);
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/* ── Legal Typography & Readability (Optimized for Dark Mode) ── */
+
+.legal-article {
+  font-size: 0.95rem;
+  line-height: 2.5; 
+  color: rgba(255, 255, 255, 0.82); 
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.legal-article p {
+  margin-bottom: 1.75rem; 
+  text-indent: 1.5rem; 
+}
+
+.legal-highlight {
+  color: var(--color-gold-light);
+  font-weight: 700;
+  padding: 0 0.25rem;
+}
+
+/* Scroll animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Highlights */
+.text-gold { color: var(--color-gold); }
+.text-wine { color: var(--color-wine); }
+
+/* Stat number styling */
+.stat-number {
+  font-weight: 700;
+  color: var(--color-gold-light);
+  line-height: 1;
+}
+
+/* Horizontal Rule styled */
+.styled-hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--color-gold) 30%, var(--color-gold) 70%, transparent);
+  margin: 2rem 0;
+}
+
+/* Magazine grid asymmetric */
+.magazine-grid {
+  display: grid;
+  grid-template-columns: 1.618fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .magazine-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Floating quote box */
+.floating-quote {
+  background: var(--color-wine);
+  color: #ffffff;
+  padding: 2rem;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.floating-quote::before {
+  content: '❝';
+  position: absolute;
+  top: -1.5rem;
+  right: 1.5rem;
+  font-size: 4rem;
+  color: var(--color-gold-light);
+  line-height: 1;
+}
+
+/* Nav bar */
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(10, 30, 40, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--color-gold);
+}
+
+/* Background paper texture overlay (Dark Glassy Variant) */
+.paper-texture {
+  background-image: 
+    radial-gradient(ellipse at 20% 50%, rgba(14, 116, 144, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(6, 95, 70, 0.05) 0%, transparent 50%);
+}
+
+/* Column break avoid */
+.keep-together {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Animated gold line */
+@keyframes expandLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.animate-line {
+  animation: expandLine 1.5s ease forwards;
+}
+
+/* Contact section */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(14, 116, 144, 0.2);
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+/* Main gradient background (Dark Cyan to Dark Emerald) */
+.bg-deep {
+  background: linear-gradient(160deg, #020f1a 0%, #031e2d 50%, #021a12 100%);
+}
+
+/* Secondary gradient background for section variety */
+.bg-section-alt {
+  background: linear-gradient(160deg, #031825 0%, #042318 100%);
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #0e7490, #065f46);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0e7490;
+}
+
+/* ── Micro-interactions & Animations ── */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.image-glow {
+  transition: all 0.5s ease;
+}
+.image-glow:hover {
+  filter: saturate(1.1) contrast(1.1);
+  box-shadow: 0 10px 30px -10px rgba(14, 116, 144, 0.4);
+}
