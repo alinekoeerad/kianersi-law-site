@@ -75,9 +75,12 @@ Mr. Kianersi specializes in complex legal challenges involving the Ministry of E
 ## Contact Information
 
 * **Direct Phone:** +98 912 769 8864
+* **Address:** Karaj, Mollasadra Blvd, above Salam Alborz High School, Sadra Lawyers Building, 2nd Floor, Unit 8
+* **Coordinates:** `35.8427497, 50.991522`
+* **Instagram:** [@kianersi.mohamad](https://www.instagram.com/kianersi.mohamad?mdxt=eGZjdzN2MWMyaXEx)
 * **Eitaa:** [@Mohamadhasankianersi](https://eitaa.com/Mohamadhasankianersi)
-* **Bale:** [@Mohamadhasankianersi](https://www.google.com/search?q=https://ble.ir/Mohamadhasankianersi)
-* **Rubika:** [@Mka12345666](https://www.google.com/search?q=https://rubika.ir/Mka12345666)
+* **Bale:** [@Mohamadhasankianersi](https://ble.ir/Mohamadhasankianersi)
+* **Rubika:** [@Mka12345666](https://rubika.ir/Mka12345666)
 
 ```
 

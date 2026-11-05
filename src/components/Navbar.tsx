@@ -1,24 +1,63 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { SmallOrnament } from './SharedUI';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
+
+  const menuItems = [
+    { href: '#about', id: 'about', label: 'درباره من' },
+    { href: '#expertise', id: 'expertise', label: 'تخصص‌ها' },
+    { href: '#laws', id: 'laws', label: 'قوانین کاربردی' },
+    { href: '#contact', id: 'contact', label: 'تماس و موقعیت دفتر' },
+  ];
+
+  // Scrollspy to detect active section in real-time
+  useEffect(() => {
+    const handleScroll = () => {
+      const sectionIds = ['about', 'expertise', 'laws', 'contact'];
+      const scrollPosition = window.scrollY + 220; // Offset considering sticky header
+
+      // Check if user reached bottom of page
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(sectionIds[i]);
+          return;
+        }
+      }
+
+      // If at top / hero
+      if (window.scrollY < 300) {
+        setActiveSection('');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial check on mount
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
       {/* Top Banner */}
-      <div style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', borderBottom: '2px solid #0e7490' }}>
+      <div style={{ backgroundColor: 'rgba(10, 30, 40, 0.85)', borderBottom: '2px solid #0e7490' }}>
         <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
-          <p className="text-xs tracking-widest" style={{ color: '#0e7490', fontFamily: 'Noto Sans Arabic' }}>
+          <p className="text-xs tracking-widest font-medium" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}>
             عضو کانون وکلای دادگستری البرز
           </p>
-          <p className="text-xs tracking-widest hidden md:block" style={{ color: 'rgba(14,116,144,0.8)', fontFamily: 'Noto Sans Arabic' }}>
+          <p className="text-xs tracking-widest hidden md:block" style={{ color: 'rgba(226,232,240,0.9)', fontFamily: 'Noto Sans Arabic' }}>
             وکیل پایه یک دادگستری
             <SmallOrnament />
             کارشناس ارشد حقوق بین‌الملل
           </p>
-          <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'Noto Sans Arabic' }}>
-            ۲۰+ سال سابقه
+          <p className="text-xs font-medium" style={{ color: '#94a3b8', fontFamily: 'Noto Sans Arabic' }}>
+            ۲۰+ سال سابقه حقوقی
           </p>
         </div>
       </div>
@@ -32,54 +71,105 @@ export default function Navbar() {
             <img 
               src="./logo.webp" 
               alt="Logo" 
-              className="w-14 h-14 object-contain" 
+              className="w-12 h-12 md:w-14 md:h-14 object-contain" 
             />
-            کیان‌ارثی
+            <span>کیان‌ارثی</span>
           </a>
 
-          {/* Desktop Menu Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {[
-              { href: '#about', label: 'درباره من' },
-              { href: '#expertise', label: 'تخصص‌ها' },
-              { href: '#laws', label: 'قوانین کاربردی' },
-              { href: '#contact', label: 'تماس' },
-            ].map(item => (
-              <a key={item.href} href={item.href} className="text-sm transition-colors duration-200 hover:opacity-70"
-                style={{ color: 'rgba(255,255,255,0.8)', fontFamily: 'Noto Sans Arabic', letterSpacing: '0.05em' }}>
-                {item.label}
-              </a>
-            ))}
+          {/* Desktop Menu Links with Clean Editorial Active Underline */}
+          <div className="hidden md:flex items-center gap-7">
+            {menuItems.map(item => {
+              const isActive = activeSection === item.id;
+              return (
+                <a 
+                  key={item.href} 
+                  href={item.href} 
+                  className="text-sm py-2 relative transition-colors duration-200"
+                  style={{ 
+                    color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.65)',
+                    fontFamily: 'Noto Sans Arabic', 
+                    letterSpacing: '0.03em',
+                    fontWeight: isActive ? 600 : 400
+                  }}
+                >
+                  <span className="hover:text-white transition-colors">{item.label}</span>
+                  {/* Clean 2px Editorial Line without glows */}
+                  <span 
+                    className={`absolute bottom-0 right-0 left-0 h-[2px] transition-all duration-300 ${
+                      isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                    }`}
+                    style={{ backgroundColor: '#0e7490' }}
+                  />
+                </a>
+              );
+            })}
           </div>
 
-          {/* Action Button */}
-          <a href="tel:+989127698864" className="hidden md:block text-xs px-5 py-2 transition-all duration-300 rounded-sm hover:opacity-90"
-            style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic', letterSpacing: '0.05em' }}>
-            مشاوره (۰۹۱۲۷۶۹۸۸۶۴)
+          {/* Desktop Action Button */}
+          <a href="tel:+989127698864" className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
+            style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}>
+            <span>📞</span>
+            <span>مشاوره تلفنی (۰۹۱۲۷۶۹۸۸۶۴)</span>
           </a>
 
-          {/* Mobile Menu Toggle Button */}
-          <button className="md:hidden text-sm px-3 py-1 transition-colors hover:text-white" style={{ color: '#0e7490', fontFamily: 'Noto Sans Arabic' }}
-            onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? '✕' : '☰'}
-          </button>
+          {/* Mobile Right Controls: Call CTA & Hamburger Toggle */}
+          <div className="flex md:hidden items-center gap-2">
+            <a 
+              href="tel:+989127698864" 
+              className="text-xs px-3 py-1.5 rounded-sm flex items-center gap-1.5 font-semibold transition-all"
+              style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
+              aria-label="تماس تلفنی"
+            >
+              <span>📞</span>
+              <span>تماس</span>
+            </a>
+
+            <button 
+              className="text-lg px-2.5 py-1 text-cyan-400 hover:text-white border border-cyan-800/80 rounded-sm bg-slate-900/60" 
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="منوی سایت"
+            >
+              {menuOpen ? '✕' : '☰'}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Dropdown Menu */}
+        {/* Mobile Dropdown Menu with Clean Editorial Active Indicator */}
         {menuOpen && (
-          <div className="md:hidden border-t" style={{ borderColor: 'rgba(14,116,144,0.3)' }}>
-            {[
-              { href: '#about', label: 'درباره من' },
-              { href: '#expertise', label: 'تخصص‌ها' },
-              { href: '#laws', label: 'قوانین کاربردی' },
-              { href: '#contact', label: 'تماس' },
-            ].map(item => (
-              <a key={item.href} href={item.href} className="block px-6 py-3 text-sm border-b transition-colors hover:bg-cyan-900/10"
-                style={{ color: 'rgba(255,255,255,0.8)', borderColor: 'rgba(14,116,144,0.2)', fontFamily: 'Noto Sans Arabic' }}
-                onClick={() => setMenuOpen(false)}>
-                {item.label}
+          <div className="md:hidden border-t bg-slate-950/95 backdrop-blur-md" style={{ borderColor: 'rgba(14,116,144,0.3)' }}>
+            {menuItems.map(item => {
+              const isActive = activeSection === item.id;
+              return (
+                <a 
+                  key={item.href} 
+                  href={item.href} 
+                  className="block px-6 py-3.5 text-sm border-b transition-colors"
+                  style={{ 
+                    borderColor: 'rgba(14,116,144,0.2)', 
+                    fontFamily: 'Noto Sans Arabic',
+                    color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+                    borderRight: isActive ? '3px solid #0e7490' : '3px solid transparent',
+                    backgroundColor: isActive ? 'rgba(14, 116, 144, 0.1)' : 'transparent',
+                    fontWeight: isActive ? 600 : 400
+                  }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span>{item.label}</span>
+                </a>
+              );
+            })}
+
+            <div className="p-4">
+              <a 
+                href="tel:+989127698864" 
+                className="flex items-center justify-center gap-2 w-full py-3 text-center text-xs font-semibold rounded-sm"
+                style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
+                onClick={() => setMenuOpen(false)}
+              >
+                <span>📞</span>
+                <span>تماس مستقیم با وکیل: ۰۹۱۲۷۶۹۸۸۶۴</span>
               </a>
-            ))}
+            </div>
           </div>
         )}
       </nav>

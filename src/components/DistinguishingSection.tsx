@@ -17,9 +17,9 @@ export default function DistinguishingSection() {
         <div className="grid md:grid-cols-12 gap-8 items-start">
           <AnimSection className="md:col-span-4">
             <div className="space-y-6">
-              <div className="p-8 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
-                <p className="section-label mb-4" style={{ color: '#0e7490' }}>وجوه تمایز</p>
-                <p className="leading-9 text-base font-light text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem' }}>
+              <div className="p-8 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.35)' }}>
+                <p className="section-label mb-4" style={{ color: '#7dd3fc' }}>وجوه تمایز</p>
+                <p className="leading-9 text-base font-light text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.95)', fontSize: '0.95rem' }}>
                   پیشینه ارزشمند و سابقه طولانی خدمت مستمر در دفاتر حقوقی شرکت‌های آب منطقه‌ای تهران و البرز و عضویت در کمیسیون بستر و حریم و صدور پروانه‌ها، ایشان را به جزئیات بخشنامه‌ها و فرآیندهای داخلی وزارت نیرو مسلط ساخته است؛ مزیتی که وکلای عمومی از آن بی‌بهره‌اند.
                 </p>
               </div>
@@ -39,16 +39,20 @@ export default function DistinguishingSection() {
           </AnimSection>
 
           <AnimSection className="md:col-span-8" delay={150}>
-            <div>
-              <div className="newspaper-columns">
-                <p className="body-text text-sm leading-9 mb-4 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
-                  <strong className="text-cyan-400">نگاه راهبردی و چندبعدی:</strong> تلفیق نگرش کلانِ حقوقی و رویه‌های حقوقی داخلی وزارت نیرو، سبب می‌شود تا هر پرونده فراتر از یک بن‌بست موقت، به عنوان یک مسئله راهبردیِ قابل حل نگریسته شود.
+            <div className="space-y-4">
+              <div className="p-5 rounded-sm bg-slate-900/40 border border-cyan-900/30">
+                <p className="body-text text-sm md:text-base leading-8 text-justify" style={{ fontFamily: 'Noto Sans Arabic', color: '#e2e8f0' }}>
+                  <strong className="text-cyan-300 font-bold block mb-1">۱. نگاه راهبردی و چندبعدی:</strong> تلفیق نگرش کلانِ حقوقی و رویه‌های حقوقی داخلی وزارت نیرو، سبب می‌شود تا هر پرونده فراتر از یک بن‌بست موقت، به عنوان یک مسئله راهبردیِ قابل حل نگریسته شود.
                 </p>
-                <p className="body-text text-sm leading-9 mb-4 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
-                  <strong className="text-cyan-400">دقت علمی و نگارش فاخر:</strong> تنظیم لوایح، دادخواست‌ها و مدافعات کتبی با استفاده از ادبیات فاخر حقوقی و استناد به آرای وحدت رویه و دکترین حقوقی، که تأثیری شگرف بر اقناع وجدان قضات محترم دارد.
+              </div>
+              <div className="p-5 rounded-sm bg-slate-900/40 border border-cyan-900/30">
+                <p className="body-text text-sm md:text-base leading-8 text-justify" style={{ fontFamily: 'Noto Sans Arabic', color: '#e2e8f0' }}>
+                  <strong className="text-cyan-300 font-bold block mb-1">۲. دقت علمی و نگارش فاخر:</strong> تنظیم لوایح، دادخواست‌ها و مدافعات کتبی با استفاده از ادبیات فاخر حقوقی و استناد به آرای وحدت رویه و دکترین حقوقی، که تأثیری شگرف بر اقناع وجدان قضات محترم دارد.
                 </p>
-                <p className="body-text text-sm leading-9 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
-                  <strong className="text-cyan-400">اخلاق حرفه‌ای و شفافیت:</strong> تبیین واقع‌بینانه شانس موفقیت پرونده، پرهیز از امیدهای واهی و تعهد همه‌جانبه به امانت‌داری و حفظ مصلحت موکل.
+              </div>
+              <div className="p-5 rounded-sm bg-slate-900/40 border border-cyan-900/30">
+                <p className="body-text text-sm md:text-base leading-8 text-justify" style={{ fontFamily: 'Noto Sans Arabic', color: '#e2e8f0' }}>
+                  <strong className="text-cyan-300 font-bold block mb-1">۳. اخلاق حرفه‌ای و شفافیت:</strong> تبیین واقع‌بینانه شانس موفقیت پرونده، پرهیز از امیدهای واهی و تعهد همه‌جانبه به امانت‌داری و حفظ مصلحت موکل.
                 </p>
               </div>
             </div>

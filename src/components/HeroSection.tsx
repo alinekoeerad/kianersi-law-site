@@ -14,7 +14,7 @@ export default function HeroSection() {
       <div className="absolute top-8 left-8 w-24 h-24 opacity-20 hidden md:block"
         style={{ border: '1px solid #0e7490', borderRight: 'none', borderBottom: 'none' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-16 pb-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 md:pt-16 pb-0">
         {/* Top section label and divider */}
         <div className="text-center mb-8">
           <SectionLabel>پرونده ویژه — حقوق آب و اراضی</SectionLabel>
@@ -22,27 +22,56 @@ export default function HeroSection() {
         </div>
 
         {/* Main hero grid layout */}
-        <div className="grid md:grid-cols-12 gap-0 items-start">
+        <div className="grid md:grid-cols-12 gap-6 md:gap-0 items-start">
           
-          {/* Right Column: Title, description, and statistics */}
-          <div className="md:col-span-5 md:pt-8 order-2 md:order-1 pb-10 md:pb-0">
+          {/* Right Column: Title, description, CTA buttons, and statistics */}
+          <div className="md:col-span-5 md:pt-4 order-2 md:order-1 pb-10 md:pb-0">
             <div className="md:pl-8">
-              <SectionLabel className="mb-4">تخصص و سوابق</SectionLabel>
-              <h2 className="text-2xl md:text-3xl mb-6 leading-relaxed font-light" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
-                وکیل پایه یک دادگستری<br/>
-                <em style={{ color: '#7dd3fc', fontStyle: 'normal', fontSize: '1.2rem' }}>متمرکز بر دعاوی حقوقی منابع آب در دیوان عدالت و دعاوی اداری</em>
-              </h2>
-              <div className="styled-hr" />
+              <SectionLabel className="mb-3">تخصص و سوابق وکالت</SectionLabel>
+              
+              <h1 className="text-2xl md:text-3xl lg:text-4xl mb-3 leading-snug font-bold" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
+                محمدحسن کیان‌ارثی<br />
+                <span className="text-xl md:text-2xl font-light text-cyan-200">وکیل پایه یک دادگستری</span>
+              </h1>
+
+              <p className="text-sm md:text-base mb-5 font-medium leading-relaxed" style={{ color: '#7dd3fc', fontFamily: 'Noto Naskh Arabic, serif' }}>
+                متمرکز بر دعاوی حقوقی منابع آب در دیوان عدالت اداری، کمیسیون‌ها و مراجع قضایی
+              </p>
+
+              <div className="styled-hr my-4" />
+
               {/* Comprehensive 20-year experience text */}
-              <p className="body-text text-sm leading-8 mb-6 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
+              <p className="body-text text-sm leading-8 mb-6 text-justify" style={{ color: '#e2e8f0', fontFamily: 'Noto Sans Arabic' }}>
                 بیش از ۲۰ سال تجربه تخصصی در حوزه حقوق آب، دعاوی حقوقی و اداری، دفاع از پرونده‌های مطروحه در محاکم قضایی و دیوان عدالت اداری، عضویت در کمیسیون‌های تخصصی وزارت نیرو و ارائه مشاوره حقوقی در طرح‌های ملی انتقال آب، استملاک اراضی و پروژه‌های عمرانی.
               </p>
+
+              {/* High-Converting CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 my-6">
+                <a 
+                  href="tel:+989127698864" 
+                  className="flex items-center justify-center gap-2 px-5 py-3 text-xs md:text-sm font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-lg text-center"
+                  style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
+                >
+                  <span>📞</span>
+                  <span>تماس و مشاوره فوری: ۰۹۱۲۷۶۹۸۸۶۴</span>
+                </a>
+                
+                <a 
+                  href="#contact" 
+                  className="flex items-center justify-center gap-2 px-4 py-3 text-xs md:text-sm font-medium rounded-sm transition-all duration-300 hover:bg-cyan-900/40 text-center"
+                  style={{ border: '1px solid rgba(14,116,144,0.6)', color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}
+                >
+                  <span>📍</span>
+                  <span>نشانی دفتر و اطلاعات تماس</span>
+                </a>
+              </div>
+
               {/* Statistics cards */}
-              <div className="grid grid-cols-3 mt-8 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.2)', borderLeft: 'none', backgroundColor: 'rgba(10,30,40,0.4)' }}>
+              <div className="grid grid-cols-3 mt-6 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.3)', borderLeft: 'none', backgroundColor: 'rgba(10,30,40,0.5)' }}>
                 <StatCard number="۲۰" label="سال تجربه" suffix="+" />
                 <StatCard number="۱۳" label="سال در کمیسیون" />
                 <div className="text-center py-6 px-4">
-                  <div className="stat-number text-5xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
+                  <div className="stat-number text-4xl md:text-5xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
                   <div className="text-xs tracking-widest section-label">حقوق بین‌الملل</div>
                 </div>
               </div>
@@ -51,14 +80,18 @@ export default function HeroSection() {
 
           {/* Center Column: Lawyer's portrait and name plate */}
           <div className="md:col-span-4 order-1 md:order-2 flex justify-center md:block">
-            <div className="relative editorial-frame mx-auto" style={{ maxWidth: '380px' }}>
-              <img src="./images/lawyer-portrait.webp" alt="محمدحسن کیان‌ارثی وکیل دادگستری" className="w-full object-cover"
-                style={{ height: '520px', objectPosition: 'center top', filter: 'saturate(0.85) contrast(1.05)' }} />
+            <div className="relative editorial-frame mx-auto max-w-[320px] md:max-w-[380px]">
+              <img 
+                src="./images/lawyer-portrait.webp" 
+                alt="محمدحسن کیان‌ارثی وکیل دادگستری" 
+                className="w-full object-cover h-[360px] md:h-[520px]"
+                style={{ objectPosition: 'center top', filter: 'saturate(0.9) contrast(1.05)' }} 
+              />
               
               {/* Gradient overlay for text readability */}
-              <div className="absolute bottom-0 right-0 left-0 p-5 pt-20" 
+              <div className="absolute bottom-0 right-0 left-0 p-5 pt-16" 
                 style={{ background: 'linear-gradient(to top, rgba(2,15,26,0.95) 0%, rgba(2,15,26,0.8) 40%, transparent 100%)' }}>
-                <p className="masthead-title text-2xl font-bold drop-shadow-2xl" 
+                <p className="masthead-title text-xl md:text-2xl font-bold drop-shadow-2xl" 
                   style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif', textShadow: '0px 2px 8px rgba(0,0,0,0.9)' }}>
                   محمدحسن کیان‌ارثی
                 </p>
@@ -71,37 +104,37 @@ export default function HeroSection() {
           </div>
 
           {/* Left Column: Key executive records and quick expertise list */}
-          <div className="md:col-span-3 order-3 md:pt-8 pb-10 md:pb-0">
+          <div className="md:col-span-3 order-3 md:pt-4 pb-10 md:pb-0">
             <div className="md:pr-4">
-              {/* Key Executive Records Box - Updated with exact required text */}
-              <div className="p-4 mb-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', color: '#ffffff', border: '1px solid rgba(14,116,144,0.2)' }}>
-                <p className="section-label mb-2">سوابق کلیدی</p>
-                <p className="text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.85)' }}>
+              {/* Key Executive Records Box */}
+              <div className="p-4 mb-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', color: '#ffffff', border: '1px solid rgba(14,116,144,0.3)' }}>
+                <p className="section-label mb-2" style={{ color: '#7dd3fc' }}>سوابق کلیدی</p>
+                <p className="text-xs md:text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.9)' }}>
                   عضو حقوقی کمیسیون صدور پروانه چاه به مدت ۵ سال
                 </p>
                 <div className="my-2 h-px" style={{ backgroundColor: 'rgba(14,116,144,0.4)' }} />
-                <p className="text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.85)' }}>
+                <p className="text-xs md:text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.9)' }}>
                   عضو حقوقی کمیسیون رسیدگی به اعتراضات بستر وحریم رودخانه ها (هیات سه نفره موضوع ماده ۳) به مدت ۱۳ سال
                 </p>
                 <div className="my-2 h-px" style={{ backgroundColor: 'rgba(14,116,144,0.4)' }} />
-                <p className="text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.85)' }}>
+                <p className="text-xs md:text-sm leading-relaxed text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: 'rgba(255,255,255,0.9)' }}>
                   ۱۴ سال کارشناس حقوقی امور آب کرج و فعالیت در دفتر حقوقی شرکت آب منطقه‌ای تهران
                 </p>
               </div>
 
               {/* Approach Quote Box */}
-              <div className="p-4 mb-6" style={{ borderRight: '3px solid #0e7490', backgroundColor: 'rgba(14,116,144,0.05)' }}>
-                <p className="text-sm leading-8 italic text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc', fontSize: '0.9rem' }}>
+              <div className="p-4 mb-6" style={{ borderRight: '3px solid #0e7490', backgroundColor: 'rgba(14,116,144,0.08)' }}>
+                <p className="text-xs md:text-sm leading-7 italic text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc' }}>
                   دقت در تحلیل پرونده، راهبردی متفاوت برای احقاق حق موکل در پیچیده‌ترین دعاوی دستگاه‌های اجرایی.
                 </p>
               </div>
 
               {/* Simplified Expertise List */}
-              <p className="section-label mb-3">حوزه‌های تخصصی</p>
+              <p className="section-label mb-3" style={{ color: '#7dd3fc' }}>حوزه‌های تخصصی</p>
               <div className="space-y-2">
                 {['حقوق آب و منابع آبی', 'دیوان عدالت اداری', 'استملاک و تملک اراضی', 'قراردادهای اداری', 'دعاوی دستگاه‌های اجرایی'].map(area => (
                   <div key={area} className="flex items-center gap-2 text-xs" style={{ color: '#e2e8f0', fontFamily: 'Noto Sans Arabic' }}>
-                    <span style={{ color: '#0e7490', fontSize: '0.5rem' }}>◆</span> {area}
+                    <span style={{ color: '#38bdf8', fontSize: '0.5rem' }}>◆</span> {area}
                   </div>
                 ))}
               </div>
@@ -110,10 +143,10 @@ export default function HeroSection() {
         </div>
 
         {/* Bottom Banner Title */}
-        <div className="mt-20 mb-10 py-10 text-center border-t border-b" style={{ borderColor: 'rgba(14,116,144,0.3)' }}>
-          <h1 className="article-title text-3xl md:text-5xl lg:text-6xl tracking-tight" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontWeight: 700, color: '#ffffff' }}>
+        <div className="mt-14 mb-10 py-8 text-center border-t border-b" style={{ borderColor: 'rgba(14,116,144,0.3)' }}>
+          <h2 className="article-title text-2xl md:text-4xl lg:text-5xl tracking-tight" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontWeight: 700, color: '#ffffff' }}>
             رویکردی نوین و مقتدرانه در حقوق تخصصی آب و اراضی
-          </h1>
+          </h2>
         </div>
       </div>
     </section>

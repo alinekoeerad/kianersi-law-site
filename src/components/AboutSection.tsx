@@ -36,7 +36,7 @@ export default function AboutSection() {
         {/* Section Header */}
         <AnimSection>
           <div className="text-center mb-14">
-            <SectionLabel>سرمقاله ویژه</SectionLabel>
+            <SectionLabel>سرمقاله و معرفی وکیل</SectionLabel>
             <h2 className="article-title text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
               مدیریت و صیانت از منابع حیاتی
             </h2>
@@ -50,28 +50,28 @@ export default function AboutSection() {
           {/* Left Column: Editorials, Quote, and National Projects */}
           <AnimSection>
             <div>
-              <p className="body-text text-justify mb-6 text-base leading-9" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontSize: '1.05rem' }}>
+              <p className="body-text text-justify mb-6 text-base leading-9" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontSize: '1.05rem', color: '#f1f5f9' }}>
                 در سپهر حقوقی معاصر، مدیریت و صیانت از منابع حیاتی نظیر آب و اراضی، نه یک امر اداری ساده، بلکه حوزه‌ای استراتژیک، فنی و به‌شدت تخصصی است. پرونده‌های این عرصه به جهت تداخل منافع حاکمیتی و حقوق مالکانه اشخاص، نیازمند هوشمندی قضایی، تسلط بی‌بدیل بر مقررات موضوعه و شناخت دقیق از فرآیندهای اجرایی است.
               </p>
               
-              <div className="newspaper-columns mt-6">
-                <p className="body-text text-sm leading-9 mb-4 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
+              <div className="space-y-4 mt-6">
+                <p className="body-text text-sm md:text-base leading-9 text-justify" style={{ fontFamily: 'Noto Sans Arabic', color: '#cbd5e1' }}>
                   آقای محمدحسن کیان‌ارثی با توشه‌ای دوجانبه از دانش آکادمیک و «بیش از دو دهه حضور کلیدی در دفاتر حقوقی شرکت‌های آب منطقه‌ای تهران و البرز»، به عنوان یکی از خوش‌نام‌ترین و خبره‌ترین وکلای این حوزه تخصصی در پایتخت و استان البرز شناخته می‌شوند. طرح و دفاع از دعاوی در محاکم عمومی، دادسراهای عمومی و انقلاب، دیوان عدالت اداری و سایر مراجع قضایی و شبه‌قضایی بخش مهمی از سوابق اجرایی ایشان است.
                 </p>
-                <p className="body-text text-sm leading-9 mb-4 text-justify" style={{ fontFamily: 'Noto Sans Arabic' }}>
+                <p className="body-text text-sm md:text-base leading-9 text-justify" style={{ fontFamily: 'Noto Sans Arabic', color: '#cbd5e1' }}>
                   این تجارب گران‌سنگ، بستری بی‌بدیل برای دفاع علمی، مستدل و پیروزمندانه از حقوق موکلین فراهم آورده است. تجربه طولانی ایشان در ساختارهای حقوقی و سازمانی مرتبط با وزارت نیرو، در کنار دانش آکادمیک موجب شده تا در پرونده‌های حساس عملکردی قابل اتکا داشته باشند.
                 </p>
               </div>
 
               {/* Floating Quote Box */}
-              <div className="floating-quote mt-10 rounded-sm">
-                <p className="text-base leading-9 text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif' }}>
+              <div className="floating-quote mt-10 rounded-sm" style={{ backgroundColor: '#064e3b' }}>
+                <p className="text-base leading-9 text-justify" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
                   “حقوق آب و اراضی ملی، عرصه‌ای نیست که بتوان در آن آزمون و خطا کرد. هرگونه اقدام نسنجیده یا تاخیر در مواجهه با تصمیمات اداری و آراء کمیسیون‌ها، می‌تواند به تضییع ابدی حقوق مکتسبه و دارایی‌های حیاتی شما منجر شود.”
                 </p>
               </div>
 
               {/* National and Infrastructure Projects Section */}
-              <div className="mt-12 p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.3)', backgroundColor: 'rgba(10,30,40,0.6)' }}>
+              <div className="mt-12 p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
                 <p className="section-label mb-4" style={{ color: '#7dd3fc' }}>سوابق تخصصی در طرح‌های ملی و عمرانی</p>
                 <ul className="space-y-3">
                   {[
@@ -81,8 +81,8 @@ export default function AboutSection() {
                     'کارشناس حقوقی استملاک و تملک اراضی و طرح‌های تملک دارایی‌های سرمایه‌ای',
                     'کارشناس حقوقی شرکت پلشیر'
                   ].map((project, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-sm" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(255,255,255,0.85)' }}>
-                      <span className="mt-1" style={{ color: '#0e7490' }}>■</span>
+                    <li key={idx} className="flex items-start gap-3 text-sm" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(255,255,255,0.9)' }}>
+                      <span className="mt-1 text-cyan-400 font-bold">■</span>
                       <span className="leading-7">{project}</span>
                     </li>
                   ))}
@@ -105,15 +105,15 @@ export default function AboutSection() {
                 />
                 <div className="absolute inset-0 rounded-sm" style={{ background: 'linear-gradient(to bottom, transparent 50%, rgba(2,15,26,0.85))' }} />
                 <div className="absolute bottom-4 right-4 left-4">
-                  <p className="text-xs tracking-widest" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}>
+                  <p className="text-xs tracking-widest font-semibold" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}>
                     صیانت از منابع آب و حقوق اراضی
                   </p>
                 </div>
               </div>
 
               {/* Professional Information Card */}
-              <div className="p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.3)', backgroundColor: 'rgba(14,116,144,0.05)' }}>
-                <p className="section-label mb-4">اطلاعات حرفه‌ای</p>
+              <div className="p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
+                <p className="section-label mb-4" style={{ color: '#7dd3fc' }}>اطلاعات حرفه‌ای</p>
                 <div className="space-y-4">
                   {[
                     { label: 'پروانه وکالت', value: 'وکیل پایه یک دادگستری' },
@@ -122,7 +122,7 @@ export default function AboutSection() {
                     { label: 'سابقه خدمت', value: 'شرکت آب منطقه‌ای تهران و البرز' },
                   ].map(item => (
                     <div key={item.label} className="flex flex-col gap-1 pb-3" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)' }}>
-                      <span className="text-xs" style={{ color: '#0e7490', fontFamily: 'Noto Sans Arabic', letterSpacing: '0.05em' }}>{item.label}</span>
+                      <span className="text-xs" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic', letterSpacing: '0.05em' }}>{item.label}</span>
                       <span className="text-sm font-medium" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>{item.value}</span>
                     </div>
                   ))}
@@ -133,7 +133,7 @@ export default function AboutSection() {
 
         </div>
 
-        {/* Certificates Section - Changed from dashed to solid line */}
+        {/* Certificates Section */}
         <AnimSection delay={300}>
           <div className="mt-20 pt-16" style={{ borderTop: '1px solid rgba(14,116,144,0.3)' }}>
             <div className="text-center mb-12">
@@ -146,49 +146,49 @@ export default function AboutSection() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               
               {/* Category 1: Water & Natural Resources */}
-              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.4)', border: '1px solid rgba(14,116,144,0.2)' }}>
+              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.6)', border: '1px solid rgba(14,116,144,0.35)' }}>
                 <h4 className="font-semibold text-sm mb-4 pb-2" style={{ color: '#7dd3fc', borderBottom: '1px solid rgba(14,116,144,0.3)', fontFamily: 'Noto Naskh Arabic, serif' }}>
                   زمینه آب و منابع طبیعی
                 </h4>
                 <ul className="space-y-3">
                   {waterCertificates.map((cert, i) => (
-                    <li key={i} className="text-xs leading-6 text-gray-300" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
+                    <li key={i} className="text-xs leading-6 text-gray-200" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
                   ))}
                 </ul>
               </div>
 
               {/* Category 2: Public & Administrative */}
-              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.4)', border: '1px solid rgba(14,116,144,0.2)' }}>
+              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.6)', border: '1px solid rgba(14,116,144,0.35)' }}>
                 <h4 className="font-semibold text-sm mb-4 pb-2" style={{ color: '#7dd3fc', borderBottom: '1px solid rgba(14,116,144,0.3)', fontFamily: 'Noto Naskh Arabic, serif' }}>
                   عمومی و اداری
                 </h4>
                 <ul className="space-y-3">
                   {adminCertificates.map((cert, i) => (
-                    <li key={i} className="text-xs leading-6 text-gray-300" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
+                    <li key={i} className="text-xs leading-6 text-gray-200" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
                   ))}
                 </ul>
               </div>
 
               {/* Category 3: Financial & Economic */}
-              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.4)', border: '1px solid rgba(14,116,144,0.2)' }}>
+              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.6)', border: '1px solid rgba(14,116,144,0.35)' }}>
                 <h4 className="font-semibold text-sm mb-4 pb-2" style={{ color: '#7dd3fc', borderBottom: '1px solid rgba(14,116,144,0.3)', fontFamily: 'Noto Naskh Arabic, serif' }}>
                   حقوق مالی و اقتصادی
                 </h4>
                 <ul className="space-y-3">
                   {financeCertificates.map((cert, i) => (
-                    <li key={i} className="text-xs leading-6 text-gray-300" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
+                    <li key={i} className="text-xs leading-6 text-gray-200" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
                   ))}
                 </ul>
               </div>
 
               {/* Category 4: Other Specialized */}
-              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.4)', border: '1px solid rgba(14,116,144,0.2)' }}>
+              <div className="p-5 rounded-sm" style={{ backgroundColor: 'rgba(10,30,40,0.6)', border: '1px solid rgba(14,116,144,0.35)' }}>
                 <h4 className="font-semibold text-sm mb-4 pb-2" style={{ color: '#7dd3fc', borderBottom: '1px solid rgba(14,116,144,0.3)', fontFamily: 'Noto Naskh Arabic, serif' }}>
                   سایر دوره‌های مرتبط
                 </h4>
                 <ul className="space-y-3">
                   {otherCertificates.map((cert, i) => (
-                    <li key={i} className="text-xs leading-6 text-gray-300" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
+                    <li key={i} className="text-xs leading-6 text-gray-200" style={{ fontFamily: 'Noto Sans Arabic' }}>• {cert}</li>
                   ))}
                 </ul>
               </div>

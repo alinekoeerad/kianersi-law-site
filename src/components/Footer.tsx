@@ -8,19 +8,24 @@ export default function Footer() {
               محمدحسن کیان‌ارثی
             </h3>
             <p className="text-xs leading-7" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(255,255,255,0.65)' }}>
-              وکیل پایه یک دادگستری متمرکز بر دعاوی آب<br />عضو کانون وکلای دادگستری البرز<br />کارشناس ارشد حقوق بین‌الملل
+              وکیل پایه یک دادگستری متمرکز بر دعاوی آب<br />
+              عضو کانون وکلای دادگستری البرز<br />
+              کارشناس ارشد حقوق بین‌الملل
             </p>
+            <p className="text-xs leading-6 mt-3" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(125,211,252,0.85)' }}>
+              کرج، بلوار ملاصدرا، بالاتر از دبیرستان سلام، ساختمان وکلای صدرا، طبقه ۲، واحد ۸
+            </p>
+
           </div>
 
           <div>
             <p className="section-label mb-4" style={{ color: 'rgba(125,211,252,0.8)' }}>دسترسی سریع</p>
             <div className="space-y-2">
-              {/* تغییرات در این بخش اعمال شده است */}
               {[
                 { name: 'درباره من', href: '#about' },
                 { name: 'تخصص‌ها', href: '#expertise' },
                 { name: 'قوانین کاربردی', href: '#laws' },
-                { name: 'تماس با وکیل', href: '#contact' }
+                { name: 'تماس و موقعیت دفتر', href: '#contact' }
               ].map(link => (
                 <div key={link.name}>
                   <a 
