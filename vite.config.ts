@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), viteSingleFile()],
-  base: '/', // این مقدار به روت تغییر کرد تا در داکر و هم‌روش به درستی کار کند
+  base: './', // سازگار با گیت‌هاب پیجز، داکر و سرورهای ابری
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
