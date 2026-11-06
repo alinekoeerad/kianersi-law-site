@@ -1032,17 +1032,19 @@ $is_auth = is_authenticated();
         .messenger-image-wrapper {
             position: relative;
             width: 100%;
-            height: 230px;
             border-radius: 6px;
             overflow: hidden;
-            background: #090d16;
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255,255,255,0.08);
+            margin-top: 0.5rem;
         }
         .messenger-image-wrapper img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            max-height: 520px;
+            object-fit: contain;
             display: block;
+            border-radius: 6px;
         }
         .messenger-zoom-badge {
             position: absolute;
@@ -1063,32 +1065,6 @@ $is_auth = is_authenticated();
             width: 14px !important;
             height: 14px !important;
             display: block !important;
-        }
-        .messenger-time-badge {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(3px);
-            border-radius: 12px;
-            padding: 2px 7px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 11px;
-            color: #ffffff;
-            direction: ltr;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            z-index: 3;
-            pointer-events: none;
-        }
-        .tg-check-icon {
-            width: 15px !important;
-            height: 11px !important;
-            max-width: 15px !important;
-            max-height: 11px !important;
-            display: inline-block !important;
-            flex-shrink: 0 !important;
         }
 
         /* ─── Refined SEO Input Groups ─── */
@@ -1776,13 +1752,6 @@ $is_auth = is_authenticated();
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                                         </span>
                                         <img id="messengerPreviewImage" src="/preview.webp" alt="تصویر پیش‌نمایش اشتراک‌گذاری">
-                                        <div class="messenger-time-badge">
-                                            <span>7:14 PM</span>
-                                            <svg class="tg-check-icon" viewBox="0 0 16 11" fill="none">
-                                                <path d="M1.5 6L4.5 9L11 2" stroke="#5eb5f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M6 6L9 9L15 2" stroke="#5eb5f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                            </svg>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
