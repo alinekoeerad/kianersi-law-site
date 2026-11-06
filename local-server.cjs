@@ -119,22 +119,27 @@ function renderAdminHtml(auth) {
   if (auth) {
     // 1. Remove login block completely
     content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
-    content = content.replace(/<!-- ─── LOGIN VIEW ─── -->[\s\S]*?(?=<!-- ─── DASHBOARD VIEW ─── -->)/i, '');
 
     // 2. Handle security warning banner
-    if (isUsingDefaultPassword()) {
-      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):\s*\?>/i, '');
+    if (!isUsingDefaultPassword()) {
+      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
     } else {
-      content = content.replace(/<div id="securityWarningBanner"[\s\S]*?<\/div>\s*<\/div>/i, '');
+      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):\s*\?>/i, '');
     }
 
-    // 3. Remove is_auth tags without swallowing dashboard content
+    // 3. Remove is_auth tags around dashboard and in script
     content = content.replace(/<\?php\s*if\s*\(\$is_auth\):\s*\?>/gi, '');
     content = content.replace(/<\?php\s*endif;\s*\?>/gi, '');
   } else {
-    // Completely remove dashboard block: everything from DASHBOARD VIEW to <script>
-    content = content.replace(/<!-- ─── DASHBOARD VIEW ─── -->[\s\S]*?(?=<script>)/i, '');
-    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/gi, '');
+    // 1. Remove dashboard HTML: everything from <?php if ($is_auth): ?> before DASHBOARD VIEW up to <script>
+    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?(?=<script>)/i, '');
+
+    // 2. Remove loadSiteData() initialization inside <script>
+    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?loadSiteData\(\);[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
+
+    // 3. Strip <?php if (!$is_auth): ?> and <?php endif; ?> tags around login
+    content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):\s*\?>/gi, '');
+    content = content.replace(/<\?php\s*endif;\s*\?>/gi, '');
   }
 
   // Strip any remaining helper php blocks
