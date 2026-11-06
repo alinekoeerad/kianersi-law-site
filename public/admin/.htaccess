@@ -2,7 +2,7 @@
 Options -Indexes
 
 # Block direct access to configuration, sensitive data files, and logs
-<FilesMatch "(config\.php|.*\.json|.*\.lock|.*\.log|.*\.bak|.*\.env|\.htaccess)$">
+<FilesMatch "(config\.json|config\.php|analytics\.json|login_attempts\.json|.*\.json|.*\.lock|.*\.log|.*\.bak|.*\.env|\.htaccess)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>

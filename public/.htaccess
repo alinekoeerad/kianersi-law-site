@@ -1,3 +1,6 @@
+# ─── Disable Directory Browsing ────────────────────────────────
+Options -Indexes
+
 # ─── Force HTTPS ────────────────────────────────────────────────
 RewriteEngine On
 RewriteCond %{HTTPS} off

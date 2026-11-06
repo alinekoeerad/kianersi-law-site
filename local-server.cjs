@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || '3000', 10);
 const DIST_DIR = path.join(__dirname, 'dist');
 const PUBLIC_DIR = path.join(__dirname, 'public');
 
