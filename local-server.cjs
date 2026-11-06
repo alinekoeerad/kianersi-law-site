@@ -581,7 +581,28 @@ const server = http.createServer(async (req, res) => {
 
   let filePath = path.join(DIST_DIR, pathname);
   if (!fs.existsSync(filePath)) {
-    // SPA fallback
+    // Handle subpath requests from /admin/
+    if (pathname.startsWith('/admin/')) {
+      const stripped = pathname.replace(/^\/admin/, '');
+      if (fs.existsSync(path.join(DIST_DIR, stripped))) {
+        filePath = path.join(DIST_DIR, stripped);
+      } else if (fs.existsSync(path.join(PUBLIC_DIR, stripped))) {
+        filePath = path.join(PUBLIC_DIR, stripped);
+      }
+    } else if (fs.existsSync(path.join(PUBLIC_DIR, pathname))) {
+      filePath = path.join(PUBLIC_DIR, pathname);
+    }
+  }
+
+  // If asset file doesn't exist, return 404 instead of falling back to index.html
+  if (!fs.existsSync(filePath)) {
+    const isAsset = /\.(webp|png|jpg|jpeg|svg|ico|css|js|json)$/i.test(pathname);
+    if (isAsset) {
+      res.statusCode = 404;
+      res.end('Asset Not Found');
+      return;
+    }
+    // SPA fallback only for non-asset routes
     filePath = path.join(DIST_DIR, 'index.html');
   }
 

@@ -900,39 +900,60 @@ $is_auth = is_authenticated();
             display: none;
         }
         /* Google SERP Live Simulator */
+        .preview-columns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
         .google-serp-preview {
             background: #202124;
             border: 1px solid #3c4043;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 1.25rem;
             font-family: Arial, sans-serif;
             text-align: right;
             direction: rtl;
-            margin-top: 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .serp-url-row {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.78rem;
-            color: #bdc1c6;
-            margin-bottom: 0.4rem;
+            gap: 0.65rem;
+            margin-bottom: 0.65rem;
         }
-        .serp-url-row .serp-favicon {
-            width: 18px;
-            height: 18px;
+        .serp-favicon-img {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            object-fit: contain;
             background: #303134;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
+            padding: 2px;
+            border: 1px solid rgba(255,255,255,0.15);
+            flex-shrink: 0;
+        }
+        .serp-site-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            line-height: 1.3;
+        }
+        .serp-site-name {
+            font-weight: 600;
+            color: #dadce0;
+            font-size: 0.85rem;
+        }
+        .serp-site-url {
+            color: #bdc1c6;
+            font-size: 0.75rem;
+            direction: ltr;
+            text-align: right;
         }
         .serp-title {
             font-size: 1.15rem;
             font-weight: 400;
             color: #8ab4f8;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.4rem;
             line-height: 1.4;
             word-break: break-word;
             cursor: pointer;
@@ -946,18 +967,164 @@ $is_auth = is_authenticated();
             line-height: 1.58;
             word-break: break-word;
         }
-        .char-counter {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 0.25rem;
+
+        /* ─── Messenger / Social Share Simulator (Telegram / Eitaa / Bale) ─── */
+        .messenger-preview-container {
+            background: #0e1621;
+            border: 1px solid rgba(14, 116, 144, 0.35);
+            border-radius: 10px;
+            padding: 1.25rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .messenger-chat-bubble {
+            background: #182533;
+            border-radius: 10px 10px 2px 10px;
+            padding: 0.85rem 1rem 0.65rem;
+            color: #ffffff;
+            position: relative;
+        }
+        .messenger-link-header {
+            color: #64b5f6;
+            font-size: 0.825rem;
+            direction: ltr;
+            text-align: left;
+            margin-bottom: 0.65rem;
+            display: block;
+            text-decoration: underline;
+        }
+        .messenger-rich-card {
+            border-right: 3px solid #64b5f6;
+            background: rgba(0, 0, 0, 0.22);
+            border-radius: 6px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .messenger-site-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+        }
+        .messenger-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #64b5f6;
+            margin-bottom: 0.45rem;
+            line-height: 1.45;
+            word-break: break-word;
+        }
+        .messenger-desc {
+            font-size: 0.825rem;
+            color: #cfd8dc;
+            line-height: 1.55;
+            margin-bottom: 0.75rem;
+            word-break: break-word;
+        }
+        .messenger-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #090d16;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .messenger-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .messenger-zoom-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: rgba(0, 0, 0, 0.65);
+            color: #ffffff;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .messenger-meta-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: #78909c;
+            margin-top: 0.4rem;
+        }
+
+        /* ─── Refined SEO Input Groups ─── */
+        .seo-input-group {
+            background: rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(14, 116, 144, 0.25);
+            border-radius: 8px;
+            padding: 1.1rem;
+            margin-bottom: 1.15rem;
+            transition: all 0.2s ease;
+        }
+        .seo-input-group:focus-within {
+            border-color: var(--cyan-light);
+            background: rgba(15, 23, 42, 0.7);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.12);
+        }
+        .seo-input-group .form-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .seo-input-group .form-control {
+            width: 100%;
+            background: rgba(8, 14, 26, 0.95);
+            border: 1px solid rgba(14, 116, 144, 0.35);
+            border-radius: 6px;
+            padding: 0.65rem 0.85rem;
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            transition: border 0.2s;
+        }
+        .seo-input-group .form-control:focus {
+            border-color: var(--cyan-light);
+            outline: none;
+        }
+        .seo-counter-row {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 0 0.25rem;
         }
-        .char-counter.good {
+        .seo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.06);
+            color: #94a3b8;
+        }
+        .seo-badge.good {
+            background: rgba(16, 185, 129, 0.18);
             color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.35);
         }
-        .char-counter.warn {
+        .seo-badge.warn {
+            background: rgba(245, 158, 11, 0.18);
             color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.35);
         }
     </style>
 </head>
@@ -1405,7 +1572,7 @@ $is_auth = is_authenticated();
                         <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش در بخش بالایی صفحه اصلی (Hero) و معرفی وکیل.</p>
                         <div class="image-preview-box">
                             <span class="image-preview-badge">WebP 92%</span>
-                            <img id="lawyerImagePreview" src="./images/lawyer-portrait.webp" alt="پرتره وکیل">
+                            <img id="lawyerImagePreview" src="/images/lawyer-portrait.webp" alt="پرتره وکیل">
                         </div>
                         <input type="file" id="fileLawyer" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'lawyer')">
                         <div class="image-actions">
@@ -1433,7 +1600,7 @@ $is_auth = is_authenticated();
                         <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش در منوی بالا و فوتر سایت (با حفظ کامل شفافیت / Alpha).</p>
                         <div class="image-preview-box">
                             <span class="image-preview-badge">WebP Transparent</span>
-                            <img id="logoImagePreview" src="./logo.webp" alt="لوگو دفتر">
+                            <img id="logoImagePreview" src="/logo.webp" alt="لوگو دفتر">
                         </div>
                         <input type="file" id="fileLogo" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'logo')">
                         <div class="image-actions">
@@ -1461,7 +1628,7 @@ $is_auth = is_authenticated();
                         <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش هنگام ارسال لینک سایت در ایتا، بله، روبیکا، واتساپ و تلگرام.</p>
                         <div class="image-preview-box">
                             <span class="image-preview-badge">WebP 1200x630</span>
-                            <img id="seoImagePreview" src="./preview.webp" alt="پیش‌نمایش سئو">
+                            <img id="seoImagePreview" src="/preview.webp" alt="پیش‌نمایش سئو">
                         </div>
                         <input type="file" id="fileSeo" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'seo')">
                         <div class="image-actions">
@@ -1482,13 +1649,13 @@ $is_auth = is_authenticated();
                 </div>
             </div>
 
-            <!-- Part 2: SEO Meta Text & Google SERP Simulator -->
+            <!-- Part 2: SEO Meta Text & Dual Live Simulators -->
             <div class="panel-card">
                 <div class="card-header">
                     <div>
-                        <h2 class="card-title">تنظیمات متنی متای سئو و موتورهای جستجو (Google SEO)</h2>
+                        <h2 class="card-title">تنظیمات متنی متای سئو و بهینه‌سازی موتورهای جستجو</h2>
                         <p style="color: var(--text-muted); font-size: 0.825rem; margin-top: 0.25rem;">
-                            مدیریت تایتل و توضیحات متای وب‌سایت برای افزایش رتبه در جستجوهای وکیل کرج، آب و دعاوی ملکی.
+                            مدیریت تایتل و توضیحات متای وب‌سایت برای افزایش رتبه در جستجوهای وکیل کرج، دعاوی آب و املاک.
                         </p>
                     </div>
                     <button type="button" onclick="saveSeoData()" class="btn btn-success">
@@ -1497,48 +1664,94 @@ $is_auth = is_authenticated();
                     </button>
                 </div>
 
-                <div class="form-grid">
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label">عنوان صفحه در گوگل و تب مرورگر (Meta Title):</label>
-                        <input type="text" id="seoTitle" class="form-input" placeholder="محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک" oninput="updateGooglePreview()">
-                        <div class="char-counter">
-                            <span>پیشنهاد سئو: ۵۰ تا ۶۰ کاراکتر</span>
-                            <span id="seoTitleCount">۰ کاراکتر</span>
+                <!-- Form Controls for SEO -->
+                <div>
+                    <!-- Meta Title Group -->
+                    <div class="seo-input-group">
+                        <label class="form-label">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+                            <span>عنوان صفحه در گوگل و تب مرورگر (Meta Title):</span>
+                        </label>
+                        <input type="text" id="seoTitle" class="form-control" placeholder="محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک" oninput="updateSeoPreviews()">
+                        <div class="seo-counter-row">
+                            <span>طول استاندارد پیشنهادی گوگل: ۵۰ الی ۶۰ کاراکتر</span>
+                            <span id="seoTitleCount" class="seo-badge">۰ کاراکتر</span>
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label">توضیحات متا برای موتورهای جستجو (Meta Description):</label>
-                        <textarea id="seoDescription" class="form-textarea" rows="3" placeholder="دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز." oninput="updateGooglePreview()"></textarea>
-                        <div class="char-counter" id="seoDescCounterBox">
-                            <span>طول ایده‌آل گوگل: ۱۲۰ تا ۱۶۰ کاراکتر</span>
-                            <span id="seoDescCount">۰ کاراکتر</span>
+                    <!-- Meta Description Group -->
+                    <div class="seo-input-group">
+                        <label class="form-label">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+                            <span>توضیحات متا برای موتورهای جستجو و اشتراک لینک (Meta Description):</span>
+                        </label>
+                        <textarea id="seoDescription" class="form-control" rows="3" placeholder="دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری." oninput="updateSeoPreviews()"></textarea>
+                        <div class="seo-counter-row">
+                            <span>طول ایده‌آل گوگل و پیام‌رسان‌ها: ۱۲۰ الی ۱۶۰ کاراکتر</span>
+                            <span id="seoDescCount" class="seo-badge">۰ کاراکتر</span>
                         </div>
                     </div>
 
-                    <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label">کلمات کلیدی متا (Meta Keywords - جدا شده با کاما یا ویرگول):</label>
-                        <textarea id="seoKeywords" class="form-textarea" rows="2" placeholder="وکیل کرج, وکیل آب, دعاوی چاه کشاورزی, حریم رودخانه, وکیل ملکی البرز, کمیسیون آبهای زیرزمینی, محمدحسن کیان ارثی"></textarea>
+                    <!-- Meta Keywords Group -->
+                    <div class="seo-input-group">
+                        <label class="form-label">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                            <span>کلمات کلیدی متا (Meta Keywords):</span>
+                        </label>
+                        <textarea id="seoKeywords" class="form-control" rows="2" placeholder="وکیل کرج, وکیل آب, دعاوی چاه کشاورزی, حریم رودخانه, وکیل ملکی البرز, کمیسیون آبهای زیرزمینی, محمدحسن کیان ارثی"></textarea>
+                        <div class="seo-counter-row">
+                            <span>کلمات کلیدی را با کاما انگلیسی (,) یا ویرگول فارسی (،) جدا نمایید.</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Live Google Search Result Preview (SERP Simulator) -->
-                <div style="margin-top: 1.5rem;">
-                    <label class="form-label" style="display: flex; align-items: center; gap: 0.5rem;">
-                        <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                        <span>پیش‌نمایش زنده در نتایج جستجوی گوگل (Google SERP Simulator):</span>
-                    </label>
-                    
-                    <div class="google-serp-preview">
-                        <div class="serp-url-row">
-                            <span class="serp-favicon">
-                                <svg class="admin-icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                            </span>
-                            <span>https://vakilkianersi.ir</span>
-                            <span style="color: #9aa0a6;">› دفتر-وکالت</span>
+                <!-- Dual Live Simulators: Google Search + Social Share -->
+                <div class="preview-columns-grid">
+                    <!-- Column 1: Google SERP Simulator -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <strong style="font-size: 0.9rem; color: #ffffff;">پیش‌نمایش زنده در نتایج جستجوی گوگل</strong>
                         </div>
-                        <div id="googlePreviewTitle" class="serp-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
-                        <div id="googlePreviewDesc" class="serp-description">دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز.</div>
+                        <div class="google-serp-preview">
+                            <div class="serp-url-row">
+                                <img id="serpLogoPreview" src="/logo.webp" alt="لوگو" class="serp-favicon-img">
+                                <div class="serp-site-info">
+                                    <span class="serp-site-name">دفتر وکالت محمدحسن کیان‌ارثی</span>
+                                    <span class="serp-site-url">https://vakilkianersi.ir</span>
+                                </div>
+                            </div>
+                            <div id="googlePreviewTitle" class="serp-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
+                            <div id="googlePreviewDesc" class="serp-description">دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری.</div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Messenger / Social Share Card (Telegram / Eitaa / Bale / WhatsApp) -->
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                            <strong style="font-size: 0.9rem; color: #ffffff;">پیش‌نمایش کارت اشتراک لینک در پیام‌رسان‌ها</strong>
+                        </div>
+                        <div class="messenger-preview-container">
+                            <div class="messenger-chat-bubble">
+                                <span class="messenger-link-header">https://vakilkianersi.ir/</span>
+                                <div class="messenger-rich-card">
+                                    <div class="messenger-site-name">دفتر وکالت محمدحسن کیان‌ارثی</div>
+                                    <div id="messengerPreviewTitle" class="messenger-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
+                                    <div id="messengerPreviewDesc" class="messenger-desc">دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری.</div>
+                                    <div class="messenger-image-wrapper">
+                                        <span class="messenger-zoom-badge">
+                                            <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                                        </span>
+                                        <img id="messengerPreviewImage" src="/preview.webp" alt="تصویر پیش‌نمایش اشتراک‌گذاری">
+                                    </div>
+                                </div>
+                                <div class="messenger-meta-footer">
+                                    <span>۱۹:۱۴</span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/><polyline points="24 10 17 17 14 14"/></svg>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1736,19 +1949,37 @@ $is_auth = is_authenticated();
                 document.getElementById('seoKeywords').value = gen.seoKeywords || '';
             }
 
-            // Image Previews
-            const cacheBuster = '?v=' + Date.now();
-            if (document.getElementById('lawyerImagePreview')) {
-                document.getElementById('lawyerImagePreview').src = (gen.lawyerImage || './images/lawyer-portrait.webp') + cacheBuster;
-            }
-            if (document.getElementById('logoImagePreview')) {
-                document.getElementById('logoImagePreview').src = (gen.logoImage || './logo.webp') + cacheBuster;
-            }
-            if (document.getElementById('seoImagePreview')) {
-                document.getElementById('seoImagePreview').src = (gen.seoImage || './preview.webp') + cacheBuster;
+            // Image Previews with Absolute Asset Resolution
+            function resolveAssetUrl(url, fallback) {
+                if (!url) return fallback;
+                let u = String(url).trim();
+                if (u.startsWith('./')) u = '/' + u.slice(2);
+                else if (!u.startsWith('/') && !u.startsWith('http')) u = '/' + u;
+                return u;
             }
 
-            updateGooglePreview();
+            const cacheBuster = '?v=' + Date.now();
+            const lawyerUrl = resolveAssetUrl(gen.lawyerImage, '/images/lawyer-portrait.webp');
+            const logoUrl = resolveAssetUrl(gen.logoImage, '/logo.webp');
+            const seoUrl = resolveAssetUrl(gen.seoImage, '/preview.webp');
+
+            if (document.getElementById('lawyerImagePreview')) {
+                document.getElementById('lawyerImagePreview').src = lawyerUrl + cacheBuster;
+            }
+            if (document.getElementById('logoImagePreview')) {
+                document.getElementById('logoImagePreview').src = logoUrl + cacheBuster;
+            }
+            if (document.getElementById('seoImagePreview')) {
+                document.getElementById('seoImagePreview').src = seoUrl + cacheBuster;
+            }
+            if (document.getElementById('serpLogoPreview')) {
+                document.getElementById('serpLogoPreview').src = logoUrl + cacheBuster;
+            }
+            if (document.getElementById('messengerPreviewImage')) {
+                document.getElementById('messengerPreviewImage').src = (seoUrl || lawyerUrl) + cacheBuster;
+            }
+
+            updateSeoPreviews();
         }
 
         // Save General Form
@@ -1798,36 +2029,53 @@ $is_auth = is_authenticated();
         }
 
         /* ─── SEO & IMAGE MANAGEMENT FUNCTIONS ─── */
-        function updateGooglePreview() {
+        function updateSeoPreviews() {
             const titleEl = document.getElementById('seoTitle');
             const descEl = document.getElementById('seoDescription');
             const previewTitle = document.getElementById('googlePreviewTitle');
             const previewDesc = document.getElementById('googlePreviewDesc');
+            const msgTitle = document.getElementById('messengerPreviewTitle');
+            const msgDesc = document.getElementById('messengerPreviewDesc');
             const titleCount = document.getElementById('seoTitleCount');
             const descCount = document.getElementById('seoDescCount');
-            const descBox = document.getElementById('seoDescCounterBox');
 
             if (!titleEl || !descEl) return;
 
             const titleVal = titleEl.value.trim() || 'محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک';
-            const descVal = descEl.value.trim() || 'دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز.';
+            const descVal = descEl.value.trim() || 'دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری.';
 
             if (previewTitle) previewTitle.textContent = titleVal;
             if (previewDesc) previewDesc.textContent = descVal;
+            if (msgTitle) msgTitle.textContent = titleVal;
+            if (msgDesc) msgDesc.textContent = descVal;
 
-            if (titleCount) titleCount.textContent = titleEl.value.length + ' کاراکتر';
-            if (descCount) descCount.textContent = descEl.value.length + ' کاراکتر';
-
-            if (descBox) {
-                const len = descEl.value.length;
-                if (len >= 120 && len <= 165) {
-                    descBox.className = 'char-counter good';
-                } else if (len > 0) {
-                    descBox.className = 'char-counter warn';
+            const tLen = titleEl.value.length;
+            if (titleCount) {
+                titleCount.textContent = tLen + ' کاراکتر';
+                if (tLen >= 45 && tLen <= 65) {
+                    titleCount.className = 'seo-badge good';
+                } else if (tLen > 65) {
+                    titleCount.className = 'seo-badge warn';
                 } else {
-                    descBox.className = 'char-counter';
+                    titleCount.className = 'seo-badge';
                 }
             }
+
+            const dLen = descEl.value.length;
+            if (descCount) {
+                descCount.textContent = dLen + ' کاراکتر';
+                if (dLen >= 120 && dLen <= 165) {
+                    descCount.className = 'seo-badge good';
+                } else if (dLen > 165) {
+                    descCount.className = 'seo-badge warn';
+                } else {
+                    descCount.className = 'seo-badge';
+                }
+            }
+        }
+
+        function updateGooglePreview() {
+            updateSeoPreviews();
         }
 
         async function saveSeoData() {
@@ -1890,6 +2138,16 @@ $is_auth = is_authenticated();
                 const img = document.getElementById(previewMap[type]);
                 if (img) img.src = e.target.result;
 
+                // Sync live simulators immediately
+                if (type === 'logo') {
+                    const serpLogo = document.getElementById('serpLogoPreview');
+                    if (serpLogo) serpLogo.src = e.target.result;
+                }
+                if (type === 'seo' || type === 'lawyer') {
+                    const msgImg = document.getElementById('messengerPreviewImage');
+                    if (msgImg) msgImg.src = e.target.result;
+                }
+
                 const btnMap = {
                     lawyer: 'btnUploadLawyer',
                     logo: 'btnUploadLogo',
@@ -1944,8 +2202,24 @@ $is_auth = is_authenticated();
                                 logo: 'logoImagePreview',
                                 seo: 'seoImagePreview'
                             };
+                            let finalUrl = result.url;
+                            if (finalUrl.startsWith('./')) finalUrl = '/' + finalUrl.slice(2);
+                            else if (!finalUrl.startsWith('/') && !finalUrl.startsWith('http')) finalUrl = '/' + finalUrl;
+
+                            const freshUrl = finalUrl + '?t=' + Date.now();
                             const img = document.getElementById(previewMap[type]);
-                            if (img) img.src = result.url + '?t=' + Date.now();
+                            if (img) img.src = freshUrl;
+
+                            // Sync simulators
+                            if (type === 'logo') {
+                                const serpLogo = document.getElementById('serpLogoPreview');
+                                if (serpLogo) serpLogo.src = freshUrl;
+                            }
+                            if (type === 'seo' || type === 'lawyer') {
+                                const msgImg = document.getElementById('messengerPreviewImage');
+                                if (msgImg) msgImg.src = freshUrl;
+                            }
+
                             if (currentSiteData && currentSiteData.general) {
                                 currentSiteData.general[result.field] = result.url;
                             }
@@ -1994,8 +2268,23 @@ $is_auth = is_authenticated();
                         logo: 'logoImagePreview',
                         seo: 'seoImagePreview'
                     };
+                    let finalUrl = result.url;
+                    if (finalUrl.startsWith('./')) finalUrl = '/' + finalUrl.slice(2);
+                    else if (!finalUrl.startsWith('/') && !finalUrl.startsWith('http')) finalUrl = '/' + finalUrl;
+
+                    const freshUrl = finalUrl + '?t=' + Date.now();
                     const img = document.getElementById(previewMap[type]);
-                    if (img) img.src = result.url + '?t=' + Date.now();
+                    if (img) img.src = freshUrl;
+
+                    if (type === 'logo') {
+                        const serpLogo = document.getElementById('serpLogoPreview');
+                        if (serpLogo) serpLogo.src = freshUrl;
+                    }
+                    if (type === 'seo' || type === 'lawyer') {
+                        const msgImg = document.getElementById('messengerPreviewImage');
+                        if (msgImg) msgImg.src = freshUrl;
+                    }
+
                     const fieldMap = {
                         lawyer: 'lawyerImage',
                         logo: 'logoImage',
