@@ -975,59 +975,67 @@ $is_auth = is_authenticated();
             border-radius: 10px;
             padding: 1.25rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .messenger-chat-bubble {
             background: #182533;
-            border-radius: 10px 10px 2px 10px;
-            padding: 0.85rem 1rem 0.65rem;
+            border-radius: 12px;
+            padding: 10px 12px 10px;
             color: #ffffff;
             position: relative;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
         }
         .messenger-link-header {
-            color: #64b5f6;
-            font-size: 0.825rem;
+            color: #5eb5f7;
+            font-size: 0.85rem;
             direction: ltr;
             text-align: left;
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.5rem;
             display: block;
             text-decoration: underline;
         }
         .messenger-rich-card {
-            border-right: 3px solid #64b5f6;
-            background: rgba(0, 0, 0, 0.22);
-            border-radius: 6px;
-            padding: 0.75rem;
-            margin-bottom: 0.5rem;
+            border-left: 2.5px solid #5eb5f7;
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 4px;
+            padding: 8px 10px 8px 12px;
+            position: relative;
         }
         .messenger-site-name {
-            font-size: 0.85rem;
+            font-size: 0.825rem;
+            font-weight: 600;
+            color: #70b4f0;
+            margin-bottom: 0.25rem;
+            text-align: right;
+        }
+        .messenger-title {
+            font-size: 0.925rem;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 0.35rem;
-        }
-        .messenger-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #64b5f6;
-            margin-bottom: 0.45rem;
-            line-height: 1.45;
+            line-height: 1.4;
             word-break: break-word;
+            text-align: right;
         }
         .messenger-desc {
-            font-size: 0.825rem;
-            color: #cfd8dc;
-            line-height: 1.55;
-            margin-bottom: 0.75rem;
+            font-size: 0.8rem;
+            color: #d5dbe0;
+            line-height: 1.5;
+            margin-bottom: 0.6rem;
             word-break: break-word;
+            text-align: right;
         }
         .messenger-image-wrapper {
             position: relative;
             width: 100%;
-            height: 200px;
-            border-radius: 8px;
+            height: 230px;
+            border-radius: 6px;
             overflow: hidden;
             background: #090d16;
-            margin-top: 0.5rem;
             border: 1px solid rgba(255,255,255,0.08);
         }
         .messenger-image-wrapper img {
@@ -1038,9 +1046,9 @@ $is_auth = is_authenticated();
         }
         .messenger-zoom-badge {
             position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            background: rgba(0, 0, 0, 0.65);
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.55);
             color: #ffffff;
             width: 26px;
             height: 26px;
@@ -1048,15 +1056,39 @@ $is_auth = is_authenticated();
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(2px);
+            z-index: 2;
         }
-        .messenger-meta-footer {
-            display: flex;
-            justify-content: flex-end;
+        .messenger-zoom-badge svg {
+            width: 14px !important;
+            height: 14px !important;
+            display: block !important;
+        }
+        .messenger-time-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(3px);
+            border-radius: 12px;
+            padding: 2px 7px;
+            display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: 0.7rem;
-            color: #78909c;
-            margin-top: 0.4rem;
+            gap: 4px;
+            font-size: 11px;
+            color: #ffffff;
+            direction: ltr;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .tg-check-icon {
+            width: 15px !important;
+            height: 11px !important;
+            max-width: 15px !important;
+            max-height: 11px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
         }
 
         /* ─── Refined SEO Input Groups ─── */
@@ -1740,15 +1772,18 @@ $is_auth = is_authenticated();
                                     <div id="messengerPreviewTitle" class="messenger-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
                                     <div id="messengerPreviewDesc" class="messenger-desc">دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری.</div>
                                     <div class="messenger-image-wrapper">
-                                        <span class="messenger-zoom-badge">
-                                            <svg style="width: 14px; height: 14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+                                        <span class="messenger-zoom-badge" title="بزرگنمایی">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
                                         </span>
                                         <img id="messengerPreviewImage" src="/preview.webp" alt="تصویر پیش‌نمایش اشتراک‌گذاری">
+                                        <div class="messenger-time-badge">
+                                            <span>7:14 PM</span>
+                                            <svg class="tg-check-icon" viewBox="0 0 16 11" fill="none">
+                                                <path d="M1.5 6L4.5 9L11 2" stroke="#5eb5f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M6 6L9 9L15 2" stroke="#5eb5f7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="messenger-meta-footer">
-                                    <span>۱۹:۱۴</span>
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/><polyline points="24 10 17 17 14 14"/></svg>
                                 </div>
                             </div>
                         </div>
