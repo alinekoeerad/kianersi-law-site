@@ -7,6 +7,20 @@ const toPersianDigits = (n: number | string) => {
   return n.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)]);
 };
 
+// Count keyword occurrences in text
+const countOccurrences = (text: string, term: string) => {
+  if (!term.trim()) return 0;
+  const normalizedText = text.toLowerCase();
+  const normalizedTerm = term.trim().toLowerCase();
+  let count = 0;
+  let pos = 0;
+  while ((pos = normalizedText.indexOf(normalizedTerm, pos)) !== -1) {
+    count++;
+    pos += normalizedTerm.length;
+  }
+  return count;
+};
+
 export default function LawsSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'wells' | 'rivers' | 'lands'>('all');
@@ -19,6 +33,16 @@ export default function LawsSection() {
     { id: 'lands', label: 'اراضی موقوفه و آلودگی آب' }
   ];
 
+  // Quick suggestion tags for faster user discovery
+  const quickTags = [
+    'چاه فاقد پروانه',
+    'بستر و حریم',
+    'کمیسیون',
+    'کنتور هوشمند',
+    'توزیع عادلانه آب',
+    'آلودگی آب'
+  ];
+
   // Map law id to category
   const getCategoryForLaw = (id: number) => {
     if ([1, 2, 3, 5].includes(id)) return 'wells';
@@ -26,38 +50,79 @@ export default function LawsSection() {
     return 'lands';
   };
 
-  // Filtered laws
-  const filteredLaws = useMemo(() => {
-    return lawsDatabase.filter((law) => {
-      const matchesCategory = selectedCategory === 'all' || getCategoryForLaw(law.id) === selectedCategory;
-      const normalizedSearch = searchTerm.trim().toLowerCase();
-      const matchesSearch = !normalizedSearch || 
-        law.title.toLowerCase().includes(normalizedSearch) || 
-        law.content.toLowerCase().includes(normalizedSearch);
+  // Category counts
+  const categoryCounts = useMemo(() => {
+    return {
+      all: lawsDatabase.length,
+      wells: lawsDatabase.filter((l) => [1, 2, 3, 5].includes(l.id)).length,
+      rivers: lawsDatabase.filter((l) => [4, 8].includes(l.id)).length,
+      lands: lawsDatabase.filter((l) => ![1, 2, 3, 5, 4, 8].includes(l.id)).length
+    };
+  }, []);
 
-      return matchesCategory && matchesSearch;
-    });
+  // Filtered laws with match counts
+  const filteredLaws = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+
+    return lawsDatabase
+      .map((law) => {
+        const matchesCategory = selectedCategory === 'all' || getCategoryForLaw(law.id) === selectedCategory;
+        const titleMatches = countOccurrences(law.title, normalizedSearch);
+        const contentMatches = countOccurrences(law.content, normalizedSearch);
+        const totalMatches = titleMatches + contentMatches;
+        const matchesSearch = !normalizedSearch || totalMatches > 0;
+
+        return {
+          ...law,
+          totalMatches,
+          isMatch: matchesCategory && matchesSearch
+        };
+      })
+      .filter((law) => law.isMatch);
   }, [searchTerm, selectedCategory]);
-  
-  // Helper function to format legal text line by line with advanced regex
-  const formatLegalText = (text: string) => {
+
+  // Helper function to highlight the searched keyword
+  const highlightSearchTerm = (text: string, term: string) => {
+    if (!term.trim()) return toPersianDigits(text);
+    const escaped = term.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escaped})`, 'gi');
+    const parts = text.split(regex);
+    if (parts.length === 1) return toPersianDigits(text);
+
+    return parts.map((part, i) => {
+      if (i % 2 === 1) {
+        return (
+          <mark
+            key={i}
+            className="bg-cyan-500/30 text-cyan-100 font-bold px-1 py-0.5 rounded-sm border-b-2 border-cyan-400 mx-0.5"
+          >
+            {toPersianDigits(part)}
+          </mark>
+        );
+      }
+      return toPersianDigits(part);
+    });
+  };
+
+  // Helper function to format legal text line by line with advanced regex + search highlighting
+  const formatLegalText = (text: string, term: string) => {
     if (!text) return null;
-    
+
     return text.split('\n').map((line, lineIndex, array) => {
       const regex = /((?:ماده\s+واحده|(?:ماده|تبصره)\s*[0-9۰-۹]+|(?:فصل|بخش)\s+(?:اول|دوم|سوم|چهارم|پنجم|ششم|هفتم|هشتم|نهم|دهم|یازدهم|دوازدهم|[0-9۰-۹]+))\s*[-–ـ_]?|^\s*(?:الف|ب|پ|ت|ث|ج|چ|ح|خ|د|ذ|ر|ز|ژ|س|ش|ص|ض|ط|ظ|ع|غ|ف|ق|ک|گ|ل|م|ن|و|ه|ی|[0-9۰-۹]+)\s*[-–ـ_)]|^\s*[-–ـ_]\s*)/g;
       const parts = line.split(regex);
-      
+
       return (
         <span key={lineIndex}>
           {parts.map((part, index) => {
             if (index % 2 === 1) {
               return (
                 <span key={index} className="legal-highlight">
-                  {toPersianDigits(part)}
+                  {highlightSearchTerm(part, term)}
                 </span>
               );
             }
-            return <span key={index}>{toPersianDigits(part)}</span>;
+            return <span key={index}>{highlightSearchTerm(part, term)}</span>;
           })}
           {lineIndex < array.length - 1 ? '\n' : ''}
         </span>
@@ -83,70 +148,158 @@ export default function LawsSection() {
           </div>
         </AnimSection>
 
-        {/* Search & Filter Bar */}
+        {/* Enhanced High-End Search & Filter Card */}
         <AnimSection delay={100}>
-          <div className="p-4 mb-6 rounded-sm space-y-4" style={{ backgroundColor: 'rgba(10, 30, 40, 0.8)', border: '1px solid rgba(14,116,144,0.3)' }}>
-            
-            {/* Search Input */}
-            <div className="relative">
-              <span className="absolute right-3.5 top-2.5 text-gray-400">🔍</span>
-              <input
-                type="text"
-                placeholder="جستجو در متن یا عنوان قوانین (مثلاً: چاه کشاورزی، حریم رودخانه، کمیسیون، فرم ۵، تبصره ۱)..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pr-10 pl-4 py-2.5 text-xs md:text-sm rounded-sm bg-slate-900 border border-cyan-900/60 text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500"
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm('')}
-                  className="absolute left-3 top-2.5 text-xs text-gray-400 hover:text-white"
-                >
-                  ✕ پاک کردن
-                </button>
-              )}
+          <div 
+            className="p-6 mb-8 rounded-sm space-y-5 transition-all"
+            style={{ 
+              backgroundColor: 'rgba(10, 30, 40, 0.85)', 
+              border: '1px solid rgba(14, 116, 144, 0.35)',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.3)'
+            }}
+          >
+            {/* Search Input Box */}
+            <div>
+              <label className="block text-xs font-semibold mb-2" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}>
+                جستجو در متن مواد، تبصره‌ها و عناوین قوانین:
+              </label>
+              
+              <div className="relative flex items-center">
+                {/* Clean SVG Search Icon */}
+                <div className="absolute right-3.5 flex items-center pointer-events-none text-cyan-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="عبارت مورد نظر خود را تایپ کنید (مثلاً: چاه فاقد پروانه، حریم رودخانه، کنتور هوشمند، کمیسیون)..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pr-11 pl-11 py-3 text-xs md:text-sm rounded-sm transition-all focus:outline-none placeholder-gray-400"
+                  style={{
+                    backgroundColor: 'rgba(2, 15, 26, 0.75)',
+                    border: '1px solid rgba(14, 116, 144, 0.45)',
+                    color: '#ffffff',
+                    fontFamily: 'Noto Sans Arabic'
+                  }}
+                />
+
+                {/* Clean SVG Clear Button */}
+                {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchTerm('')}
+                    className="absolute left-3 p-1.5 rounded-full text-gray-400 hover:text-white hover:bg-cyan-900/40 transition-colors"
+                    title="پاک کردن جستجو"
+                    aria-label="پاک کردن جستجو"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* Category Filter Pills & Toggle Buttons */}
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-              <div className="flex flex-wrap items-center gap-1.5">
-                {categories.map((cat) => (
+            {/* Quick Keyword Suggestion Tags */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className="text-[11px] text-gray-400" style={{ fontFamily: 'Noto Sans Arabic' }}>
+                جستجوهای متداول:
+              </span>
+              {quickTags.map((tag) => {
+                const isActive = searchTerm === tag;
+                return (
                   <button
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat.id as any)}
-                    className="text-xs px-3 py-1.5 rounded-sm transition-all duration-200"
+                    key={tag}
+                    type="button"
+                    onClick={() => setSearchTerm(isActive ? '' : tag)}
+                    className="text-[11px] px-2.5 py-1 rounded-sm transition-all"
                     style={{
-                      backgroundColor: selectedCategory === cat.id ? '#0e7490' : 'rgba(2, 15, 26, 0.6)',
-                      color: selectedCategory === cat.id ? '#ffffff' : '#cbd5e1',
-                      border: '1px solid rgba(14, 116, 144, 0.3)'
+                      backgroundColor: isActive ? 'rgba(14, 116, 144, 0.35)' : 'rgba(2, 15, 26, 0.6)',
+                      color: isActive ? '#7dd3fc' : '#cbd5e1',
+                      border: isActive ? '1px solid #0e7490' : '1px solid rgba(14, 116, 144, 0.25)',
+                      fontFamily: 'Noto Sans Arabic'
                     }}
                   >
-                    {cat.label}
+                    {tag} {isActive && '✕'}
                   </button>
-                ))}
-              </div>
-
-              {/* Expand / Collapse All */}
-              <div className="flex items-center gap-2 text-xs">
-                <button
-                  onClick={() => setOpenAll(true)}
-                  className="text-cyan-400 hover:text-cyan-300 underline"
-                >
-                  باز کردن همه
-                </button>
-                <span className="text-gray-600">|</span>
-                <button
-                  onClick={() => setOpenAll(false)}
-                  className="text-cyan-400 hover:text-cyan-300 underline"
-                >
-                  بستن همه
-                </button>
-              </div>
+                );
+              })}
             </div>
 
-            {/* Result count with Persian Digits */}
-            <div className="text-xs text-gray-400 pt-1 border-t border-cyan-950">
-              نمایش <strong className="text-cyan-300 font-bold">{toPersianDigits(filteredLaws.length)}</strong> عنوان قانون از مجموع <strong className="text-cyan-300 font-bold">{toPersianDigits(lawsDatabase.length)}</strong> عنوان
+            {/* Editorial Category Tabs & Expand/Collapse Controls */}
+            <div className="pt-3 border-t flex flex-wrap items-center justify-between gap-4" style={{ borderColor: 'rgba(14, 116, 144, 0.2)' }}>
+              
+              {/* Category Tabs */}
+              <div className="flex flex-wrap items-center gap-2">
+                {categories.map((cat) => {
+                  const isSelected = selectedCategory === cat.id;
+                  const count = categoryCounts[cat.id as keyof typeof categoryCounts];
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat.id as any)}
+                      className="text-xs py-1.5 px-3 rounded-sm transition-all duration-200 flex items-center gap-1.5"
+                      style={{
+                        backgroundColor: isSelected ? 'rgba(14, 116, 144, 0.25)' : 'transparent',
+                        color: isSelected ? '#ffffff' : '#94a3b8',
+                        borderBottom: isSelected ? '2px solid #0e7490' : '2px solid transparent',
+                        fontWeight: isSelected ? 600 : 400,
+                        fontFamily: 'Noto Sans Arabic'
+                      }}
+                    >
+                      <span>{cat.label}</span>
+                      <span 
+                        className="text-[10px] px-1.5 py-0.2 rounded-full"
+                        style={{
+                          backgroundColor: isSelected ? '#0e7490' : 'rgba(255, 255, 255, 0.08)',
+                          color: isSelected ? '#ffffff' : '#94a3b8'
+                        }}
+                      >
+                        {toPersianDigits(count)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Expand / Collapse Controls */}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setOpenAll(true)}
+                  className="text-xs px-2.5 py-1 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                  style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
+                >
+                  <span>⤢</span>
+                  <span>باز کردن همه</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOpenAll(false)}
+                  className="text-xs px-2.5 py-1 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                  style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
+                >
+                  <span>⤡</span>
+                  <span>بستن همه</span>
+                </button>
+              </div>
+
+            </div>
+
+            {/* Results Counter Bar */}
+            <div className="pt-2 flex items-center justify-between text-xs text-gray-400">
+              <p>
+                نمایش <strong className="text-cyan-300 font-bold">{toPersianDigits(filteredLaws.length)}</strong> قانون از مجموع <strong className="text-cyan-300 font-bold">{toPersianDigits(lawsDatabase.length)}</strong> قانون
+              </p>
+              {searchTerm && (
+                <p className="text-cyan-300 font-medium">
+                  فیلتر بر اساس عبارت «{searchTerm}»
+                </p>
+              )}
             </div>
 
           </div>
@@ -155,41 +308,66 @@ export default function LawsSection() {
         {/* Laws Accordion List */}
         <AnimSection delay={200}>
           {filteredLaws.length === 0 ? (
-            <div className="p-8 text-center rounded-sm bg-slate-900/50 border border-cyan-900/30">
-              <p className="text-sm text-gray-300 mb-2">موردی متناسب با عبارت جستجوی «{searchTerm}» یافت نشد.</p>
+            <div className="p-10 text-center rounded-sm bg-slate-900/60 border border-cyan-900/40 space-y-3">
+              <span className="text-3xl inline-block text-cyan-400">⚖️</span>
+              <p className="text-sm font-semibold text-gray-200">
+                موردی متناسب با عبارت جستجوی «{searchTerm}» یافت نشد.
+              </p>
+              <p className="text-xs text-gray-400 max-w-md mx-auto leading-6">
+                پیشنهاد می‌شود املای واژه را بررسی کرده یا از عبارات کلی‌تر نظیر «چاه»، «حریم»، «پروانه» یا «تأسیسات» استفاده کنید.
+              </p>
               <button 
+                type="button"
                 onClick={() => { setSearchTerm(''); setSelectedCategory('all'); }}
-                className="text-xs text-cyan-400 hover:underline"
+                className="mt-2 text-xs px-4 py-2 rounded-sm font-semibold transition-all hover:brightness-110"
+                style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
               >
-                نمایش همه قوانین
+                پاک کردن فیلترها و مشاهده همه قوانین
               </button>
             </div>
           ) : (
             <div className="space-y-4">
-              {filteredLaws.map((law) => (
-                <details 
-                  key={`${law.id}-${openAll}`} 
-                  open={openAll === true ? true : openAll === false ? false : undefined}
-                  className="group p-5 rounded-sm transition-colors duration-300 hover:bg-cyan-950/40" 
-                  style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}
-                >
-                  
-                  <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-sm outline-none" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc' }}>
-                    <span className="group-hover:text-white transition-colors duration-300 flex items-center gap-2">
-                      <span className="text-xs px-2 py-0.5 rounded-sm bg-cyan-900/50 text-cyan-300">
-                        قانون شماره {toPersianDigits(law.id)}
-                      </span>
-                      <span>{law.title}</span>
-                    </span>
-                    <span className="text-cyan-400 group-open:rotate-180 transition-transform duration-300">▼</span>
-                  </summary>
-                  
-                  <div className="mt-4 pt-4 legal-article" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', whiteSpace: 'pre-wrap' }}>
-                    {formatLegalText(law.content)}
-                  </div>
-                  
-                </details>
-              ))}
+              {filteredLaws.map((law) => {
+                const isAutoOpen = searchTerm.trim().length > 0;
+                const isOpen = openAll === true ? true : openAll === false ? false : isAutoOpen ? true : undefined;
+
+                return (
+                  <details 
+                    key={`${law.id}-${openAll}-${searchTerm}`} 
+                    open={isOpen}
+                    className="group p-5 rounded-sm transition-colors duration-300 hover:bg-cyan-950/40" 
+                    style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}
+                  >
+                    
+                    <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-sm outline-none gap-3" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc' }}>
+                      <div className="flex items-center gap-2.5 flex-wrap flex-1">
+                        <span className="text-xs px-2 py-0.5 rounded-sm bg-cyan-950 text-cyan-300 border border-cyan-800/50">
+                          قانون شماره {toPersianDigits(law.id)}
+                        </span>
+                        <span className="group-hover:text-white transition-colors duration-300 text-sm md:text-base">
+                          {highlightSearchTerm(law.title, searchTerm)}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        {searchTerm.trim() && law.totalMatches > 0 && (
+                          <span className="text-xs px-2.5 py-0.5 rounded-sm bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 font-sans">
+                            {toPersianDigits(law.totalMatches)} مورد منطبق
+                          </span>
+                        )}
+                        <span className="text-cyan-400 group-open:rotate-180 transition-transform duration-300 text-xs">
+                          ▼
+                        </span>
+                      </div>
+                    </summary>
+                    
+                    <div className="mt-4 pt-4 legal-article" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', whiteSpace: 'pre-wrap' }}>
+                      {formatLegalText(law.content, searchTerm)}
+                    </div>
+                    
+                  </details>
+                );
+              })}
             </div>
           )}
         </AnimSection>
