@@ -22,8 +22,8 @@ export const SectionLabel = ({ children, className = '' }: { children: React.Rea
 );
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
-export const StatCard = ({ number, label, suffix = '' }: { number: string; label: string; suffix?: string }) => (
-  <div className="text-center py-3 sm:py-6 px-1.5 sm:px-4" style={{ borderRight: '1px solid rgba(14,116,144,0.3)' }}>
+export const StatCard = ({ number, label, suffix = '', hasBorderLeft = true }: { number: string; label: string; suffix?: string; hasBorderLeft?: boolean }) => (
+  <div className="text-center py-3 sm:py-6 px-1.5 sm:px-4" style={{ borderLeft: hasBorderLeft ? '1px solid rgba(14,116,144,0.35)' : 'none' }}>
     <div className="stat-number text-3xl sm:text-4xl md:text-5xl mb-1 sm:mb-2">{number}<span className="text-xl sm:text-2xl">{suffix}</span></div>
     <div className="text-[10px] sm:text-xs tracking-tight sm:tracking-widest section-label">{label}</div>
   </div>

@@ -23,7 +23,7 @@
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
     width: 100%;
   }
@@ -34,7 +34,7 @@
     direction: rtl;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
     width: 100%;
   }
@@ -294,11 +294,13 @@
 
 /* Nav bar */
 .nav-sticky {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: rgba(10, 30, 40, 0.85);
+  background-color: rgba(10, 30, 40, 0.95);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 2px solid var(--color-gold);
 }
 

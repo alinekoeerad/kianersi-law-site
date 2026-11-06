@@ -62,78 +62,80 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <nav className="nav-sticky">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          
-          {/* Logo and Masthead Title Container */}
-          <a href="#hero" className="flex items-center gap-3 masthead-title text-xl font-bold transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
-            <img 
-              src="./logo.webp" 
-              alt="نشان رسمی دفتر وکالت محمدحسن کیان‌ارثی" 
-              title="محمدحسن کیان‌ارثی وکیل کرج"
-              className="w-12 h-12 md:w-14 md:h-14 object-contain" 
-            />
-            <span>کیان‌ارثی</span>
-          </a>
-
-          {/* Desktop Menu Links with Clean Editorial Active Underline */}
-          <div className="hidden md:flex items-center gap-7">
-            {menuItems.map(item => {
-              const isActive = activeSection === item.id;
-              return (
-                <a 
-                  key={item.href} 
-                  href={item.href} 
-                  className="text-sm py-2 relative transition-colors duration-200"
-                  style={{ 
-                    color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.65)',
-                    fontFamily: 'Noto Sans Arabic', 
-                    letterSpacing: '0.03em',
-                    fontWeight: isActive ? 600 : 400
-                  }}
-                >
-                  <span className="hover:text-white transition-colors">{item.label}</span>
-                  {/* Clean 2px Editorial Line without glows */}
-                  <span 
-                    className={`absolute bottom-0 right-0 left-0 h-[2px] transition-all duration-300 ${
-                      isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-                    }`}
-                    style={{ backgroundColor: '#0e7490' }}
-                  />
-                </a>
-              );
-            })}
-          </div>
-
-          {/* Desktop Action Button */}
-          <a href="tel:+989127698864" className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
-            style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}>
-            <span>📞</span>
-            <span>مشاوره تلفنی (۰۹۱۲۷۶۹۸۸۶۴)</span>
-          </a>
-
-          {/* Mobile Right Controls: Call CTA & Hamburger Toggle */}
-          <div className="flex md:hidden items-center gap-2">
-            <a 
-              href="tel:+989127698864" 
-              className="text-xs px-3 py-1.5 rounded-sm flex items-center gap-1.5 font-semibold transition-all"
-              style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
-              aria-label="تماس تلفنی"
-            >
-              <span>📞</span>
-              <span>تماس</span>
+      {/* Main Navigation Header */}
+      <header className="nav-sticky">
+        <nav>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+            
+            {/* Logo and Masthead Title Container */}
+            <a href="#hero" className="flex items-center gap-3 masthead-title text-xl font-bold transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
+              <img 
+                src="./logo.webp" 
+                alt="نشان رسمی دفتر وکالت محمدحسن کیان‌ارثی" 
+                title="محمدحسن کیان‌ارثی وکیل کرج"
+                className="w-12 h-12 md:w-14 md:h-14 object-contain" 
+              />
+              <span>کیان‌ارثی</span>
             </a>
 
-            <button 
-              className="text-lg px-2.5 py-1 text-cyan-400 hover:text-white border border-cyan-800/80 rounded-sm bg-slate-900/60" 
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="منوی سایت"
-            >
-              {menuOpen ? '✕' : '☰'}
-            </button>
+            {/* Desktop Menu Links with Clean Editorial Active Underline */}
+            <div className="hidden md:flex items-center gap-7">
+              {menuItems.map(item => {
+                const isActive = activeSection === item.id;
+                return (
+                  <a 
+                    key={item.href} 
+                    href={item.href} 
+                    className="text-sm py-2 relative transition-colors duration-200"
+                    style={{ 
+                      color: isActive ? '#ffffff' : 'rgba(255, 255, 255, 0.65)',
+                      fontFamily: 'Noto Sans Arabic', 
+                      letterSpacing: '0.03em',
+                      fontWeight: isActive ? 600 : 400
+                    }}
+                  >
+                    <span className="hover:text-white transition-colors">{item.label}</span>
+                    {/* Clean 2px Editorial Line without glows */}
+                    <span 
+                      className={`absolute bottom-0 right-0 left-0 h-[2px] transition-all duration-300 ${
+                        isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+                      }`}
+                      style={{ backgroundColor: '#0e7490' }}
+                    />
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Desktop Action Button */}
+            <a href="tel:+989127698864" className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
+              style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}>
+              <span>📞</span>
+              <span>مشاوره تلفنی (۰۹۱۲۷۶۹۸۸۶۴)</span>
+            </a>
+
+            {/* Mobile Right Controls: Call CTA & Hamburger Toggle */}
+            <div className="flex md:hidden items-center gap-2">
+              <a 
+                href="tel:+989127698864" 
+                className="text-xs px-3 py-1.5 rounded-sm flex items-center gap-1.5 font-semibold transition-all"
+                style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
+                aria-label="تماس تلفنی"
+              >
+                <span>📞</span>
+                <span>تماس</span>
+              </a>
+
+              <button 
+                className="text-lg px-2.5 py-1 text-cyan-400 hover:text-white border border-cyan-800/80 rounded-sm bg-slate-900/60" 
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="منوی سایت"
+              >
+                {menuOpen ? '✕' : '☰'}
+              </button>
+            </div>
           </div>
-        </div>
+        </nav>
 
         {/* Mobile Dropdown Menu with Clean Editorial Active Indicator */}
         {menuOpen && (
@@ -173,7 +175,7 @@ export default function Navbar() {
             </div>
           </div>
         )}
-      </nav>
+      </header>
     </>
   );
 }

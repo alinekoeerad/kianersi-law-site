@@ -67,9 +67,9 @@ export default function HeroSection() {
               </div>
 
               {/* Statistics cards */}
-              <div className="grid grid-cols-3 mt-6 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.3)', borderLeft: 'none', backgroundColor: 'rgba(10,30,40,0.5)' }}>
-                <StatCard number="۲۰" label="سال تجربه" suffix="+" />
-                <StatCard number="۱۳" label="سال در کمیسیون" />
+              <div className="grid grid-cols-3 mt-6 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.4)', backgroundColor: 'rgba(10,30,40,0.5)' }}>
+                <StatCard number="۲۰" label="سال تجربه" suffix="+" hasBorderLeft={true} />
+                <StatCard number="۱۳" label="سال در کمیسیون" hasBorderLeft={true} />
                 <div className="text-center py-3 sm:py-6 px-1.5 sm:px-4">
                   <div className="stat-number text-2xl sm:text-4xl md:text-5xl mb-1 sm:mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
                   <div className="text-[10px] sm:text-xs tracking-tight sm:tracking-widest section-label">حقوق بین‌الملل</div>
