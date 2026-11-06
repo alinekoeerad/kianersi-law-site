@@ -163,7 +163,10 @@ function get_auth_admins() {
 function is_using_default_password() {
     $admins = get_auth_admins();
     foreach ($admins as $a) {
-        if ($a['username'] === 'admin' && password_verify('Kianersi@1403', $a['password_hash'])) {
+        if (isset($a['password']) && $a['password'] === 'Kianersi@1403') {
+            return true;
+        }
+        if (isset($a['password_hash']) && password_verify('Kianersi@1403', $a['password_hash'])) {
             return true;
         }
     }

@@ -889,7 +889,7 @@ $is_auth = is_authenticated();
     </header>
 
     <?php if (is_using_default_password()): ?>
-    <div class="security-banner-wrap" style="max-width: 1200px; margin: 0.85rem auto 0; padding: 0 1.5rem;">
+    <div id="securityWarningBanner" class="security-banner-wrap" style="max-width: 1200px; margin: 0.85rem auto 0; padding: 0 1.5rem;">
         <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 0.6rem; color: #fca5a5; font-size: 0.825rem; line-height: 1.5;">
                 <svg class="admin-icon" style="color: #ef4444; width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -2085,6 +2085,16 @@ $is_auth = is_authenticated();
                     if (result.success) {
                         showToast('کلمه عبور با موفقیت تغییر کرد.');
                         changePasswordForm.reset();
+                        const warningBanner = document.getElementById('securityWarningBanner');
+                        if (warningBanner) {
+                            warningBanner.style.transition = 'opacity 0.4s ease, max-height 0.4s ease, margin 0.4s ease, padding 0.4s ease';
+                            warningBanner.style.opacity = '0';
+                            warningBanner.style.maxHeight = '0';
+                            warningBanner.style.overflow = 'hidden';
+                            warningBanner.style.margin = '0';
+                            warningBanner.style.padding = '0';
+                            setTimeout(() => { warningBanner.remove(); }, 400);
+                        }
                     } else {
                         showToast(result.error || 'خطا در تغییر کلمه عبور', true);
                     }

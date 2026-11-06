@@ -100,6 +100,11 @@ function isAuth(req) {
   return cookie.includes('local_admin_session=authenticated');
 }
 
+function isUsingDefaultPassword() {
+  const admins = getAdminsConfig();
+  return admins.some((a) => a.password === 'Kianersi@1403');
+}
+
 // Render admin HTML (resolving PHP blocks)
 function renderAdminHtml(auth) {
   const adminIndex = fs.existsSync(path.join(DIST_DIR, 'admin', 'index.php'))
@@ -115,6 +120,15 @@ function renderAdminHtml(auth) {
     // Show dashboard: remove login block between <?php if (!$is_auth): ?> and <?php else: ?>
     content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):[\s\S]*?<\?php\s*else:\s*\?>/i, '');
     content = content.replace(/<\?php\s*endif;\s*\?>/i, '');
+
+    // Handle security warning banner
+    if (isUsingDefaultPassword()) {
+      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):\s*\?>/i, '');
+      content = content.replace(/<\?php\s*endif;\s*\?>/i, '');
+    } else {
+      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
+    }
+
     // Init call
     content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?loadSiteData\(\);[\s\S]*?<\?php\s*endif;\s*\?>/i, 'loadSiteData();');
   } else {
