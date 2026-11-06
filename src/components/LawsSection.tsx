@@ -21,6 +21,17 @@ const countOccurrences = (text: string, term: string) => {
   return count;
 };
 
+// Map law to category intelligently (defined outside to avoid TDZ / initialization order issues)
+const getCategoryForLaw = (law: { id: number; title: string; content: string; category?: string }) => {
+  if (law.category) return law.category;
+  if ([1, 2, 3, 5].includes(law.id)) return 'wells';
+  if ([4, 8].includes(law.id)) return 'rivers';
+  const text = (law.title + ' ' + law.content).toLowerCase();
+  if (text.includes('چاه') || text.includes('قنات') || text.includes('آبخوان') || text.includes('زیرزمینی')) return 'wells';
+  if (text.includes('بستر') || text.includes('حریم') || text.includes('رودخانه') || text.includes('مسیل')) return 'rivers';
+  return 'lands';
+};
+
 export default function LawsSection() {
   const { laws, categories: customCategories } = useSiteData();
   const [searchTerm, setSearchTerm] = useState('');
@@ -64,17 +75,6 @@ export default function LawsSection() {
     'توزیع عادلانه آب',
     'آلودگی آب'
   ];
-
-  // Map law to category intelligently
-  const getCategoryForLaw = (law: { id: number; title: string; content: string; category?: string }) => {
-    if (law.category) return law.category;
-    if ([1, 2, 3, 5].includes(law.id)) return 'wells';
-    if ([4, 8].includes(law.id)) return 'rivers';
-    const text = (law.title + ' ' + law.content).toLowerCase();
-    if (text.includes('چاه') || text.includes('قنات') || text.includes('آبخوان') || text.includes('زیرزمینی')) return 'wells';
-    if (text.includes('بستر') || text.includes('حریم') || text.includes('رودخانه') || text.includes('مسیل')) return 'rivers';
-    return 'lands';
-  };
 
   const getCategoryLabel = (catId?: string) => {
     if (!catId || catId === 'all') return null;

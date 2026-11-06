@@ -9,6 +9,11 @@ $is_auth = is_authenticated();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل مدیریت اختصاصی | دفتر وکالت محمدحسن کیان‌ارثی</title>
     
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="shortcut icon" type="image/png" href="/logo.png">
+    <link rel="apple-touch-icon" href="/logo.png">
+
     <!-- Vazirmatn Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -567,6 +572,7 @@ $is_auth = is_authenticated();
     <!-- ─── LOGIN VIEW ─── -->
     <div class="login-wrap">
         <div class="login-card">
+            <img src="/logo.png" alt="لوگو دفتر وکالت کیان‌ارثی" style="width: 64px; height: 64px; object-fit: contain; margin: 0 auto 1rem; display: block; border-radius: 6px; box-shadow: 0 4px 15px rgba(14, 116, 144, 0.3);">
             <h1 class="login-title">ورود به پنل مدیریت</h1>
             <p class="login-desc">پایگاه رسمی دفتر وکالت محمدحسن کیان‌ارثی<br>جهت ورود اطلاعات کاربری خود را وارد کنید.</p>
             
@@ -596,7 +602,7 @@ $is_auth = is_authenticated();
     <!-- ─── DASHBOARD VIEW ─── -->
     <header class="admin-header">
         <a href="#" class="brand-logo">
-            <span style="color: var(--cyan-light);">⚖️</span>
+            <img src="/logo.png" alt="لوگو دفتر وکالت" style="width: 30px; height: 30px; object-fit: contain; border-radius: 4px; border: 1px solid rgba(14, 116, 144, 0.4);">
             <span>مدیریت وب‌سایت کیان‌ارثی</span>
         </a>
         <div class="header-actions">

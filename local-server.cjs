@@ -85,6 +85,7 @@ const MIME_TYPES = {
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.png': 'image/png',
+  '.ico': 'image/x-icon',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.webp': 'image/webp',
@@ -462,6 +463,17 @@ const server = http.createServer(async (req, res) => {
   }
 
   // 3. Static files
+  if (pathname === '/favicon.ico') {
+    const icoPath = fs.existsSync(path.join(DIST_DIR, 'favicon.ico'))
+      ? path.join(DIST_DIR, 'favicon.ico')
+      : path.join(DIST_DIR, 'logo.png');
+    if (fs.existsSync(icoPath)) {
+      res.setHeader('Content-Type', 'image/png');
+      res.end(fs.readFileSync(icoPath));
+      return;
+    }
+  }
+
   if (pathname === '/') pathname = '/index.html';
 
   let filePath = path.join(DIST_DIR, pathname);
