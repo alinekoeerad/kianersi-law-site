@@ -74,7 +74,7 @@ export default function Navbar() {
             {/* Logo and Masthead Title Container */}
             <a href="#hero" className="flex items-center gap-3 masthead-title text-xl font-bold transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
               <img 
-                src="./logo.webp" 
+                src={general.logoImage || "./logo.webp"} 
                 alt="نشان رسمی دفتر وکالت محمدحسن کیان‌ارثی" 
                 title="محمدحسن کیان‌ارثی وکیل کرج"
                 className="w-12 h-12 md:w-14 md:h-14 object-contain" 

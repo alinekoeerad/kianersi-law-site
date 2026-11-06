@@ -167,6 +167,32 @@ async function runTestSuite() {
     // ی) رندر صفحه پنل مدیریت (بررسی عدم وجود باگ بنر امنیتی)
     const adminPage = await request('/admin/', 'GET', null, authHeaders);
     assert(adminPage.status === 200, 'صفحه داشبورد مدیریت با موفقیت رندر می‌شود.');
+    assert(adminPage.body.includes('تصاویر و سئو'), 'تب اختصاصی مدیریت تصاویر و سئو در پنل رندر شد.');
+    assert(adminPage.body.includes('Google SERP Simulator') || adminPage.body.includes('نتایج جستجوی گوگل'), 'شبیه‌ساز پیش‌نمایش زنده در گوگل در پنل قرار دارد.');
+
+    // ک) تست ذخیره تنظیمات سئو و متاتگ‌ها
+    const seoSaveRes = await request('/admin/api.php?action=save_general', 'POST', {
+      general: {
+        seoTitle: 'محمدحسن کیان‌ارثی | وکیل پایه یک کرج | دعاوی آب و املاک',
+        seoDescription: 'دفتر وکالت تخصصی کرج در دعاوی آب، چاه کشاورزی و حریم رودخانه',
+        seoKeywords: 'وکیل کرج, وکیل آب'
+      }
+    }, authHeaders);
+    assert(seoSaveRes.status === 200 && seoSaveRes.json && seoSaveRes.json.success, 'تنظیمات متنی سئو (Title, Description, Keywords) با موفقیت ذخیره شدند.');
+
+    // ل) تست آپلود تصویر با تبدیل به WebP
+    // یک پیکسل شفاف 1x1 در فرمت WebP/PNG به صورت Base64
+    const samplePixelBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=';
+    const uploadRes = await request('/admin/api.php?action=upload_image', 'POST', {
+      type: 'lawyer',
+      image_base64: samplePixelBase64
+    }, authHeaders);
+    assert(uploadRes.status === 200 && uploadRes.json && uploadRes.json.success, 'تصویر با موفقیت آپلود و در قالب فرمت WebP ثبت گردید.');
+    assert(uploadRes.json.url && uploadRes.json.url.endsWith('.webp'), `آدرس تصویر ایجادشده به فرمت WebP اشاره دارد (${uploadRes.json.url}).`);
+
+    // م) تست بازنشانی تصویر به پیش‌فرض
+    const resetRes = await request('/admin/api.php?action=reset_image', 'POST', { type: 'lawyer' }, authHeaders);
+    assert(resetRes.status === 200 && resetRes.json && resetRes.json.success, 'تصویر به فایل پیش‌فرض اولیه با موفقیت بازنشانی شد.');
 
   } catch (err) {
     console.error('خطا در آزمون سرور:', err.message);

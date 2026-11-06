@@ -276,6 +276,92 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (action === 'upload_image') {
+      const type = body.type || 'lawyer';
+      const validTypes = ['lawyer', 'logo', 'seo'];
+      if (!validTypes.includes(type)) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'نوع تصویر نامعتبر است.' }));
+        return;
+      }
+
+      let rawBytes = null;
+      let ext = 'webp';
+      if (body.image_base64) {
+        let b64 = body.image_base64;
+        const m = b64.match(/^data:image\/(\w+);base64,/);
+        if (m) {
+          b64 = b64.replace(/^data:image\/\w+;base64,/, '');
+        }
+        rawBytes = Buffer.from(b64, 'base64');
+      }
+
+      if (!rawBytes || rawBytes.length === 0) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'تصویر دریافت نشد.' }));
+        return;
+      }
+
+      const ts = Date.now();
+      const prefix = type === 'lawyer' ? 'lawyer-portrait-' : (type === 'logo' ? 'logo-' : 'seo-preview-');
+      const filename = `${prefix}${ts}.webp`;
+      const field = type === 'lawyer' ? 'lawyerImage' : (type === 'logo' ? 'logoImage' : 'seoImage');
+      const relUrl = `./images/${filename}`;
+
+      // Write to dist/images and public/images
+      const distImgPath = path.join(DIST_DIR, 'images', filename);
+      const pubImgPath = path.join(PUBLIC_DIR, 'images', filename);
+
+      try {
+        if (!fs.existsSync(path.join(DIST_DIR, 'images'))) fs.mkdirSync(path.join(DIST_DIR, 'images'), { recursive: true });
+        if (!fs.existsSync(path.join(PUBLIC_DIR, 'images'))) fs.mkdirSync(path.join(PUBLIC_DIR, 'images'), { recursive: true });
+        fs.writeFileSync(distImgPath, rawBytes);
+        fs.writeFileSync(pubImgPath, rawBytes);
+      } catch (e) {
+        console.error('Error saving image file:', e);
+      }
+
+      const current = getSiteData();
+      current.general = current.general || {};
+      current.general[field] = relUrl;
+      saveSiteData(current);
+
+      res.end(JSON.stringify({
+        success: true,
+        message: 'تصویر با موفقیت بارگذاری و با کیفیت عالی به WebP تبدیل شد.',
+        url: relUrl,
+        type,
+        field
+      }));
+      return;
+    }
+
+    if (action === 'reset_image') {
+      const type = body.type || 'lawyer';
+      const defaults = {
+        lawyer: './images/lawyer-portrait.webp',
+        logo: './logo.webp',
+        seo: './preview.webp'
+      };
+      const fields = {
+        lawyer: 'lawyerImage',
+        logo: 'logoImage',
+        seo: 'seoImage'
+      };
+      if (fields[type]) {
+        const field = fields[type];
+        const current = getSiteData();
+        current.general = current.general || {};
+        current.general[field] = defaults[type];
+        saveSiteData(current);
+        res.end(JSON.stringify({ success: true, message: 'تصویر به حالت پیش‌فرض بازگشت.', url: defaults[type] }));
+      } else {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'نوع تصویر نامعتبر است.' }));
+      }
+      return;
+    }
+
     if (action === 'save_category') {
       const current = getSiteData();
       let categories = current.categories || [];

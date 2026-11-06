@@ -20,6 +20,12 @@ export interface GeneralData {
   baleUrl: string;
   rubika: string;
   rubikaUrl: string;
+  lawyerImage?: string;
+  logoImage?: string;
+  seoImage?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoKeywords?: string;
 }
 
 export interface LawCategory {
@@ -52,7 +58,13 @@ export const defaultSiteData: SiteData = {
     bale: '@Mohamadhasankianersi',
     baleUrl: 'https://ble.ir/Mohamadhasankianersi',
     rubika: '@Mka12345666',
-    rubikaUrl: 'https://rubika.ir/Mka12345666'
+    rubikaUrl: 'https://rubika.ir/Mka12345666',
+    lawyerImage: './images/lawyer-portrait.webp',
+    logoImage: './logo.webp',
+    seoImage: './images/lawyer-portrait.webp',
+    seoTitle: 'محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج - دعاوی تخصصی آب و اراضی',
+    seoDescription: 'دفتر وکالت محمدحسن کیان‌ارثی؛ وکیل پایه یک دادگستری در کرج و تهران با ۲۰+ سال سابقه تخصصی در دعاوی حقوق آب، چاه‌های کشاورزی، حریم رودخانه، کمیسیون‌ها و دیوان عدالت اداری. مشاوره: ۰۹۱۲۷۶۹۸۸۶۴',
+    seoKeywords: 'محمدحسن کیان‌ارثی, محمد حسن کیان ارثی, وکیل کیان ارثی, وکیل پایه یک دادگستری کرج, وکیل دعاوی آب کرج, وکیل چاه کشاورزی البرز, وکیل کمیسیون آب‌های زیرزمینی, وکیل حریم رودخانه, وکیل دیوان عدالت اداری کرج'
   },
   categories: [
     { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
@@ -76,13 +88,41 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       })
       .then(json => {
         if (json && json.laws && Array.isArray(json.laws) && json.general) {
+          const gen = { ...defaultSiteData.general, ...json.general };
           setData({
-            general: { ...defaultSiteData.general, ...json.general },
+            general: gen,
             categories: Array.isArray(json.categories) && json.categories.length > 0 
               ? json.categories 
               : defaultSiteData.categories,
             laws: json.laws
           });
+
+          // Dynamically update document title and meta tags if provided
+          if (gen.seoTitle) {
+            document.title = gen.seoTitle;
+            const ogTitle = document.querySelector('meta[property="og:title"]');
+            if (ogTitle) ogTitle.setAttribute('content', gen.seoTitle);
+            const twTitle = document.querySelector('meta[name="twitter:title"]');
+            if (twTitle) twTitle.setAttribute('content', gen.seoTitle);
+          }
+          if (gen.seoDescription) {
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc) metaDesc.setAttribute('content', gen.seoDescription);
+            const ogDesc = document.querySelector('meta[property="og:description"]');
+            if (ogDesc) ogDesc.setAttribute('content', gen.seoDescription);
+            const twDesc = document.querySelector('meta[name="twitter:description"]');
+            if (twDesc) twDesc.setAttribute('content', gen.seoDescription);
+          }
+          if (gen.seoKeywords) {
+            const metaKeys = document.querySelector('meta[name="keywords"]');
+            if (metaKeys) metaKeys.setAttribute('content', gen.seoKeywords);
+          }
+          if (gen.seoImage) {
+            const ogImg = document.querySelector('meta[property="og:image"]');
+            if (ogImg) ogImg.setAttribute('content', gen.seoImage);
+            const twImg = document.querySelector('meta[name="twitter:image"]');
+            if (twImg) twImg.setAttribute('content', gen.seoImage);
+          }
         }
       })
       .catch(() => {

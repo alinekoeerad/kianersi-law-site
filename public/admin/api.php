@@ -243,9 +243,187 @@ if ($action === 'save_general') {
     $siteData['general'] = array_merge($siteData['general'] ?? [], $sanitized);
     
     if (write_site_data($siteData)) {
-        json_out(['success' => true, 'message' => 'تنظیمات عمومی با موفقیت ذخیره شد.']);
+        json_out(['success' => true, 'message' => 'تنظیمات با موفقیت ذخیره شد.']);
     } else {
         json_out(['success' => false, 'error' => 'خطا در ذخیره فایل اطلاعات سایت.'], 500);
+    }
+}
+
+// 9.5. Upload Image and Auto-Convert to High-Quality WebP (Perceptually Lossless, ~92 Quality)
+if ($action === 'upload_image') {
+    $type = $input['type'] ?? $_POST['type'] ?? 'lawyer';
+    $valid_types = ['lawyer', 'logo', 'seo'];
+    if (!in_array($type, $valid_types)) {
+        json_out(['success' => false, 'error' => 'نوع تصویر ارسالی نامعتبر است.'], 400);
+    }
+
+    $raw_bytes = null;
+    $orig_ext = 'png';
+
+    // 1. Check Multipart File Upload
+    if (!empty($_FILES['image']['tmp_name']) && is_uploaded_file($_FILES['image']['tmp_name'])) {
+        if ($_FILES['image']['size'] > 12 * 1024 * 1024) {
+            json_out(['success' => false, 'error' => 'حجم تصویر نباید بیشتر از ۱۲ مگابایت باشد.'], 400);
+        }
+        $raw_bytes = file_get_contents($_FILES['image']['tmp_name']);
+        $orig_ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+    } elseif (!empty($input['image_base64'])) {
+        // 2. Check Base64 payload
+        $b64 = $input['image_base64'];
+        if (preg_match('/^data:image\/(\w+);base64,/', $b64, $m)) {
+            $orig_ext = strtolower($m[1]);
+            $b64 = substr($b64, strpos($b64, ',') + 1);
+        }
+        $raw_bytes = base64_decode($b64);
+        if ($raw_bytes === false || strlen($raw_bytes) > 12 * 1024 * 1024) {
+            json_out(['success' => false, 'error' => 'تصویر ارسالی نامعتبر یا بیش از حد حجیم است.'], 400);
+        }
+    } else {
+        json_out(['success' => false, 'error' => 'هیچ تصویری برای بارگذاری ارسال نشده است.'], 400);
+    }
+
+    if (empty($raw_bytes)) {
+        json_out(['success' => false, 'error' => 'فایل دریافتی خالی است.'], 400);
+    }
+
+    $data_file = get_data_filepath();
+    $base_dir = dirname($data_file);
+    $images_dir = $base_dir . '/images';
+    if (!is_dir($images_dir)) {
+        @mkdir($images_dir, 0755, true);
+    }
+
+    $siteData = read_site_data();
+    if (!isset($siteData['general'])) {
+        $siteData['general'] = [];
+    }
+
+    $ts = time();
+    $field_name = '';
+    $prefix = '';
+
+    if ($type === 'lawyer') {
+        $field_name = 'lawyerImage';
+        $prefix = 'lawyer-portrait-';
+    } elseif ($type === 'logo') {
+        $field_name = 'logoImage';
+        $prefix = 'logo-';
+    } elseif ($type === 'seo') {
+        $field_name = 'seoImage';
+        $prefix = 'seo-preview-';
+    }
+
+    // Clean up previous custom uploaded file for this type to maintain ultra-compact host disk space
+    $old_file = $siteData['general'][$field_name] ?? '';
+    if (!empty($old_file) && strpos($old_file, $prefix) !== false) {
+        $clean_old = preg_replace('/^\.\//', '', parse_url($old_file, PHP_URL_PATH));
+        $old_path = $base_dir . '/' . $clean_old;
+        if (file_exists($old_path) && is_file($old_path)) {
+            @unlink($old_path);
+        }
+    }
+
+    $new_filename = $prefix . $ts . '.webp';
+    $target_path = $images_dir . '/' . $new_filename;
+    $relative_url = './images/' . $new_filename;
+
+    $converted = false;
+
+    // Convert to WebP using GD library
+    if (extension_loaded('gd') && function_exists('imagecreatefromstring') && function_exists('imagewebp')) {
+        $img = @imagecreatefromstring($raw_bytes);
+        if ($img !== false) {
+            $w = imagesx($img);
+            $h = imagesy($img);
+
+            // Scale down if image is abnormally huge (> 2400px)
+            if ($w > 2400 || $h > 2400) {
+                $max_dim = 2400;
+                $scale = min($max_dim / $w, $max_dim / $h);
+                $new_w = (int)round($w * $scale);
+                $new_h = (int)round($h * $scale);
+                $resized = imagecreatetruecolor($new_w, $new_h);
+                imagealphablending($resized, false);
+                imagesavealpha($resized, true);
+                $transparent = imagecolorallocatealpha($resized, 255, 255, 255, 127);
+                imagefilledrectangle($resized, 0, 0, $new_w, $new_h, $transparent);
+                imagecopyresampled($resized, $img, 0, 0, 0, 0, $new_w, $new_h, $w, $h);
+                imagedestroy($img);
+                $img = $resized;
+            } else {
+                if (!imageistruecolor($img)) {
+                    imagepalettetotruecolor($img);
+                }
+                imagealphablending($img, true);
+                imagesavealpha($img, true);
+            }
+
+            // Save WebP with 92% quality (Visually lossless, lightweight footprint)
+            if (imagewebp($img, $target_path, 92)) {
+                $converted = true;
+            }
+            imagedestroy($img);
+        }
+    }
+
+    // Direct save fallback if GD is not present or failed
+    if (!$converted) {
+        $fallback_ext = ($orig_ext === 'webp') ? 'webp' : $orig_ext;
+        $fallback_name = $prefix . $ts . '.' . $fallback_ext;
+        $target_path = $images_dir . '/' . $fallback_name;
+        $relative_url = './images/' . $fallback_name;
+        if (@file_put_contents($target_path, $raw_bytes) === false) {
+            json_out(['success' => false, 'error' => 'خطا در ذخیره فایل روی سرور. دسترسی پوشه images را بررسی کنید.'], 500);
+        }
+    }
+
+    // Persist new URL to site-data.json
+    $siteData['general'][$field_name] = $relative_url;
+    write_site_data($siteData);
+
+    json_out([
+        'success' => true,
+        'message' => 'تصویر با موفقیت بارگذاری و با کیفیت عالی به WebP تبدیل شد.',
+        'url' => $relative_url,
+        'type' => $type,
+        'field' => $field_name
+    ]);
+}
+
+// 9.6. Reset Image to Factory Default
+if ($action === 'reset_image') {
+    $type = $input['type'] ?? 'lawyer';
+    $siteData = read_site_data();
+    $defaults = [
+        'lawyer' => './images/lawyer-portrait.webp',
+        'logo' => './logo.webp',
+        'seo' => './preview.webp'
+    ];
+    $fields = [
+        'lawyer' => 'lawyerImage',
+        'logo' => 'logoImage',
+        'seo' => 'seoImage'
+    ];
+
+    if (isset($fields[$type])) {
+        $f = $fields[$type];
+        $prefix = ($type === 'lawyer') ? 'lawyer-portrait-' : (($type === 'logo') ? 'logo-' : 'seo-preview-');
+        $old_file = $siteData['general'][$f] ?? '';
+        if (!empty($old_file) && strpos($old_file, $prefix) !== false) {
+            $data_file = get_data_filepath();
+            $base_dir = dirname($data_file);
+            $clean_old = preg_replace('/^\.\//', '', parse_url($old_file, PHP_URL_PATH));
+            $old_path = $base_dir . '/' . $clean_old;
+            if (file_exists($old_path) && is_file($old_path)) {
+                @unlink($old_path);
+            }
+        }
+
+        $siteData['general'][$f] = $defaults[$type];
+        write_site_data($siteData);
+        json_out(['success' => true, 'message' => 'تصویر به حالت پیش‌فرض اولیه بازگردانده شد.', 'url' => $defaults[$type]]);
+    } else {
+        json_out(['success' => false, 'error' => 'نوع تصویر نامعتبر است.'], 400);
     }
 }
 

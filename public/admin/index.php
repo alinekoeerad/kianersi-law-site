@@ -828,6 +828,137 @@ $is_auth = is_authenticated();
                 justify-content: center;
             }
         }
+
+        /* ─── Images & SEO Management Styles ─── */
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .image-card {
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(14, 116, 144, 0.25);
+            border-radius: 6px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: all 0.2s ease;
+        }
+        .image-card:hover {
+            border-color: rgba(6, 182, 212, 0.45);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
+        }
+        .image-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .image-preview-box {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: #090d16;
+            border: 1px dashed rgba(14, 116, 144, 0.35);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-preview-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.25s ease;
+        }
+        .image-preview-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: rgba(6, 182, 212, 0.85);
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+        .image-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .image-actions .btn {
+            flex: 1 1 calc(50% - 0.25rem);
+        }
+        .file-upload-input {
+            display: none;
+        }
+        /* Google SERP Live Simulator */
+        .google-serp-preview {
+            background: #202124;
+            border: 1px solid #3c4043;
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-family: Arial, sans-serif;
+            text-align: right;
+            direction: rtl;
+            margin-top: 1rem;
+        }
+        .serp-url-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.78rem;
+            color: #bdc1c6;
+            margin-bottom: 0.4rem;
+        }
+        .serp-url-row .serp-favicon {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #303134;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+        .serp-title {
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #8ab4f8;
+            margin-bottom: 0.35rem;
+            line-height: 1.4;
+            word-break: break-word;
+            cursor: pointer;
+        }
+        .serp-title:hover {
+            text-decoration: underline;
+        }
+        .serp-description {
+            font-size: 0.875rem;
+            color: #bdc1c6;
+            line-height: 1.58;
+            word-break: break-word;
+        }
+        .char-counter {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .char-counter.good {
+            color: #10b981;
+        }
+        .char-counter.warn {
+            color: #f59e0b;
+        }
     </style>
 </head>
 <body>
@@ -906,6 +1037,10 @@ $is_auth = is_authenticated();
         <button class="tab-btn active" onclick="switchTab('general')">
             <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             <span>اطلاعات عمومی و تماس</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('seo')">
+            <svg class="admin-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+            <span>تصاویر و سئو (SEO)</span>
         </button>
         <button class="tab-btn" onclick="switchTab('laws')">
             <svg class="admin-icon" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
@@ -1247,6 +1382,175 @@ $is_auth = is_authenticated();
 
         </div>
 
+        <!-- TAB 5: IMAGES & SEO -->
+        <div id="tab-seo" class="tab-content" style="display: none;">
+            <!-- Part 1: Visual Image Assets Management with Auto-WebP -->
+            <div class="panel-card">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">مدیریت تصاویر و هویت بصری سایت</h2>
+                        <p style="color: var(--text-muted); font-size: 0.825rem; margin-top: 0.25rem;">
+                            بارگذاری و تعویض تصاویر با <strong>تبدیل خودکار به WebP فوق‌العاده باکیفیت و کم‌حجم</strong> جهت افزایش سرعت لود سایت و رضایت کاربران.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="seo-grid">
+                    <!-- 1. Lawyer Portrait Card -->
+                    <div class="image-card">
+                        <div class="image-card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <span>تصویر پرتره رسمی وکیل</span>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش در بخش بالایی صفحه اصلی (Hero) و معرفی وکیل.</p>
+                        <div class="image-preview-box">
+                            <span class="image-preview-badge">WebP 92%</span>
+                            <img id="lawyerImagePreview" src="./images/lawyer-portrait.webp" alt="پرتره وکیل">
+                        </div>
+                        <input type="file" id="fileLawyer" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'lawyer')">
+                        <div class="image-actions">
+                            <button type="button" class="btn btn-primary" onclick="triggerFileInput('fileLawyer')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span>انتخاب تصویر</span>
+                            </button>
+                            <button type="button" id="btnUploadLawyer" class="btn btn-success" onclick="uploadImage('lawyer')" disabled>
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                <span>آپلود و تبدیل</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" style="flex: 1 1 100%;" onclick="resetImage('lawyer')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                                <span>بازنشانی به تصویر پیش‌فرض اولیه</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Logo Card -->
+                    <div class="image-card">
+                        <div class="image-card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                            <span>لوگو و نشان رسمی دفتر</span>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش در منوی بالا و فوتر سایت (با حفظ کامل شفافیت / Alpha).</p>
+                        <div class="image-preview-box">
+                            <span class="image-preview-badge">WebP Transparent</span>
+                            <img id="logoImagePreview" src="./logo.webp" alt="لوگو دفتر">
+                        </div>
+                        <input type="file" id="fileLogo" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'logo')">
+                        <div class="image-actions">
+                            <button type="button" class="btn btn-primary" onclick="triggerFileInput('fileLogo')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span>انتخاب لوگو</span>
+                            </button>
+                            <button type="button" id="btnUploadLogo" class="btn btn-success" onclick="uploadImage('logo')" disabled>
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                <span>آپلود و تبدیل</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" style="flex: 1 1 100%;" onclick="resetImage('logo')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                                <span>بازنشانی به لوگوی پیش‌فرض اولیه</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 3. SEO / Social Share Preview Card -->
+                    <div class="image-card">
+                        <div class="image-card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            <span>تصویر پیش‌نمایش اشتراک‌گذاری (Open Graph)</span>
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 0.775rem;">نمایش هنگام ارسال لینک سایت در ایتا، بله، روبیکا، واتساپ و تلگرام.</p>
+                        <div class="image-preview-box">
+                            <span class="image-preview-badge">WebP 1200x630</span>
+                            <img id="seoImagePreview" src="./preview.webp" alt="پیش‌نمایش سئو">
+                        </div>
+                        <input type="file" id="fileSeo" class="file-upload-input" accept="image/png,image/jpeg,image/webp" onchange="previewSelectedFile(this, 'seo')">
+                        <div class="image-actions">
+                            <button type="button" class="btn btn-primary" onclick="triggerFileInput('fileSeo')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <span>انتخاب تصویر</span>
+                            </button>
+                            <button type="button" id="btnUploadSeo" class="btn btn-success" onclick="uploadImage('seo')" disabled>
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                <span>آپلود و تبدیل</span>
+                            </button>
+                            <button type="button" class="btn btn-secondary" style="flex: 1 1 100%;" onclick="resetImage('seo')">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                                <span>بازنشانی به تصویر پیش‌فرض</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 2: SEO Meta Text & Google SERP Simulator -->
+            <div class="panel-card">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">تنظیمات متنی متای سئو و موتورهای جستجو (Google SEO)</h2>
+                        <p style="color: var(--text-muted); font-size: 0.825rem; margin-top: 0.25rem;">
+                            مدیریت تایتل و توضیحات متای وب‌سایت برای افزایش رتبه در جستجوهای وکیل کرج، آب و دعاوی ملکی.
+                        </p>
+                    </div>
+                    <button type="button" onclick="saveSeoData()" class="btn btn-success">
+                        <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        <span>ذخیره تنظیمات سئو</span>
+                    </button>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label">عنوان صفحه در گوگل و تب مرورگر (Meta Title):</label>
+                        <input type="text" id="seoTitle" class="form-input" placeholder="محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک" oninput="updateGooglePreview()">
+                        <div class="char-counter">
+                            <span>پیشنهاد سئو: ۵۰ تا ۶۰ کاراکتر</span>
+                            <span id="seoTitleCount">۰ کاراکتر</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label">توضیحات متا برای موتورهای جستجو (Meta Description):</label>
+                        <textarea id="seoDescription" class="form-textarea" rows="3" placeholder="دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز." oninput="updateGooglePreview()"></textarea>
+                        <div class="char-counter" id="seoDescCounterBox">
+                            <span>طول ایده‌آل گوگل: ۱۲۰ تا ۱۶۰ کاراکتر</span>
+                            <span id="seoDescCount">۰ کاراکتر</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label">کلمات کلیدی متا (Meta Keywords - جدا شده با کاما یا ویرگول):</label>
+                        <textarea id="seoKeywords" class="form-textarea" rows="2" placeholder="وکیل کرج, وکیل آب, دعاوی چاه کشاورزی, حریم رودخانه, وکیل ملکی البرز, کمیسیون آبهای زیرزمینی, محمدحسن کیان ارثی"></textarea>
+                    </div>
+                </div>
+
+                <!-- Live Google Search Result Preview (SERP Simulator) -->
+                <div style="margin-top: 1.5rem;">
+                    <label class="form-label" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <span>پیش‌نمایش زنده در نتایج جستجوی گوگل (Google SERP Simulator):</span>
+                    </label>
+                    
+                    <div class="google-serp-preview">
+                        <div class="serp-url-row">
+                            <span class="serp-favicon">
+                                <svg class="admin-icon" style="width: 12px; height: 12px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </span>
+                            <span>https://vakilkianersi.ir</span>
+                            <span style="color: #9aa0a6;">› دفتر-وکالت</span>
+                        </div>
+                        <div id="googlePreviewTitle" class="serp-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
+                        <div id="googlePreviewDesc" class="serp-description">دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز.</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; text-align: left;">
+                    <button type="button" onclick="saveSeoData()" class="btn btn-success">
+                        <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                        <span>ذخیره تنظیمات سئو</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ─── CATEGORY ADD / EDIT MODAL ─── -->
@@ -1420,6 +1724,31 @@ $is_auth = is_authenticated();
             document.getElementById('baleUrl').value = gen.baleUrl || '';
             document.getElementById('rubika').value = gen.rubika || '';
             document.getElementById('rubikaUrl').value = gen.rubikaUrl || '';
+
+            // SEO Text fields
+            if (document.getElementById('seoTitle')) {
+                document.getElementById('seoTitle').value = gen.seoTitle || '';
+            }
+            if (document.getElementById('seoDescription')) {
+                document.getElementById('seoDescription').value = gen.seoDescription || '';
+            }
+            if (document.getElementById('seoKeywords')) {
+                document.getElementById('seoKeywords').value = gen.seoKeywords || '';
+            }
+
+            // Image Previews
+            const cacheBuster = '?v=' + Date.now();
+            if (document.getElementById('lawyerImagePreview')) {
+                document.getElementById('lawyerImagePreview').src = (gen.lawyerImage || './images/lawyer-portrait.webp') + cacheBuster;
+            }
+            if (document.getElementById('logoImagePreview')) {
+                document.getElementById('logoImagePreview').src = (gen.logoImage || './logo.webp') + cacheBuster;
+            }
+            if (document.getElementById('seoImagePreview')) {
+                document.getElementById('seoImagePreview').src = (gen.seoImage || './preview.webp') + cacheBuster;
+            }
+
+            updateGooglePreview();
         }
 
         // Save General Form
@@ -1443,6 +1772,11 @@ $is_auth = is_authenticated();
                 rubikaUrl: document.getElementById('rubikaUrl').value,
             };
 
+            // Preserve SEO if available
+            if (document.getElementById('seoTitle')) general.seoTitle = document.getElementById('seoTitle').value.trim();
+            if (document.getElementById('seoDescription')) general.seoDescription = document.getElementById('seoDescription').value.trim();
+            if (document.getElementById('seoKeywords')) general.seoKeywords = document.getElementById('seoKeywords').value.trim();
+
             try {
                 const res = await fetch('api.php?action=save_general', {
                     method: 'POST',
@@ -1460,6 +1794,229 @@ $is_auth = is_authenticated();
                 }
             } catch (err) {
                 showToast('خطا در برقراری ارتباط با سرور', true);
+            }
+        }
+
+        /* ─── SEO & IMAGE MANAGEMENT FUNCTIONS ─── */
+        function updateGooglePreview() {
+            const titleEl = document.getElementById('seoTitle');
+            const descEl = document.getElementById('seoDescription');
+            const previewTitle = document.getElementById('googlePreviewTitle');
+            const previewDesc = document.getElementById('googlePreviewDesc');
+            const titleCount = document.getElementById('seoTitleCount');
+            const descCount = document.getElementById('seoDescCount');
+            const descBox = document.getElementById('seoDescCounterBox');
+
+            if (!titleEl || !descEl) return;
+
+            const titleVal = titleEl.value.trim() || 'محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک';
+            const descVal = descEl.value.trim() || 'دفتر وکالت تخصصی محمدحسن کیان‌ارثی، وکیل پایه یک دادگستری کرج. مشاوره تخصصی در دعاوی حفر چاه غیرمجاز، کمیسیون آب‌های زیرزمینی، حریم رودخانه و اراضی ملی البرز.';
+
+            if (previewTitle) previewTitle.textContent = titleVal;
+            if (previewDesc) previewDesc.textContent = descVal;
+
+            if (titleCount) titleCount.textContent = titleEl.value.length + ' کاراکتر';
+            if (descCount) descCount.textContent = descEl.value.length + ' کاراکتر';
+
+            if (descBox) {
+                const len = descEl.value.length;
+                if (len >= 120 && len <= 165) {
+                    descBox.className = 'char-counter good';
+                } else if (len > 0) {
+                    descBox.className = 'char-counter warn';
+                } else {
+                    descBox.className = 'char-counter';
+                }
+            }
+        }
+
+        async function saveSeoData() {
+            const seoTitle = document.getElementById('seoTitle') ? document.getElementById('seoTitle').value.trim() : '';
+            const seoDescription = document.getElementById('seoDescription') ? document.getElementById('seoDescription').value.trim() : '';
+            const seoKeywords = document.getElementById('seoKeywords') ? document.getElementById('seoKeywords').value.trim() : '';
+
+            try {
+                const res = await fetch('api.php?action=save_general', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    body: JSON.stringify({ 
+                        general: { seoTitle, seoDescription, seoKeywords } 
+                    })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast('تنظیمات سئو و متای سایت با موفقیت ذخیره شد.');
+                    if (currentSiteData && currentSiteData.general) {
+                        currentSiteData.general.seoTitle = seoTitle;
+                        currentSiteData.general.seoDescription = seoDescription;
+                        currentSiteData.general.seoKeywords = seoKeywords;
+                    }
+                } else {
+                    showToast(result.error || 'خطا در ذخیره سئو', true);
+                }
+            } catch (err) {
+                showToast('خطا در ارتباط با سرور', true);
+            }
+        }
+
+        function triggerFileInput(id) {
+            const input = document.getElementById(id);
+            if (input) input.click();
+        }
+
+        const selectedImageFiles = {};
+
+        function previewSelectedFile(input, type) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            if (file.size > 12 * 1024 * 1024) {
+                showToast('حجم فایل انتخابی بیش از حد مجاز (حداکثر ۱۲ مگابایت) است.', true);
+                input.value = '';
+                return;
+            }
+
+            selectedImageFiles[type] = file;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewMap = {
+                    lawyer: 'lawyerImagePreview',
+                    logo: 'logoImagePreview',
+                    seo: 'seoImagePreview'
+                };
+                const img = document.getElementById(previewMap[type]);
+                if (img) img.src = e.target.result;
+
+                const btnMap = {
+                    lawyer: 'btnUploadLawyer',
+                    logo: 'btnUploadLogo',
+                    seo: 'btnUploadSeo'
+                };
+                const btn = document.getElementById(btnMap[type]);
+                if (btn) btn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function uploadImage(type) {
+            const file = selectedImageFiles[type];
+            if (!file) {
+                showToast('لطفاً ابتدا تصویری انتخاب کنید.', true);
+                return;
+            }
+
+            const btnMap = {
+                lawyer: 'btnUploadLawyer',
+                logo: 'btnUploadLogo',
+                seo: 'btnUploadSeo'
+            };
+            const btn = document.getElementById(btnMap[type]);
+            const originalText = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>در حال آپلود و تبدیل به WebP...</span>';
+            }
+
+            try {
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const dataUrl = e.target.result;
+                    try {
+                        const res = await fetch('api.php?action=upload_image', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': currentCsrfToken
+                            },
+                            body: JSON.stringify({
+                                type: type,
+                                image_base64: dataUrl
+                            })
+                        });
+                        const result = await res.json();
+                        if (result.success) {
+                            showToast(result.message || 'تصویر با موفقیت بارگذاری و به WebP بهینه تبدیل شد.');
+                            const previewMap = {
+                                lawyer: 'lawyerImagePreview',
+                                logo: 'logoImagePreview',
+                                seo: 'seoImagePreview'
+                            };
+                            const img = document.getElementById(previewMap[type]);
+                            if (img) img.src = result.url + '?t=' + Date.now();
+                            if (currentSiteData && currentSiteData.general) {
+                                currentSiteData.general[result.field] = result.url;
+                            }
+                            delete selectedImageFiles[type];
+                        } else {
+                            showToast(result.error || 'خطا در آپلود تصویر', true);
+                        }
+                    } catch (err) {
+                        showToast('خطا در ارسال تصویر به سرور', true);
+                    } finally {
+                        if (btn) {
+                            btn.disabled = true;
+                            btn.innerHTML = originalText;
+                        }
+                    }
+                };
+                reader.readAsDataURL(file);
+            } catch (err) {
+                showToast('خطا در خواندن فایل', true);
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            }
+        }
+
+        async function resetImage(type) {
+            if (!confirm('آیا مطمئن هستید که می‌خواهید این تصویر به حالت پیش‌فرض اولیه بازگردد؟')) {
+                return;
+            }
+
+            try {
+                const res = await fetch('api.php?action=reset_image', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    body: JSON.stringify({ type })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast(result.message || 'تصویر به حالت پیش‌فرض بازگشت.');
+                    const previewMap = {
+                        lawyer: 'lawyerImagePreview',
+                        logo: 'logoImagePreview',
+                        seo: 'seoImagePreview'
+                    };
+                    const img = document.getElementById(previewMap[type]);
+                    if (img) img.src = result.url + '?t=' + Date.now();
+                    const fieldMap = {
+                        lawyer: 'lawyerImage',
+                        logo: 'logoImage',
+                        seo: 'seoImage'
+                    };
+                    if (currentSiteData && currentSiteData.general) {
+                        currentSiteData.general[fieldMap[type]] = result.url;
+                    }
+                    delete selectedImageFiles[type];
+                    const btnMap = {
+                        lawyer: 'btnUploadLawyer',
+                        logo: 'btnUploadLogo',
+                        seo: 'btnUploadSeo'
+                    };
+                    const btn = document.getElementById(btnMap[type]);
+                    if (btn) btn.disabled = true;
+                } else {
+                    showToast(result.error || 'خطا در بازنشانی تصویر', true);
+                }
+            } catch (err) {
+                showToast('خطا در ارتباط با سرور', true);
             }
         }
 

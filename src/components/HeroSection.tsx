@@ -87,7 +87,7 @@ export default function HeroSection() {
           <div className="md:col-span-4 order-1 md:order-2 flex justify-center md:block">
             <div className="relative editorial-frame mx-auto max-w-[320px] md:max-w-[380px]">
               <img 
-                src="./images/lawyer-portrait.webp" 
+                src={general.lawyerImage || "./images/lawyer-portrait.webp"} 
                 alt="محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج و متخصص دعاوی آب و اراضی" 
                 title="محمدحسن کیان‌ارثی وکیل دادگستری کرج"
                 className="w-full object-cover h-[360px] md:h-[520px]"
