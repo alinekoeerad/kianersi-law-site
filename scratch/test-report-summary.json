@@ -1,0 +1,651 @@
+{
+  "timestamp": "2026-11-06T22:19:14.913Z",
+  "total": 107,
+  "passed": 107,
+  "failed": 0,
+  "healthScore": "100.0%",
+  "tests": [
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/index.html (باندل کامپایل‌شده وبسایت اصلی)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/site-data.json (پایگاه داده اصلی محتوا (JSON))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/robots.txt (دستورالعمل خزنده‌های وب (robots.txt))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/sitemap.xml (نقشه سایت جهت ایندکس گوگل (sitemap.xml))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/.htaccess (دیواره آتش و امنیت آپاچی روت)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/logo.png (فایل نشان تصویری PNG)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/logo.webp (فایل نشان تصویری مدرن WebP)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/preview.webp (تصویر کارت پیش‌نمایش اشتراک‌گذاری)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/favicon.ico (آیکون زبانه مرورگر (Favicon))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/images/lawyer-portrait.webp (پرتره رسمی وکیل با فرمت WebP)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/admin/index.php (رابط کاربری پنل مدیریت (admin/index.php))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/admin/api.php (هسته ای‌پی‌آی پنل (admin/api.php))",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/admin/config.php (پیکربندی امنیتی ادمین)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "زیرساخت و فایل‌ها",
+      "title": "بررسی وجود فایل: dist/admin/.htaccess (قوانین امنیتی و ضد نفوذ پوشه ادمین)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پکیج هاست",
+      "title": "فایل فشرده website.zip آماده استقرا با حجم مناسب (2.07 MB)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سئو و ساختار",
+      "title": "تعریف زبان فارسی (fa) و جهت راست‌به‌چپ (RTL) در سند HTML",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سئو و متاتگ‌ها",
+      "title": "تگ عنوان صفحه (Title) حاوی نام رسمی وکیل و کلیدواژه کرج",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سئو و متاتگ‌ها",
+      "title": "توضیحات متا (Meta Description) استاندارد به همراه شماره تماس مستقیم",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سئو و متاتگ‌ها",
+      "title": "کلمات کلیدی متا (Meta Keywords) تخصصی حوزه آب و املاک",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سئو تکنیکال",
+      "title": "تگ آدرس قانونی کانونیکال (Canonical URL) به دامنه رسمی",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "OpenGraph",
+      "title": "متاتگ‌های OpenGraph کامل جهت نمایش غنی در واتساپ، ایتا، بله و روبیکا",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "Twitter Card",
+      "title": "متاتگ‌های توییتر کارت برای پیش‌نمایش عریض با تصویر",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "Google Rich Snippet",
+      "title": "اسکیمای ساختاریافته استاندارد LegalService و Attorney مورد تایید گوگل",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "Schema.org",
+      "title": "اطلاعات تلفن و آدرس در اسکیمای ساختاریافته گوگل",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "Robots.txt",
+      "title": "فایل robots.txt با دسترسی آزاد به موتورهای جستجو و مسدودسازی پوشه ادمین",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "Sitemap.xml",
+      "title": "نقشه سایت XML استاندارد با آدرس رسمی دفتر وکالت",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "منوی ناوبری (Navbar)",
+      "title": "نمایش برند و لوگوی دفتر وکالت در هدر سایت",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "منوی ناوبری (Navbar)",
+      "title": "نمایش سابقه کار حقوقی در بنر بالای نوبار",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "منوی ناوبری (Navbar)",
+      "title": "طراحی منوی همبرگری واکنش‌گرا برای نسخه موبایل",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش معرفی (Hero)",
+      "title": "نمایش نام وکیل، عنوان حقوقی و نشان رسمی پایه یک دادگستری",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش معرفی (Hero)",
+      "title": "اتصال داینامیک به تصویر پرتره رسمی وکیل",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش معرفی (Hero)",
+      "title": "کال‌تو‌اکشن اصلی برقراری ارتباط سریع و دریافت مشاوره",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش درباره وکیل (About)",
+      "title": "نمایش سابقه کار حقوقی (۲۰+ سال) و پروانه وکالت",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش درباره وکیل (About)",
+      "title": "نمایش مدارج تحصیلی، تخصص‌ها و پیشینه قضایی و وکالتی",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حوزه‌های تخصصی",
+      "title": "پوشش پرونده‌های دعاوی آب، چاه‌های کشاورزی و حریم رودخانه",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حوزه‌های تخصصی",
+      "title": "پوشش دعاوی ملکی، اسناد ثبتی، اراضی موات و منابع طبیعی",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حوزه‌های تخصصی",
+      "title": "پوشش دعاوی شهرداری‌ها، کمیسیون‌های تخصصی و دیوان عدالت اداری",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بخش تمایزات",
+      "title": "نمایش مزیت‌های رقابتی، تخصص موشکافانه و سابقه موفق پرونده‌ها",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "کتابخانه قوانین",
+      "title": "قابلیت جستجوی زنده در عناوین و مفاد قوانین",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "کتابخانه قوانین",
+      "title": "دسته‌بندی موضوعی قوانین با امکان سوئیچ تب‌ها",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "کتابخانه قوانین",
+      "title": "امکان مشاهده متن کامل قانون در مودال یا پنل بازشونده",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "اطلاعات تماس",
+      "title": "نمایش تلفن همراه، آدرس دقیق دفتر در کرج و ساعت کار",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "موقعیت مکانی دفتر",
+      "title": "پشتیبانی از مختصات جغرافیایی (عرض و طول جغرافیایی)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "مسیریابی هوشمند",
+      "title": "لینک‌های مستقیم مسیریابی سریع با اپلیکیشن‌های نشان، بلد و Google Maps",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "فوتر سایت",
+      "title": "کپی‌رایت حقوقی، سلب مسئولیت و لینک‌های دسترسی سریع در پاورقی",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "تجربه کاربری",
+      "title": "دکمه بازگشت نرم به بالای صفحه (Back to Top)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "نام رسمی وکیل در فایل دیتا به درستی ثبت شده است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "شماره تماس مستقیم استاندارد با کد بین‌المللی ایران",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "آدرس فیزیکی دفتر وکالت در کرج",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "مختصات جغرافیایی معتبر GPS: (35.8427497, 50.991522)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "تعداد دسته‌بندی‌های موضوعی (3 دسته)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پایگاه داده",
+      "title": "بانک قوانین معتبر (8 قانون تخصصی با متن کامل)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "مفاد قوانین",
+      "title": "قانون شماره 1: «قانون تعیین تکلیف چاه های آب ف...» دارای متن کامل است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "مفاد قوانین",
+      "title": "قانون شماره 2: «آیین نامه اجرایی قانون تعیین ت...» دارای متن کامل است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "مفاد قوانین",
+      "title": "قانون شماره 3: «آیین‌نامه اجرائی فصل دوم - قان...» دارای متن کامل است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "پاسخ‌دهی وب",
+      "title": "صفحه اصلی سایت با موفقیت و کد وضعیت 200 لود شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "رندر وبسایت",
+      "title": "محتوای صفحه اصلی دربرگیرنده نام و مشخصات وکیل است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "امنیت پنل",
+      "title": "درخواست بدون لاگین به API با خطای 403 مسدود شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "صفحه لاگین",
+      "title": "صفحه لاگین با کد 200 در دسترس است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "صفحه لاگین",
+      "title": "فرم ورود مدیر (#loginForm) در صفحه قرار دارد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "هندلر لاگین",
+      "title": "اسکریپت پردازش فرم ورود به درستی رندر و به فرم متصل است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ایزولاسیون لاگین",
+      "title": "عناصر داشبورد مدیریت در صفحه لاگین کاملاً پنهان هستند.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ایزولاسیون لاگین",
+      "title": "تب‌های مدیریت در صفحه لاگین مخفی هستند.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "امنیت ورود",
+      "title": "تلاش برای ورود با رمز نادرست با کد 401 رد شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "احراز هویت",
+      "title": "ورود با اطلاعات مدیر با موفقیت انجام پذیرفت.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "کوکی امنیتی",
+      "title": "کوکی سشن امنیتی (local_admin_session) صادر گردید.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "داشبورد مدیریت",
+      "title": "داشبورد مدیریت با سشن معتبر باز شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "داشبورد مدیریت",
+      "title": "هدر اصلی مدیریت با لوگو و مشخصات دفتر وکالت لود شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "داشبورد مدیریت",
+      "title": "نوار تب‌های ۵‌گانه مدیریت بارگذاری شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "داشبورد مدیریت",
+      "title": "فرم لاگین در نمای داشبورد پنهان است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "دریافت داده‌ها",
+      "title": "دریافت داده‌های کلی سایت از طریق get_data",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ذخیره عمومی",
+      "title": "ذخیره تنظیمات عمومی و مختصات جغرافیایی با موفقیت انجام شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ماندگاری داده‌ها",
+      "title": "مختصات ثبت‌شده بر روی دیسک با موفقیت بازخوانی شد (35.83610, 50.99820)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "آپلود پرتره",
+      "title": "آپلود تصویر پرتره و تبدیل به فرمت WebP موفقیت‌آمیز بود.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "تبدیل به WebP",
+      "title": "آدرس عکس جدید به فرمت فشرده و مدرن WebP اشاره دارد (./images/lawyer-portrait-1794003554782.webp)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "بازنشانی پرتره",
+      "title": "تصویر پرتره به فایل اورجینال اولیه بازگردانده شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ذخیره سئو",
+      "title": "متاتگ‌های سئو با موفقیت در سیستم ثبت شدند.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "شبیه‌ساز گوگل",
+      "title": "کارت شبیه‌ساز زنده پیش‌نمایش در نتایج جستجوی گوگل فعال است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "شبیه‌ساز پیام‌رسان‌ها",
+      "title": "کارت پیش‌نمایش اشتراک در تلگرام، واتساپ، ایتا و بله فعال است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "افزودن دسته‌بندی",
+      "title": "دسته‌بندی جدید به ساختار موضوعی افزوده شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "اعتبارسنجی شناسه",
+      "title": "شناسه دسته‌بندی با موفقیت تولید شد (cat_1794003554813)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ثبت قانون جدید",
+      "title": "قانون جدید با موفقیت به بانک قوانین افزوده گردید.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "اعتبارسنجی قانون",
+      "title": "شناسه قانون جدید: 9",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حذف قانون",
+      "title": "قانون آزمایشی با موفقیت از سیستم حذف شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حذف دسته‌بندی",
+      "title": "دسته‌بندی آزمایشی با موفقیت حذف گردید.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ثبت بازدید",
+      "title": "رویداد بازدید از صفحه (page_view) ثبت شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ثبت تماس",
+      "title": "رویداد کلیک روی دکمه تماس با وکیل ثبت شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "داشبورد آماری",
+      "title": "داده‌های تحلیلی رفتار کاربران به همراه شاخص‌های کلیدی دریافت شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "شمارنده بازدید",
+      "title": "تعداد کل بازدیدها: 7",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "شمارنده تماس",
+      "title": "تعداد کل تماس‌ها: 5",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "لیست مدیران",
+      "title": "فهرست مدیران سیستم دریافت گردید.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "افزودن مدیر",
+      "title": "مدیر جدید با نام کاربری (test_manager_357) ایجاد شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حذف مدیر",
+      "title": "حساب کاربری مدیر آزمایشی با موفقیت حذف شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "دانلود بکاپ",
+      "title": "نسخه پشتیبان کامل سامانه با هدر استاندارد دانلود فایل تولید شد.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "محتوای بکاپ",
+      "title": "فایل بکاپ حاوی کلیه داده‌های عمومی، تنظیمات و کتابخانه قوانین است.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "خروج از پنل",
+      "title": "عملیات خروج با پاکسازی کامل کوکی نشست انجام پذیرفت.",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حذف ایموجی‌ها",
+      "title": "عدم وجود هرگونه ایموجی خام در پنل مدیریت و جایگزینی کامل با آیکون‌های SVG",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "دیزاین سیستم حقوقی",
+      "title": "رعایت سیستم طراحی با لبه‌های تیز و شکیل حقوقی (--radius-sm: 2px, --radius-md: 4px)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "واکنش‌گرایی تبلت و موبایل",
+      "title": "وجود مدیاکوئری‌های اختصاصی تبلت و موبایل (max-width: 768px)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "واکنش‌گرایی موبایل‌های کوچک",
+      "title": "وجود مدیاکوئری‌های اختصاصی نمایشگرهای موبایل (max-width: 540px / 480px)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "سازگاری فرم‌ها",
+      "title": "چینش عمودی کنترل‌ها و اسکرول نرم جداول در ابعاد موبایل",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "امنیت دایرکتوری",
+      "title": "غیرفعال‌سازی نمایش فهرست فایل‌های سرور (Options -Indexes)",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "محافظت از فایل‌های داده",
+      "title": "مسدودسازی دسترسی مستقیم به فایل‌های حساس JSON در وب",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "هدرهای امنیتی",
+      "title": "تنظیم هدر X-Content-Type-Options: nosniff",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "ضد کلیک‌جکینگ",
+      "title": "تنظیم هدر X-Frame-Options جهت جلوگیری از بارگذاری در iframeهای غیرمجاز",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "حریم خصوصی",
+      "title": "تنظیم هدر Referrer-Policy جهت حفظ حریم خصوصی کاربران",
+      "status": "PASS",
+      "details": ""
+    },
+    {
+      "category": "امنیت ادمین",
+      "title": "مسدودسازی دسترسی عمومی به لاگ‌ها و کانفیگ داخلی پنل مدیریت",
+      "status": "PASS",
+      "details": ""
+    }
+  ]
+}
