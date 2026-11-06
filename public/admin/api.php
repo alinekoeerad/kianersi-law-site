@@ -24,7 +24,41 @@ if ($action === 'check_auth') {
     ]);
 }
 
-// 2. Login (with Anti-Brute-Force Protection)
+// 2. Track Analytics Event (Public, Non-Blocking, Ultra-Lightweight)
+if ($action === 'track_event') {
+    $event = $input['event'] ?? '';
+    $allowed = ['page_view', 'phone', 'instagram', 'eitaa', 'bale', 'rubika', 'maps'];
+    if (!in_array($event, $allowed)) {
+        json_out(['success' => false], 400);
+    }
+
+    $analytics_file = __DIR__ . '/analytics.json';
+    $data = file_exists($analytics_file) ? (json_decode(@file_get_contents($analytics_file), true) ?? []) : [];
+    
+    $default_data = [
+        'views' => 0,
+        'phone' => 0,
+        'instagram' => 0,
+        'eitaa' => 0,
+        'bale' => 0,
+        'rubika' => 0,
+        'maps' => 0,
+        'last_updated' => date('Y-m-d H:i:s')
+    ];
+    $data = array_merge($default_data, $data);
+
+    if ($event === 'page_view') {
+        $data['views']++;
+    } else {
+        $data[$event]++;
+    }
+    $data['last_updated'] = date('Y-m-d H:i:s');
+
+    @file_put_contents($analytics_file, json_encode($data, JSON_PRETTY_PRINT), LOCK_EX);
+    json_out(['success' => true]);
+}
+
+// 3. Login (with Anti-Brute-Force Protection)
 if ($action === 'login') {
     // Check if IP is currently locked due to too many failed attempts
     $bf = check_brute_force_status();
@@ -57,7 +91,7 @@ if ($action === 'login') {
     }
 }
 
-// 3. Logout
+// 4. Logout
 if ($action === 'logout') {
     $_SESSION = [];
     if (session_id()) {
@@ -103,13 +137,61 @@ function write_site_data($data) {
     return @file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX) !== false;
 }
 
-// 4. Get Data
+// 5. Get Data
 if ($action === 'get_data') {
     $data = read_site_data();
     json_out(['success' => true, 'data' => $data, 'csrf_token' => get_csrf_token()]);
 }
 
-// 5. Save General Settings
+// 6. Get Analytics Data
+if ($action === 'get_analytics') {
+    $analytics_file = __DIR__ . '/analytics.json';
+    $data = file_exists($analytics_file) ? (json_decode(@file_get_contents($analytics_file), true) ?? []) : [];
+    $default_data = [
+        'views' => 0,
+        'phone' => 0,
+        'instagram' => 0,
+        'eitaa' => 0,
+        'bale' => 0,
+        'rubika' => 0,
+        'maps' => 0,
+        'last_updated' => '-'
+    ];
+    json_out(['success' => true, 'analytics' => array_merge($default_data, $data)]);
+}
+
+// 7. Reset Analytics Data
+if ($action === 'reset_analytics') {
+    $analytics_file = __DIR__ . '/analytics.json';
+    $default_data = [
+        'views' => 0,
+        'phone' => 0,
+        'instagram' => 0,
+        'eitaa' => 0,
+        'bale' => 0,
+        'rubika' => 0,
+        'maps' => 0,
+        'last_updated' => date('Y-m-d H:i:s')
+    ];
+    @file_put_contents($analytics_file, json_encode($default_data, JSON_PRETTY_PRINT), LOCK_EX);
+    json_out(['success' => true, 'message' => 'آمار بازدید و کلیک‌ها با موفقیت بازنشانی شد.', 'analytics' => $default_data]);
+}
+
+// 8. Download Backup File
+if ($action === 'download_backup') {
+    $file = get_data_filepath();
+    if (!file_exists($file)) {
+        json_out(['success' => false, 'error' => 'فایل اطلاعات جهت پشتیبان‌گیری یافت نشد.'], 404);
+    }
+    header('Content-Type: application/json; charset=utf-8');
+    header('Content-Disposition: attachment; filename="kianersi-backup-' . date('Y-m-d') . '.json"');
+    header('Pragma: no-cache');
+    header('Expires: 0');
+    readfile($file);
+    exit;
+}
+
+// 9. Save General Settings
 if ($action === 'save_general') {
     $general = $input['general'] ?? null;
     if (!$general || !is_array($general)) {
@@ -132,7 +214,7 @@ if ($action === 'save_general') {
     }
 }
 
-// 6. Save Single Law (Add or Edit)
+// 10. Save Single Law (Add or Edit) - Including Category
 if ($action === 'save_law') {
     $law = $input['law'] ?? null;
     if (!$law || !isset($law['title'], $law['content'])) {
@@ -141,6 +223,8 @@ if ($action === 'save_law') {
 
     $title = trim($law['title']);
     $content = trim($law['content']);
+    $valid_categories = ['wells', 'rivers', 'lands'];
+    $category = in_array($law['category'] ?? '', $valid_categories) ? $law['category'] : 'wells';
 
     if (empty($title) || empty($content)) {
         json_out(['success' => false, 'error' => 'عنوان یا متن قانون نمی‌تواند خالی باشد.'], 400);
@@ -157,6 +241,7 @@ if ($action === 'save_law') {
         foreach ($laws as &$l) {
             if ((int)$l['id'] === $lawId) {
                 $l['title'] = $title;
+                $l['category'] = $category;
                 $l['content'] = $content;
                 $found = true;
                 break;
@@ -166,6 +251,7 @@ if ($action === 'save_law') {
             $laws[] = [
                 'id' => $lawId,
                 'title' => $title,
+                'category' => $category,
                 'content' => $content
             ];
         }
@@ -179,6 +265,7 @@ if ($action === 'save_law') {
         $laws[] = [
             'id' => $newId,
             'title' => $title,
+            'category' => $category,
             'content' => $content
         ];
     }
@@ -191,7 +278,7 @@ if ($action === 'save_law') {
     }
 }
 
-// 7. Delete Law
+// 11. Delete Law
 if ($action === 'delete_law') {
     $lawId = (int)($input['id'] ?? 0);
     if ($lawId <= 0) {
@@ -212,7 +299,7 @@ if ($action === 'delete_law') {
     }
 }
 
-// 8. Change Password
+// 12. Change Password
 if ($action === 'change_password') {
     $current_pass = $input['current_password'] ?? '';
     $new_pass = $input['new_password'] ?? '';
@@ -227,7 +314,6 @@ if ($action === 'change_password') {
     }
 
     if (save_auth_config($auth['username'], $new_pass)) {
-        // Regenerate session ID for extra safety
         session_regenerate_id(true);
         json_out(['success' => true, 'message' => 'رمز عبور با موفقیت به‌روزرسانی شد.']);
     } else {

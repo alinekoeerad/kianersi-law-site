@@ -1,6 +1,7 @@
 // Import necessary UI components
 import { SectionLabel, OrnamentDivider, StatCard } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
+import { trackEvent } from '../utils/analytics';
 
 export default function HeroSection() {
   const { general } = useSiteData();
@@ -51,6 +52,7 @@ export default function HeroSection() {
               <div className="flex flex-col sm:flex-row gap-3 my-6">
                 <a 
                   href={`tel:${general.rawPhone}`} 
+                  onClick={() => trackEvent('phone')}
                   className="flex items-center justify-center gap-2 px-5 py-3 text-xs md:text-sm font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-lg text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >

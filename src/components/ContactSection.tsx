@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
+import { trackEvent, AnalyticsEventType } from '../utils/analytics';
 
 export default function ContactSection() {
   const { general } = useSiteData();
@@ -25,35 +26,40 @@ export default function ContactSection() {
       label: 'تلفن مستقیم', 
       value: general.phone, 
       href: `tel:${general.rawPhone}`, 
-      target: '_self' 
+      target: '_self',
+      track: 'phone' as AnalyticsEventType
     },
     { 
       icon: <img src="./instagram.svg" alt="صفحه رسمی اینستاگرام وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'صفحه رسمی اینستاگرام', 
       value: general.instagram, 
       href: general.instagramUrl, 
-      target: '_blank' 
+      target: '_blank',
+      track: 'instagram' as AnalyticsEventType
     },
     { 
       icon: <img src="./eitaa.webp" alt="ارسال اسناد در پیام‌رسان ایتا به وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان ایتا', 
       value: general.eitaa, 
       href: general.eitaaUrl, 
-      target: '_blank' 
+      target: '_blank',
+      track: 'eitaa' as AnalyticsEventType
     },
     { 
       icon: <img src="./bale.webp" alt="ارتباط در پیام‌رسان بله با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان بله', 
       value: general.bale, 
       href: general.baleUrl, 
-      target: '_blank' 
+      target: '_blank',
+      track: 'bale' as AnalyticsEventType
     },
     { 
       icon: <img src="./rubika.webp" alt="ارتباط در پیام‌رسان روبیکا با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان روبیکا', 
       value: general.rubika, 
       href: general.rubikaUrl, 
-      target: '_blank' 
+      target: '_blank',
+      track: 'rubika' as AnalyticsEventType
     },
   ];
 
@@ -109,6 +115,7 @@ export default function ContactSection() {
                   <a 
                     key={index} 
                     href={item.href} 
+                    onClick={() => trackEvent(item.track)}
                     className="contact-item block hover:bg-cyan-900/15 px-3 py-3 rounded-sm transition-all duration-300 group"
                     target={item.target} 
                     rel={item.target === '_blank' ? 'noopener noreferrer' : undefined}
@@ -150,6 +157,7 @@ export default function ContactSection() {
               <div>
                 <a 
                   href={`tel:${general.rawPhone}`} 
+                  onClick={() => trackEvent('phone')}
                   className="flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-md text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >
@@ -291,6 +299,7 @@ export default function ContactSection() {
                     <a
                       key={app.name}
                       href={app.href}
+                      onClick={() => trackEvent('maps')}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-1 py-2 px-2 text-[11px] sm:text-xs rounded-sm transition-all duration-300 hover:brightness-125 hover:-translate-y-0.5 text-center font-medium"

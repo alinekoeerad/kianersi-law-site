@@ -491,3 +491,10 @@ export const lawsDatabase = [
 حسن حبیبی`
   }
 ];
+
+export interface LawItem {
+  id: number;
+  title: string;
+  content: string;
+  category?: 'wells' | 'rivers' | 'lands' | string;
+}

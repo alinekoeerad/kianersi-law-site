@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SmallOrnament } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
+import { trackEvent } from '../utils/analytics';
 
 export default function Navbar() {
   const { general } = useSiteData();
@@ -110,7 +111,10 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Action Button */}
-            <a href={`tel:${general.rawPhone}`} className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
+            <a 
+              href={`tel:${general.rawPhone}`} 
+              onClick={() => trackEvent('phone')}
+              className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
               style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}>
               <span>📞</span>
               <span>مشاوره تلفنی ({general.phone})</span>
@@ -120,6 +124,7 @@ export default function Navbar() {
             <div className="flex md:hidden items-center gap-2">
               <a 
                 href={`tel:${general.rawPhone}`} 
+                onClick={() => trackEvent('phone')}
                 className="text-xs px-3 py-1.5 rounded-sm flex items-center gap-1.5 font-semibold transition-all"
                 style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
                 aria-label="تماس تلفنی"
@@ -167,9 +172,9 @@ export default function Navbar() {
             <div className="p-4">
               <a 
                 href={`tel:${general.rawPhone}`} 
+                onClick={() => { trackEvent('phone'); setMenuOpen(false); }}
                 className="flex items-center justify-center gap-2 w-full py-3 text-center text-xs font-semibold rounded-sm"
                 style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
-                onClick={() => setMenuOpen(false)}
               >
                 <span>📞</span>
                 <span>تماس مستقیم با وکیل: {general.phone}</span>

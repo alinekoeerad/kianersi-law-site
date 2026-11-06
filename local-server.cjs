@@ -129,6 +129,23 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (action === 'track_event') {
+      const event = body.event || '';
+      const analyticsPath = path.join(DIST_DIR, 'admin', 'analytics.json');
+      let data = { views: 0, phone: 0, instagram: 0, eitaa: 0, bale: 0, rubika: 0, maps: 0, last_updated: new Date().toISOString() };
+      if (fs.existsSync(analyticsPath)) {
+        try { data = Object.assign(data, JSON.parse(fs.readFileSync(analyticsPath, 'utf8'))); } catch (e) {}
+      }
+      if (event === 'page_view') data.views++;
+      else if (data[event] !== undefined) data[event]++;
+      data.last_updated = new Date().toLocaleString('fa-IR');
+      try {
+        fs.writeFileSync(analyticsPath, JSON.stringify(data, null, 2), 'utf8');
+      } catch (e) {}
+      res.end(JSON.stringify({ success: true }));
+      return;
+    }
+
     if (action === 'login') {
       const { username, password } = body;
       const conf = getAuthConfig();
@@ -161,6 +178,32 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (action === 'get_analytics') {
+      const analyticsPath = path.join(DIST_DIR, 'admin', 'analytics.json');
+      let data = { views: 0, phone: 0, instagram: 0, eitaa: 0, bale: 0, rubika: 0, maps: 0, last_updated: '-' };
+      if (fs.existsSync(analyticsPath)) {
+        try { data = Object.assign(data, JSON.parse(fs.readFileSync(analyticsPath, 'utf8'))); } catch (e) {}
+      }
+      res.end(JSON.stringify({ success: true, analytics: data }));
+      return;
+    }
+
+    if (action === 'reset_analytics') {
+      const analyticsPath = path.join(DIST_DIR, 'admin', 'analytics.json');
+      const data = { views: 0, phone: 0, instagram: 0, eitaa: 0, bale: 0, rubika: 0, maps: 0, last_updated: new Date().toLocaleString('fa-IR') };
+      try { fs.writeFileSync(analyticsPath, JSON.stringify(data, null, 2), 'utf8'); } catch (e) {}
+      res.end(JSON.stringify({ success: true, message: 'آمارها صفر شدند.', analytics: data }));
+      return;
+    }
+
+    if (action === 'download_backup') {
+      const data = getSiteData();
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.setHeader('Content-Disposition', 'attachment; filename="kianersi-backup.json"');
+      res.end(JSON.stringify(data, null, 2));
+      return;
+    }
+
     if (action === 'save_general') {
       const current = getSiteData();
       current.general = Object.assign({}, current.general || {}, body.general || {});
@@ -174,21 +217,23 @@ const server = http.createServer(async (req, res) => {
       const laws = current.laws || [];
       const law = body.law || {};
       const lawId = parseInt(law.id, 10);
+      const category = law.category || 'wells';
 
       if (lawId > 0) {
         let found = false;
         for (let l of laws) {
           if (l.id === lawId) {
             l.title = law.title;
+            l.category = category;
             l.content = law.content;
             found = true;
             break;
           }
         }
-        if (!found) laws.push({ id: lawId, title: law.title, content: law.content });
+        if (!found) laws.push({ id: lawId, title: law.title, category, content: law.content });
       } else {
         const maxId = laws.reduce((max, l) => Math.max(max, l.id || 0), 0);
-        laws.push({ id: maxId + 1, title: law.title, content: law.content });
+        laws.push({ id: maxId + 1, title: law.title, category, content: law.content });
       }
 
       current.laws = laws;
