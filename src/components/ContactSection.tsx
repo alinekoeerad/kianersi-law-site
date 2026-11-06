@@ -18,35 +18,35 @@ export default function ContactSection() {
   // Contact channels with local assets and official links (clean title & value without sublabels)
   const contactMethods = [
     { 
-      icon: <img src="./phone.webp" alt="Phone" className="w-7 h-7 object-contain" />,
+      icon: <img src="./phone.webp" alt="شماره تماس مستقیم دفتر وکالت محمدحسن کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'تلفن مستقیم', 
       value: '۰۹۱۲۷۶۹۸۸۶۴', 
       href: 'tel:+989127698864', 
       target: '_self' 
     },
     { 
-      icon: <img src="./instagram.svg" alt="Instagram" className="w-7 h-7 object-contain" />,
+      icon: <img src="./instagram.svg" alt="صفحه رسمی اینستاگرام وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'صفحه رسمی اینستاگرام', 
       value: '@kianersi.mohamad', 
       href: 'https://www.instagram.com/kianersi.mohamad?mdxt=eGZjdzN2MWMyaXEx', 
       target: '_blank' 
     },
     { 
-      icon: <img src="./eitaa.webp" alt="Eitaa" className="w-7 h-7 object-contain" />,
+      icon: <img src="./eitaa.webp" alt="ارسال اسناد در پیام‌رسان ایتا به وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان ایتا', 
       value: '@Mohamadhasankianersi', 
       href: 'https://eitaa.com/Mohamadhasankianersi', 
       target: '_blank' 
     },
     { 
-      icon: <img src="./bale.webp" alt="Bale" className="w-7 h-7 object-contain" />,
+      icon: <img src="./bale.webp" alt="ارتباط در پیام‌رسان بله با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان بله', 
       value: '@Mohamadhasankianersi', 
       href: 'https://ble.ir/Mohamadhasankianersi', 
       target: '_blank' 
     },
     { 
-      icon: <img src="./rubika.webp" alt="Rubika" className="w-7 h-7 object-contain" />,
+      icon: <img src="./rubika.webp" alt="ارتباط در پیام‌رسان روبیکا با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان روبیکا', 
       value: '@Mka12345666', 
       href: 'https://rubika.ir/Mka12345666', 
@@ -86,8 +86,8 @@ export default function ContactSection() {
         <AnimSection>
           <div className="text-center mb-14">
             <SectionLabel>ارتباط و مشاوره حقوقی</SectionLabel>
-            <h2 className="article-title text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
-              مشاوره، ارزیابی پرونده و نشانی دفتر
+            <h2 className="article-title text-2xl sm:text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
+              مشاوره حقوقی، ارزیابی پرونده و نشانی دفتر وکالت در کرج
             </h2>
             <OrnamentDivider className="max-w-md mx-auto mt-6" />
           </div>
@@ -171,7 +171,7 @@ export default function ContactSection() {
               
               <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)' }}>
                 <div className="flex items-center gap-2">
-                  <img src="./location.webp" alt="Location" className="w-5 h-5 object-contain" />
+                  <img src="./location.webp" alt="نشانی و موقعیت دفتر وکالت در کرج" className="w-5 h-5 object-contain" />
                   <p className="section-label mb-0" style={{ color: '#7dd3fc' }}>نشانی و موقعیت دفتر وکالت</p>
                 </div>
                 <button

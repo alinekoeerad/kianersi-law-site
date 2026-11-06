@@ -37,8 +37,8 @@ export default function AboutSection() {
         <AnimSection>
           <div className="text-center mb-14">
             <SectionLabel>سرمقاله و معرفی وکیل</SectionLabel>
-            <h2 className="article-title text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
-              مدیریت و صیانت از منابع حیاتی
+            <h2 className="article-title text-2xl sm:text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
+              سوابق تخصصی وکیل در دعاوی آب و دستگاه‌های اجرایی
             </h2>
             <OrnamentDivider className="max-w-md mx-auto mt-6" />
           </div>
@@ -98,7 +98,8 @@ export default function AboutSection() {
               <div className="relative">
                 <img
                   src="./images/water-pipe.webp"
-                  alt="دعاوی دستگاه های اجرایی"
+                  alt="طرح‌های ملی انتقال آب و دعاوی دستگاه‌های اجرایی وزارت نیرو - وکیل کیان‌ارثی"
+                  title="صیانت از منابع آب و حقوق اراضی"
                   loading="lazy"
                   className="w-full object-cover rounded-sm image-glow"
                   style={{ height: '280px' }}

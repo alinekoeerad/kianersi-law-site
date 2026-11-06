@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://vakilkianersi.ir/</loc>
-    <lastmod>2024-06-07</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://vakilkianersi.ir/images/lawyer-portrait.webp</image:loc>
+      <image:title>محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج</image:title>
+      <image:caption>تصویر پرتره محمدحسن کیان‌ارثی وکیل متخصص دعاوی آب و اراضی در کرج</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vakilkianersi.ir/logo.png</image:loc>
+      <image:title>لوگوی دفتر وکالت محمدحسن کیان‌ارثی</image:title>
+      <image:caption>نشان رسمی دفتر وکالت محمدحسن کیان‌ارثی عضو کانون وکلای دادگستری البرز</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vakilkianersi.ir/images/divan-edalat.webp</image:loc>
+      <image:title>دفاع در دیوان عدالت اداری</image:title>
+      <image:caption>دفاع موثر در دیوان عدالت اداری و کمیسیون‌های آب‌های زیرزمینی</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://vakilkianersi.ir/images/water-pipe.webp</image:loc>
+      <image:title>طرح‌های ملی انتقال آب و صیانت از منابع آبی</image:title>
+      <image:caption>صیانت از حقوق اراضی و تأسیسات آبی کشور</image:caption>
+    </image:image>
   </url>
 </urlset>

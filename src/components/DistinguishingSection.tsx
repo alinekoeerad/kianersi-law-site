@@ -27,7 +27,8 @@ export default function DistinguishingSection() {
               <div className="relative overflow-hidden rounded-sm border border-cyan-900/30 shadow-lg">
                 <img 
                   src="./images/divan-edalat.webp" 
-                  alt="دیوان عدالت اداری" 
+                  alt="دفاع تخصصی در دیوان عدالت اداری و کمیسیون‌های امور آب - دفتر وکالت کیان‌ارثی" 
+                  title="دفاع مؤثر در دیوان عدالت اداری"
                   loading="lazy"
                   className="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity duration-500 image-glow" 
                 />

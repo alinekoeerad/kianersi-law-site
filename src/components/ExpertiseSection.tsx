@@ -10,8 +10,8 @@ export default function ExpertiseSection() {
         <AnimSection>
           <div className="text-center mb-14">
             <SectionLabel>حوزه‌های تخصصی فعالیت</SectionLabel>
-            <h2 className="article-title text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
-              ارکان تخصص و حوزه‌های بنیادین وکالت
+            <h2 className="article-title text-2xl sm:text-3xl md:text-4xl mt-2" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
+              حوزه‌های تخصصی وکالت: کمیسیون آب، چاه کشاورزی و دیوان عدالت اداری
             </h2>
             <p className="mt-4 text-sm max-w-2xl mx-auto leading-8" style={{ fontFamily: 'Noto Sans Arabic', color: '#cbd5e1' }}>
               تمایز عملکردی در تسلط همه‌جانبه بر سه رکن قانون، رویه اداری و مقتضیات فنی در دعاوی ملی و دستگاه‌های اجرایی است.

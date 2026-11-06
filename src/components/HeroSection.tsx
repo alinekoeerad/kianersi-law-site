@@ -31,11 +31,11 @@ export default function HeroSection() {
               
               <h1 className="text-2xl md:text-3xl lg:text-4xl mb-3 leading-snug font-bold" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
                 محمدحسن کیان‌ارثی<br />
-                <span className="text-xl md:text-2xl font-light text-cyan-200">وکیل پایه یک دادگستری</span>
+                <span className="text-xl md:text-2xl font-light text-cyan-200">وکیل پایه یک دادگستری کرج</span>
               </h1>
 
               <p className="text-sm md:text-base mb-5 font-medium leading-relaxed" style={{ color: '#7dd3fc', fontFamily: 'Noto Naskh Arabic, serif' }}>
-                متمرکز بر دعاوی حقوقی منابع آب در دیوان عدالت اداری، کمیسیون‌ها و مراجع قضایی
+                متخصص دعاوی حقوقی منابع آب، کمیسیون‌های آب‌های زیرزمینی و دیوان عدالت اداری
               </p>
 
               <div className="styled-hr my-4" />
@@ -83,7 +83,8 @@ export default function HeroSection() {
             <div className="relative editorial-frame mx-auto max-w-[320px] md:max-w-[380px]">
               <img 
                 src="./images/lawyer-portrait.webp" 
-                alt="محمدحسن کیان‌ارثی وکیل دادگستری" 
+                alt="محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج و متخصص دعاوی آب و اراضی" 
+                title="محمدحسن کیان‌ارثی وکیل دادگستری کرج"
                 className="w-full object-cover h-[360px] md:h-[520px]"
                 style={{ objectPosition: 'center top', filter: 'saturate(0.9) contrast(1.05)' }} 
               />
