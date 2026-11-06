@@ -10,7 +10,8 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "zip": "powershell Compress-Archive -Path dist/* -DestinationPath website.zip -Force",
-    "local": "node local-server.cjs"
+    "local": "node local-server.cjs",
+    "test:all": "node scratch/comprehensive-test-suite.cjs"
   },
   "dependencies": {
     "clsx": "2.1.1",
