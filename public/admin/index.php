@@ -1046,26 +1046,6 @@ $is_auth = is_authenticated();
             display: block;
             border-radius: 6px;
         }
-        .messenger-zoom-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.55);
-            color: #ffffff;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(2px);
-            z-index: 2;
-        }
-        .messenger-zoom-badge svg {
-            width: 14px !important;
-            height: 14px !important;
-            display: block !important;
-        }
 
         /* ─── Refined SEO Input Groups ─── */
         .seo-input-group {
@@ -1748,9 +1728,6 @@ $is_auth = is_authenticated();
                                     <div id="messengerPreviewTitle" class="messenger-title">محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج | متخصص دعاوی آب و املاک</div>
                                     <div id="messengerPreviewDesc" class="messenger-desc">دفتر وکالت تخصصی محمدحسن کیان‌ارثی در کرج؛ متخصص دعاوی آب، چاه‌های کشاورزی، حریم تأسیسات آبی و دیوان عدالت اداری.</div>
                                     <div class="messenger-image-wrapper">
-                                        <span class="messenger-zoom-badge" title="بزرگنمایی">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                                        </span>
                                         <img id="messengerPreviewImage" src="/preview.webp" alt="تصویر پیش‌نمایش اشتراک‌گذاری">
                                     </div>
                                 </div>
