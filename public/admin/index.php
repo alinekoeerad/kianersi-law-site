@@ -43,6 +43,12 @@ $is_auth = is_authenticated();
             font-family: 'Vazirmatn', system-ui, sans-serif;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
@@ -59,7 +65,8 @@ $is_auth = is_authenticated();
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 1.5rem;
+            padding: 1.5rem 1rem;
+            width: 100%;
         }
 
         .login-card {
@@ -68,7 +75,7 @@ $is_auth = is_authenticated();
             padding: 2.5rem 2rem;
             width: 100%;
             max-width: 420px;
-            border-radius: 4px;
+            border-radius: 6px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             text-align: center;
         }
@@ -83,7 +90,7 @@ $is_auth = is_authenticated();
         .login-desc {
             font-size: 0.825rem;
             color: var(--text-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 1.75rem;
             line-height: 1.6;
         }
 
@@ -91,7 +98,7 @@ $is_auth = is_authenticated();
         .admin-header {
             background: rgba(10, 30, 40, 0.95);
             border-bottom: 2px solid var(--cyan-primary);
-            padding: 1rem 1.5rem;
+            padding: 0.85rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -99,36 +106,42 @@ $is_auth = is_authenticated();
             top: 0;
             z-index: 50;
             backdrop-filter: blur(10px);
+            width: 100%;
+            gap: 0.75rem;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.6rem;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #ffffff;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 3px;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 4px;
             font-size: 0.825rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
             transition: all 0.2s ease;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -179,25 +192,31 @@ $is_auth = is_authenticated();
         /* ─── Navigation Tabs ─── */
         .tabs-container {
             max-width: 1200px;
-            margin: 1.5rem auto 0;
+            margin: 1.25rem auto 0;
             padding: 0 1.5rem;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.35rem;
             border-bottom: 1px solid var(--border-color);
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tabs-container::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
-            padding: 0.75rem 1.25rem;
+            padding: 0.75rem 1rem;
             color: var(--text-muted);
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
             border-bottom: 2px solid transparent;
             transition: all 0.2s;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn.active {
@@ -209,21 +228,23 @@ $is_auth = is_authenticated();
         /* ─── Main Content Container ─── */
         .main-container {
             max-width: 1200px;
-            margin: 1.5rem auto 3rem;
+            margin: 1.25rem auto 3rem;
             padding: 0 1.5rem;
+            width: 100%;
         }
 
         .panel-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 1.75rem;
+            border-radius: 6px;
+            padding: 1.5rem;
             box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
+            width: 100%;
         }
 
         .card-header {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid rgba(14, 116, 144, 0.2);
             display: flex;
@@ -234,7 +255,7 @@ $is_auth = is_authenticated();
         }
 
         .card-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--cyan-light);
         }
@@ -242,12 +263,14 @@ $is_auth = is_authenticated();
         /* ─── Forms ─── */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
             gap: 1.25rem;
+            width: 100%;
         }
 
         .form-group {
             margin-bottom: 1rem;
+            width: 100%;
         }
 
         .form-label {
@@ -260,12 +283,13 @@ $is_auth = is_authenticated();
 
         .form-control {
             width: 100%;
+            max-width: 100%;
             padding: 0.65rem 0.85rem;
             background: var(--bg-input);
             border: 1px solid var(--border-color);
-            border-radius: 3px;
+            border-radius: 4px;
             color: #ffffff;
-            font-size: 0.85rem;
+            font-size: 0.875rem;
             outline: none;
             transition: border-color 0.2s;
         }
@@ -275,7 +299,7 @@ $is_auth = is_authenticated();
         }
 
         textarea.form-control {
-            min-height: 120px;
+            min-height: 110px;
             resize: vertical;
             line-height: 1.8;
         }
@@ -285,15 +309,16 @@ $is_auth = is_authenticated();
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            width: 100%;
         }
 
         .category-header {
             background: rgba(14, 116, 144, 0.15);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.25rem;
+            padding: 0.85rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -304,7 +329,8 @@ $is_auth = is_authenticated();
         .category-title-group {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .category-badge-count {
@@ -320,11 +346,12 @@ $is_auth = is_authenticated();
         .category-actions {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            flex-wrap: wrap;
         }
 
         .category-laws-list {
-            padding: 1.25rem;
+            padding: 1rem 1.25rem;
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
@@ -342,13 +369,14 @@ $is_auth = is_authenticated();
         .law-item {
             background: rgba(3, 24, 37, 0.85);
             border: 1px solid rgba(14, 116, 144, 0.25);
-            padding: 0.85rem 1.15rem;
+            padding: 0.85rem 1rem;
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
+            gap: 0.85rem;
             transition: all 0.2s;
+            width: 100%;
         }
         .law-item:hover {
             border-color: var(--cyan-light);
@@ -360,8 +388,8 @@ $is_auth = is_authenticated();
             min-width: 0;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            flex-wrap: wrap;
+            gap: 0.5rem;
+            overflow: hidden;
         }
 
         .law-badge {
@@ -371,10 +399,11 @@ $is_auth = is_authenticated();
             padding: 0.2rem 0.5rem;
             border-radius: 3px;
             font-weight: 600;
+            flex-shrink: 0;
         }
 
         .law-title {
-            font-size: 0.925rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #ffffff;
             white-space: nowrap;
@@ -389,12 +418,30 @@ $is_auth = is_authenticated();
         }
 
         /* ─── Visual Charts for Micro Analytics ─── */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+            gap: 0.85rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .stat-box {
+            background: rgba(3, 24, 37, 0.7);
+            border: 1px solid var(--border-color);
+            padding: 1.15rem 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
         .chart-card {
             background: rgba(3, 24, 37, 0.75);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             padding: 1.5rem;
-            margin-top: 1.5rem;
+            margin-top: 1.25rem;
+            width: 100%;
         }
 
         .chart-title {
@@ -409,28 +456,25 @@ $is_auth = is_authenticated();
 
         .chart-layout-grid {
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 1.75rem;
             align-items: center;
-        }
-
-        @media (max-width: 900px) {
-            .chart-layout-grid {
-                grid-template-columns: 1fr;
-            }
+            width: 100%;
         }
 
         /* Horizontal Bar Chart */
         .bars-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.85rem;
+            width: 100%;
         }
 
         .bar-item {
             display: flex;
             flex-direction: column;
             gap: 0.35rem;
+            width: 100%;
         }
 
         .bar-meta {
@@ -438,17 +482,21 @@ $is_auth = is_authenticated();
             justify-content: space-between;
             font-size: 0.8rem;
             color: var(--text-main);
+            gap: 0.5rem;
         }
 
         .bar-label-group {
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .bar-track {
             width: 100%;
-            height: 10px;
+            height: 9px;
             background: rgba(14, 116, 144, 0.15);
             border-radius: 5px;
             overflow: hidden;
@@ -468,6 +516,9 @@ $is_auth = is_authenticated();
             align-items: center;
             justify-content: center;
             position: relative;
+            width: 100%;
+            border-right: 1px solid rgba(14, 116, 144, 0.2);
+            padding-right: 1.5rem;
         }
 
         .donut-legend {
@@ -481,9 +532,10 @@ $is_auth = is_authenticated();
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
             font-size: 0.775rem;
             color: var(--text-muted);
+            overflow: hidden;
         }
 
         .legend-color-dot {
@@ -493,15 +545,30 @@ $is_auth = is_authenticated();
             flex-shrink: 0;
         }
 
-        /* ─── Multi-Admin Table ─── */
+        /* ─── Multi-Admin & Security Tab ─── */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 1.25rem;
+            width: 100%;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 4px;
+            border: 1px solid rgba(14, 116, 144, 0.2);
+        }
+
         .admin-table {
             width: 100%;
+            min-width: 440px;
             border-collapse: collapse;
-            margin-top: 1rem;
         }
 
         .admin-table th, .admin-table td {
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 0.85rem;
             text-align: right;
             border-bottom: 1px solid rgba(14, 116, 144, 0.2);
             font-size: 0.85rem;
@@ -517,37 +584,38 @@ $is_auth = is_authenticated();
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             backdrop-filter: blur(5px);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 100;
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
 
         .modal-box {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: 6px;
             width: 100%;
-            max-width: 750px;
+            max-width: 720px;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 2rem;
+            padding: 1.75rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         /* ─── Notification Toast ─── */
         .toast {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 0.85rem 1.5rem;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            max-width: calc(100vw - 3rem);
+            padding: 0.75rem 1.25rem;
             background: var(--emerald-accent);
             color: #ffffff;
-            border-radius: 3px;
-            font-size: 0.875rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
             font-weight: 600;
             box-shadow: 0 5px 20px rgba(0,0,0,0.4);
             transform: translateY(100px);
@@ -561,6 +629,186 @@ $is_auth = is_authenticated();
         }
         .toast.error {
             background: #dc2626;
+        }
+
+        /* ══════════════════════════════════════════════════════════════
+           RESPONSIVE MEDIA QUERIES (Mobile & Tablet Hardening)
+        ══════════════════════════════════════════════════════════════ */
+
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 0.65rem 0.85rem;
+            }
+            .brand-logo {
+                font-size: 0.925rem;
+                gap: 0.4rem;
+            }
+            .brand-logo img {
+                width: 24px !important;
+                height: 24px !important;
+            }
+            .header-actions {
+                gap: 0.35rem;
+            }
+            .header-actions .btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
+            }
+            .btn-text-long {
+                display: none;
+            }
+            .tabs-container {
+                padding: 0 0.75rem;
+                margin-top: 0.75rem;
+            }
+            .tab-btn {
+                padding: 0.65rem 0.75rem;
+                font-size: 0.775rem;
+            }
+            .main-container {
+                padding: 0 0.75rem;
+                margin: 0.75rem auto 2rem;
+            }
+            .panel-card {
+                padding: 1.15rem 0.85rem;
+                margin-bottom: 1rem;
+                border-radius: 6px;
+            }
+            .card-header {
+                margin-bottom: 1rem;
+                gap: 0.5rem;
+            }
+            .card-title {
+                font-size: 0.95rem;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0.85rem;
+            }
+            .security-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+            }
+            .stat-box {
+                padding: 0.85rem 0.5rem;
+            }
+            .chart-card {
+                padding: 1rem 0.85rem;
+            }
+            .chart-layout-grid {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+            }
+            .donut-wrapper {
+                border-right: none !important;
+                border-top: 1px solid rgba(14, 116, 144, 0.2);
+                padding-right: 0 !important;
+                padding-top: 1.5rem;
+            }
+            .category-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.65rem;
+                padding: 0.85rem 0.75rem;
+            }
+            .category-title-group {
+                justify-content: space-between;
+                width: 100%;
+            }
+            .category-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.35rem;
+                width: 100%;
+            }
+            .category-actions .btn {
+                flex: 1 1 auto;
+                justify-content: center;
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+            .category-laws-list {
+                padding: 0.75rem;
+                gap: 0.6rem;
+            }
+            .law-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.6rem;
+                padding: 0.75rem;
+            }
+            .law-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.35rem;
+                width: 100%;
+            }
+            .law-title {
+                white-space: normal;
+                line-height: 1.55;
+                font-size: 0.85rem;
+                word-break: break-word;
+            }
+            .law-actions {
+                display: flex;
+                gap: 0.4rem;
+                width: 100%;
+                border-top: 1px solid rgba(14, 116, 144, 0.2);
+                padding-top: 0.5rem;
+                justify-content: flex-end;
+            }
+            .law-actions .btn {
+                flex: 1;
+                justify-content: center;
+            }
+            .modal-overlay {
+                padding: 0.75rem;
+            }
+            .modal-box {
+                padding: 1.25rem 1rem;
+                max-height: 94vh;
+            }
+            .form-save-footer {
+                text-align: stretch !important;
+            }
+            .form-save-footer .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-logo span {
+                display: none;
+            }
+            .header-actions .btn-text {
+                display: none;
+            }
+            .header-actions .btn {
+                padding: 0.45rem 0.65rem;
+            }
+            .donut-legend {
+                grid-template-columns: 1fr;
+                gap: 0.45rem;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .card-header > div:last-child {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.4rem;
+                width: 100%;
+            }
+            .card-header > div:last-child .btn {
+                flex: 1 1 auto;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -608,27 +856,29 @@ $is_auth = is_authenticated();
         <div class="header-actions">
             <a href="api.php?action=download_backup" class="btn btn-outline" style="border-color: #059669; color: #34d399;" title="دانلود کل اطلاعات سایت در یک فایل">
                 <span>📥</span>
-                <span>دانلود نسخه پشتیبان</span>
+                <span class="btn-text">بک‌آپ</span>
+                <span class="btn-text-long"> اطلاعات</span>
             </a>
-            <a href="../" target="_blank" class="btn btn-outline">
+            <a href="../" target="_blank" class="btn btn-outline" title="مشاهده وب‌سایت در صفحه جدید">
                 <span>👁️</span>
-                <span>مشاهده سایت</span>
+                <span class="btn-text">مشاهده سایت</span>
             </a>
-            <button onclick="handleLogout()" class="btn btn-danger">
-                <span>خروج</span>
+            <button onclick="handleLogout()" class="btn btn-danger" title="خروج از پنل مدیریت">
+                <span>🚪</span>
+                <span class="btn-text">خروج</span>
             </button>
         </div>
     </header>
 
     <?php if (is_using_default_password()): ?>
-    <div style="max-width: 1200px; margin: 1rem auto 0; padding: 0 1.5rem;">
-        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 4px; padding: 0.85rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center; gap: 0.6rem; color: #fca5a5; font-size: 0.85rem;">
-                <span style="font-size: 1.2rem;">⚠️</span>
-                <span><strong>هشدار امنیتی مهم:</strong> شما در حال حاضر از رمز عبور پیش‌فرض اولیه سیستم استفاده می‌کنید. لطفاً برای ارتقای امنیت وب‌سایت، هم‌اکنون از تب امنیت رمز خود را تغییر دهید.</span>
+    <div class="security-banner-wrap" style="max-width: 1200px; margin: 0.85rem auto 0; padding: 0 1.5rem;">
+        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; color: #fca5a5; font-size: 0.825rem; line-height: 1.5;">
+                <span style="font-size: 1.2rem; flex-shrink: 0;">⚠️</span>
+                <span><strong>هشدار امنیتی:</strong> کلمه عبور فعلی، رمز پیش‌فرض اولیه است. لطفاً برای ارتقای امنیت وب‌سایت، هم‌اکنون از تب امنیت رمز خود را تغییر دهید.</span>
             </div>
-            <button onclick="switchTab('security')" class="btn btn-danger btn-sm">
-                تغییر فوری رمز عبور
+            <button onclick="switchTab('security')" class="btn btn-danger btn-sm" style="flex-shrink: 0;">
+                تغییر فوری رمز
             </button>
         </div>
     </div>
@@ -733,7 +983,7 @@ $is_auth = is_authenticated();
                     </div>
                 </div>
 
-                <div style="text-align: left; margin-top: 1.5rem;">
+                <div class="form-save-footer" style="text-align: left; margin-top: 1.5rem;">
                     <button onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.65rem 1.5rem;">
                         <span>💾</span>
                         <span>ذخیره کلیه تنظیمات</span>
@@ -881,7 +1131,7 @@ $is_auth = is_authenticated();
         <!-- TAB 4: SECURITY & MULTI-ADMIN MANAGEMENT -->
         <div id="tab-security" class="tab-content" style="display: none;">
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+            <div class="security-grid">
                 
                 <!-- Box 1: Change Current Password -->
                 <div class="panel-card" style="margin-bottom: 0;">
@@ -1625,6 +1875,7 @@ $is_auth = is_authenticated();
                     const canDelete = admins.length > 1;
 
                     let html = `
+                    <div class="table-responsive">
                     <table class="admin-table">
                         <thead>
                             <tr>
@@ -1665,6 +1916,7 @@ $is_auth = is_authenticated();
                     html += `
                         </tbody>
                     </table>
+                    </div>
                     `;
 
                     if (!canDelete) {
