@@ -186,3 +186,4 @@ if ($action === 'change_password') {
 }
 
 json_out(['success' => false, 'error' => 'عملیات نامعتبر است.'], 400);
+

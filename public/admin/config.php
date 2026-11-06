@@ -42,3 +42,4 @@ function is_authenticated() {
 function get_data_filepath() {
     return dirname(__DIR__) . '/site-data.json';
 }
+

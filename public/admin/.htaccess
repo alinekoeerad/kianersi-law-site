@@ -6,3 +6,4 @@
 
 # Allow executing PHP scripts
 DirectoryIndex index.php
+
