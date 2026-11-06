@@ -21,26 +21,38 @@ $is_auth = is_authenticated();
     
     <style>
         :root {
-            --bg-deep: #020f1a;
-            --bg-card: rgba(10, 30, 40, 0.85);
-            --bg-card-subtle: rgba(4, 21, 33, 0.7);
-            --bg-input: rgba(3, 24, 37, 0.9);
-            --border-color: rgba(14, 116, 144, 0.35);
-            --border-hover: rgba(125, 211, 252, 0.6);
+            --bg-deep: #020b14;
+            --bg-card: rgba(7, 24, 38, 0.88);
+            --bg-card-subtle: rgba(4, 18, 29, 0.78);
+            --bg-input: rgba(2, 17, 27, 0.9);
+            --border-color: rgba(14, 116, 144, 0.32);
+            --border-hover: rgba(56, 189, 248, 0.65);
             --cyan-primary: #0e7490;
+            --cyan-hover: #0891b2;
+            --cyan-glow: rgba(14, 116, 144, 0.4);
             --cyan-light: #7dd3fc;
+            --cyan-accent: #38bdf8;
             --emerald-accent: #059669;
+            --emerald-hover: #10b981;
             --emerald-light: #34d399;
             --amber-accent: #f59e0b;
+            --rose-accent: #e11d48;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 22px;
+            --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(14, 116, 144, 0.22);
+            --shadow-hover: 0 16px 40px -5px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(56, 189, 248, 0.45);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Vazirmatn', system-ui, sans-serif;
+            font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
         }
 
         html, body {
@@ -55,8 +67,11 @@ $is_auth = is_authenticated();
             min-height: 100vh;
             direction: rtl;
             background-image: 
-                radial-gradient(ellipse at 20% 50%, rgba(14, 116, 144, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(6, 95, 70, 0.06) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 20%, rgba(14, 116, 144, 0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 65%, rgba(6, 95, 70, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 90%, rgba(2, 132, 199, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+            line-height: 1.6;
         }
 
         /* ─── Login Screen ─── */
@@ -71,128 +86,237 @@ $is_auth = is_authenticated();
 
         .login-card {
             background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
-            padding: 2.5rem 2rem;
+            padding: 2.75rem 2.25rem;
             width: 100%;
-            max-width: 420px;
-            border-radius: 6px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 430px;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(14, 116, 144, 0.2);
             text-align: center;
         }
 
         .login-title {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
+            margin-bottom: 0.4rem;
+            color: #ffffff;
         }
 
         .login-desc {
-            font-size: 0.825rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-bottom: 1.75rem;
             line-height: 1.6;
         }
 
-        /* ─── Dashboard Screen ─── */
+        /* ─── Dashboard Screen Header ─── */
         .admin-header {
-            background: rgba(10, 30, 40, 0.95);
-            border-bottom: 2px solid var(--cyan-primary);
-            padding: 0.85rem 1.5rem;
+            background: rgba(5, 20, 32, 0.92);
+            border-bottom: 1px solid rgba(14, 116, 144, 0.35);
+            padding: 0.75rem 1.75rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             width: 100%;
-            gap: 0.75rem;
+            gap: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: #ffffff;
+            gap: 0.75rem;
             text-decoration: none;
             flex-shrink: 0;
+        }
+
+        .brand-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            background: rgba(3, 24, 37, 0.8);
+            padding: 2px;
+            box-shadow: 0 2px 8px rgba(14, 116, 144, 0.3);
+        }
+
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .brand-subtitle {
+            font-size: 0.725rem;
+            color: var(--cyan-light);
+            font-weight: 500;
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.65rem;
             flex-wrap: wrap;
         }
 
+        .header-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(5, 150, 105, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--emerald-light);
+            font-weight: 600;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--emerald-light);
+            box-shadow: 0 0 8px var(--emerald-light);
+            animation: pulseStatus 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseStatus {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.85); }
+        }
+
+        .admin-user-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: rgba(14, 116, 144, 0.18);
+            border: 1px solid rgba(14, 116, 144, 0.4);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .admin-user-chip svg {
+            color: var(--cyan-accent);
+        }
+
+        /* ─── Buttons Design System ─── */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.4rem;
-            padding: 0.45rem 0.85rem;
-            border-radius: 4px;
+            gap: 0.45rem;
+            padding: 0.55rem 1rem;
+            border-radius: var(--radius-sm);
             font-size: 0.825rem;
             font-weight: 600;
             cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             white-space: nowrap;
+            user-select: none;
+        }
+
+        .btn:hover:not([disabled]) {
+            transform: translateY(-1px);
+        }
+
+        .btn:active:not([disabled]) {
+            transform: translateY(0);
         }
 
         .btn-primary {
-            background: var(--cyan-primary);
+            background: linear-gradient(135deg, var(--cyan-primary) 0%, #0284c7 100%);
             color: #ffffff;
+            border-color: rgba(56, 189, 248, 0.35);
+            box-shadow: 0 3px 12px rgba(14, 116, 144, 0.35);
         }
-        .btn-primary:hover {
-            filter: brightness(1.15);
+        .btn-primary:hover:not([disabled]) {
+            background: linear-gradient(135deg, #0891b2 0%, #0369a1 100%);
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45);
         }
 
         .btn-success {
-            background: var(--emerald-accent);
+            background: linear-gradient(135deg, var(--emerald-accent) 0%, #047857 100%);
             color: #ffffff;
+            border-color: rgba(52, 211, 153, 0.35);
+            box-shadow: 0 3px 12px rgba(5, 150, 105, 0.3);
         }
-        .btn-success:hover {
-            filter: brightness(1.15);
+        .btn-success:hover:not([disabled]) {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 16px rgba(52, 211, 153, 0.4);
         }
 
         .btn-outline {
-            background: transparent;
+            background: rgba(14, 116, 144, 0.1);
             border: 1px solid var(--border-color);
             color: var(--cyan-light);
         }
-        .btn-outline:hover {
-            border-color: var(--cyan-light);
-            background: rgba(14, 116, 144, 0.15);
+        .btn-outline:hover:not([disabled]) {
+            border-color: var(--cyan-accent);
+            background: rgba(14, 116, 144, 0.25);
+            color: #ffffff;
+            box-shadow: 0 3px 12px rgba(14, 116, 144, 0.25);
         }
 
         .btn-danger {
-            background: #991b1b;
+            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
             color: #ffffff;
+            border-color: rgba(248, 113, 113, 0.3);
+            box-shadow: 0 3px 12px rgba(153, 27, 27, 0.3);
         }
-        .btn-danger:hover {
-            background: #b91c1c;
+        .btn-danger:hover:not([disabled]) {
+            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+        }
+        .btn-secondary:hover:not([disabled]) {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
         }
 
         .btn-sm {
-            padding: 0.35rem 0.65rem;
+            padding: 0.38rem 0.75rem;
             font-size: 0.775rem;
+            border-radius: 6px;
         }
 
         .btn[disabled] {
             opacity: 0.45;
             cursor: not-allowed;
             pointer-events: none;
+            transform: none !important;
+            box-shadow: none !important;
         }
 
         .admin-icon {
             display: inline-block;
-            width: 1rem;
-            height: 1rem;
+            width: 1.05rem;
+            height: 1.05rem;
             vertical-align: middle;
             stroke-width: 2;
             stroke: currentColor;
@@ -201,20 +325,25 @@ $is_auth = is_authenticated();
             stroke-linejoin: round;
             flex-shrink: 0;
         }
-        .admin-icon-sm { width: 0.85rem; height: 0.85rem; }
+        .admin-icon-sm { width: 0.9rem; height: 0.9rem; }
         .admin-icon-lg { width: 1.35rem; height: 1.35rem; }
 
-        /* ─── Navigation Tabs ─── */
+        /* ─── Segmented Navigation Tabs Bar ─── */
         .tabs-container {
             max-width: 1200px;
             margin: 1.25rem auto 0;
-            padding: 0 1.5rem;
+            padding: 6px;
+            background: rgba(4, 20, 32, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(14, 116, 144, 0.35);
+            border-radius: var(--radius-xl);
             display: flex;
-            gap: 0.35rem;
-            border-bottom: 1px solid var(--border-color);
+            gap: 0.4rem;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
         .tabs-container::-webkit-scrollbar {
             display: none;
@@ -222,98 +351,176 @@ $is_auth = is_authenticated();
 
         .tab-btn {
             background: transparent;
-            border: none;
-            padding: 0.75rem 1rem;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            padding: 0.65rem 1.15rem;
             color: var(--text-muted);
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.55rem;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(14, 116, 144, 0.15);
+            color: #f1f5f9;
+            border-color: rgba(14, 116, 144, 0.3);
         }
 
         .tab-btn.active {
-            color: var(--cyan-light);
-            border-bottom-color: var(--cyan-light);
+            background: linear-gradient(135deg, #0e7490 0%, #0284c7 100%);
+            color: #ffffff;
+            border-color: rgba(56, 189, 248, 0.4);
             font-weight: 700;
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* ─── Main Content Container ─── */
         .main-container {
             max-width: 1200px;
-            margin: 1.25rem auto 3rem;
+            margin: 1.25rem auto 5rem;
             padding: 0 1.5rem;
             width: 100%;
         }
 
         .panel-card {
             background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            margin-bottom: 1.25rem;
+            border-radius: var(--radius-lg);
+            padding: 1.65rem;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 1.5rem;
             width: 100%;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .panel-card:hover {
+            border-color: rgba(14, 116, 144, 0.45);
         }
 
         .card-header {
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(14, 116, 144, 0.2);
+            margin-bottom: 1.35rem;
+            padding-bottom: 0.95rem;
+            border-bottom: 1px solid rgba(14, 116, 144, 0.22);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 0.85rem;
+        }
+
+        .card-header-main {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .card-icon-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-md);
+            background: rgba(14, 116, 144, 0.2);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-accent);
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(14, 116, 144, 0.2);
         }
 
         .card-title {
-            font-size: 1.05rem;
+            font-size: 1.125rem;
             font-weight: 700;
-            color: var(--cyan-light);
+            color: #ffffff;
+            line-height: 1.3;
         }
 
-        /* ─── Forms ─── */
+        .card-subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            line-height: 1.5;
+        }
+
+        /* ─── Forms & Input Fields ─── */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
             gap: 1.25rem;
             width: 100%;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.15rem;
             width: 100%;
         }
 
         .form-label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.825rem;
             font-weight: 600;
             color: var(--cyan-light);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .input-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-wrap .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--cyan-accent);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.85;
+        }
+
+        .input-wrap.textarea-wrap .input-icon {
+            top: 16px;
+            transform: none;
         }
 
         .form-control {
             width: 100%;
             max-width: 100%;
-            padding: 0.65rem 0.85rem;
+            padding: 0.7rem 0.95rem;
             background: var(--bg-input);
             border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             color: #ffffff;
             font-size: 0.875rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s ease;
+            line-height: 1.6;
+        }
+
+        .form-control.has-icon {
+            padding-right: 2.6rem;
         }
 
         .form-control:focus {
-            border-color: var(--cyan-light);
+            border-color: var(--cyan-accent);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+            background: rgba(3, 26, 42, 0.95);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-dim);
+            font-size: 0.825rem;
         }
 
         textarea.form-control {
@@ -322,21 +529,74 @@ $is_auth = is_authenticated();
             line-height: 1.8;
         }
 
+        /* ─── Social Media Channel Cards ─── */
+        .social-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            gap: 1.25rem;
+            width: 100%;
+        }
+
+        .social-channel-box {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+
+        .social-channel-box:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        }
+
+        .social-channel-box.instagram-box:hover { border-color: rgba(225, 48, 108, 0.7); }
+        .social-channel-box.eitaa-box:hover { border-color: rgba(230, 126, 34, 0.7); }
+        .social-channel-box.bale-box:hover { border-color: rgba(16, 185, 129, 0.7); }
+        .social-channel-box.rubika-box:hover { border-color: rgba(142, 68, 173, 0.7); }
+
+        .social-channel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.15rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .social-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
         /* ─── Categorized Laws Section Cards ─── */
         .category-section-card {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: var(--radius-md);
             margin-bottom: 1.25rem;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.25);
             width: 100%;
+            transition: all 0.25s ease;
+        }
+
+        .category-section-card:hover {
+            border-color: rgba(14, 116, 144, 0.5);
         }
 
         .category-header {
             background: rgba(14, 116, 144, 0.15);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.85rem 1.25rem;
+            padding: 0.95rem 1.35rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -347,125 +607,137 @@ $is_auth = is_authenticated();
         .category-title-group {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            gap: 0.65rem;
         }
 
         .category-badge-count {
-            background: rgba(14, 116, 144, 0.4);
+            background: rgba(14, 116, 144, 0.35);
             color: var(--cyan-light);
             font-size: 0.75rem;
-            font-weight: 600;
             padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            border: 1px solid rgba(125, 211, 252, 0.3);
+            border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-weight: 600;
         }
 
         .category-actions {
             display: flex;
+            gap: 0.45rem;
             align-items: center;
-            gap: 0.4rem;
-            flex-wrap: wrap;
         }
 
         .category-laws-list {
-            padding: 1rem 1.25rem;
+            padding: 0.6rem;
             display: flex;
             flex-direction: column;
-            gap: 0.75rem;
+            gap: 0.5rem;
         }
 
         .category-empty-state {
-            padding: 2rem 1rem;
+            padding: 1.5rem;
             text-align: center;
             color: var(--text-muted);
-            border: 1px dashed rgba(14, 116, 144, 0.3);
-            border-radius: 4px;
             font-size: 0.85rem;
         }
 
         .law-item {
-            background: rgba(3, 24, 37, 0.85);
-            border: 1px solid rgba(14, 116, 144, 0.25);
-            padding: 0.85rem 1rem;
-            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.85rem;
-            transition: all 0.2s;
-            width: 100%;
+            background: rgba(3, 24, 37, 0.6);
+            border: 1px solid rgba(14, 116, 144, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem;
+            transition: all 0.2s ease;
+            gap: 0.75rem;
         }
+
         .law-item:hover {
-            border-color: var(--cyan-light);
-            background: rgba(14, 116, 144, 0.12);
+            background: rgba(14, 116, 144, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateX(-2px);
         }
 
         .law-info {
-            flex: 1;
-            min-width: 0;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             overflow: hidden;
         }
 
         .law-badge {
-            font-size: 0.75rem;
-            background: rgba(14, 116, 144, 0.3);
+            font-size: 0.725rem;
+            font-weight: 700;
             color: var(--cyan-light);
+            background: rgba(14, 116, 144, 0.3);
             padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-weight: 600;
-            flex-shrink: 0;
+            border-radius: 4px;
+            white-space: nowrap;
         }
 
         .law-title {
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 0.875rem;
             color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-weight: 500;
         }
 
         .law-actions {
             display: flex;
-            gap: 0.4rem;
+            gap: 0.35rem;
             flex-shrink: 0;
         }
 
-        /* ─── Visual Charts for Micro Analytics ─── */
+        /* ─── Analytics Dashboard KPI Cards ─── */
         .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
-            gap: 0.85rem;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
             margin-top: 1rem;
-            width: 100%;
         }
 
         .stat-box {
-            background: rgba(3, 24, 37, 0.7);
+            background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            padding: 1.15rem 0.75rem;
-            border-radius: 6px;
+            padding: 1.25rem 1rem;
+            border-radius: var(--radius-md);
             text-align: center;
-            transition: transform 0.2s;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--stat-accent, var(--cyan-accent));
+            opacity: 0.7;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            border-color: var(--border-hover);
         }
 
         .chart-card {
-            background: rgba(3, 24, 37, 0.75);
+            background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: var(--radius-md);
             padding: 1.5rem;
-            margin-top: 1.25rem;
-            width: 100%;
+            margin-top: 1.5rem;
         }
 
         .chart-title {
             font-size: 0.95rem;
             font-weight: 700;
-            color: var(--cyan-light);
+            color: #ffffff;
             margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
@@ -474,646 +746,517 @@ $is_auth = is_authenticated();
 
         .chart-layout-grid {
             display: grid;
-            grid-template-columns: 1.3fr 1fr;
-            gap: 1.75rem;
+            grid-template-columns: 1fr 280px;
+            gap: 2rem;
             align-items: center;
-            width: 100%;
         }
 
-        /* Horizontal Bar Chart */
-        .bars-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-            width: 100%;
-        }
-
-        .bar-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-            width: 100%;
-        }
-
-        .bar-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: var(--text-main);
-            gap: 0.5rem;
-        }
-
-        .bar-label-group {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bar-track {
-            width: 100%;
-            height: 9px;
-            background: rgba(14, 116, 144, 0.15);
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .bar-fill {
-            height: 100%;
-            border-radius: 5px;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Donut SVG Chart */
-        .donut-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            width: 100%;
-            border-right: 1px solid rgba(14, 116, 144, 0.2);
-            padding-right: 1.5rem;
-        }
-
-        .donut-legend {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.6rem;
-            margin-top: 1.25rem;
-            width: 100%;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-            font-size: 0.775rem;
-            color: var(--text-muted);
-            overflow: hidden;
-        }
-
-        .legend-color-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* ─── Multi-Admin & Security Tab ─── */
-        .security-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-            gap: 1.25rem;
-            width: 100%;
-        }
-
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 4px;
-            border: 1px solid rgba(14, 116, 144, 0.2);
-        }
-
-        .admin-table {
-            width: 100%;
-            min-width: 440px;
-            border-collapse: collapse;
-        }
-
-        .admin-table th, .admin-table td {
-            padding: 0.75rem 0.85rem;
-            text-align: right;
-            border-bottom: 1px solid rgba(14, 116, 144, 0.2);
-            font-size: 0.85rem;
-        }
-
-        .admin-table th {
-            color: var(--cyan-light);
-            font-weight: 600;
-            background: rgba(14, 116, 144, 0.1);
-        }
-
-        /* ─── Modal ─── */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(5px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            padding: 1.25rem;
-        }
-
-        .modal-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            width: 100%;
-            max-width: 720px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 1.75rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        }
-
-        /* ─── Notification Toast ─── */
-        .toast {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            max-width: calc(100vw - 3rem);
-            padding: 0.75rem 1.25rem;
-            background: var(--emerald-accent);
-            color: #ffffff;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 200;
-        }
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .toast.error {
-            background: #dc2626;
-        }
-
-        /* ══════════════════════════════════════════════════════════════
-           RESPONSIVE MEDIA QUERIES (Mobile & Tablet Hardening)
-        ══════════════════════════════════════════════════════════════ */
-
-        @media (max-width: 768px) {
-            .admin-header {
-                padding: 0.65rem 0.85rem;
-            }
-            .brand-logo {
-                font-size: 0.925rem;
-                gap: 0.4rem;
-            }
-            .brand-logo img {
-                width: 24px !important;
-                height: 24px !important;
-            }
-            .header-actions {
-                gap: 0.35rem;
-            }
-            .header-actions .btn {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.75rem;
-            }
-            .btn-text-long {
-                display: none;
-            }
-            .tabs-container {
-                padding: 0 0.75rem;
-                margin-top: 0.75rem;
-            }
-            .tab-btn {
-                padding: 0.65rem 0.75rem;
-                font-size: 0.775rem;
-            }
-            .main-container {
-                padding: 0 0.75rem;
-                margin: 0.75rem auto 2rem;
-            }
-            .panel-card {
-                padding: 1.15rem 0.85rem;
-                margin-bottom: 1rem;
-                border-radius: 6px;
-            }
-            .card-header {
-                margin-bottom: 1rem;
-                gap: 0.5rem;
-            }
-            .card-title {
-                font-size: 0.95rem;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-                gap: 0.85rem;
-            }
-            .security-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            .analytics-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.6rem;
-            }
-            .stat-box {
-                padding: 0.85rem 0.5rem;
-            }
-            .chart-card {
-                padding: 1rem 0.85rem;
-            }
+        @media (max-width: 860px) {
             .chart-layout-grid {
                 grid-template-columns: 1fr;
-                gap: 1.75rem;
             }
             .donut-wrapper {
                 border-right: none !important;
                 border-top: 1px solid rgba(14, 116, 144, 0.2);
                 padding-right: 0 !important;
                 padding-top: 1.5rem;
-            }
-            .category-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0.65rem;
-                padding: 0.85rem 0.75rem;
-            }
-            .category-title-group {
-                justify-content: space-between;
-                width: 100%;
-            }
-            .category-actions {
                 display: flex;
-                flex-wrap: wrap;
-                gap: 0.35rem;
-                width: 100%;
-            }
-            .category-actions .btn {
-                flex: 1 1 auto;
-                justify-content: center;
-                font-size: 0.75rem;
-                padding: 0.4rem 0.6rem;
-            }
-            .category-laws-list {
-                padding: 0.75rem;
-                gap: 0.6rem;
-            }
-            .law-item {
                 flex-direction: column;
-                align-items: stretch;
-                gap: 0.6rem;
-                padding: 0.75rem;
-            }
-            .law-info {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.35rem;
-                width: 100%;
-            }
-            .law-title {
-                white-space: normal;
-                line-height: 1.55;
-                font-size: 0.85rem;
-                word-break: break-word;
-            }
-            .law-actions {
-                display: flex;
-                gap: 0.4rem;
-                width: 100%;
-                border-top: 1px solid rgba(14, 116, 144, 0.2);
-                padding-top: 0.5rem;
-                justify-content: flex-end;
-            }
-            .law-actions .btn {
-                flex: 1;
-                justify-content: center;
-            }
-            .modal-overlay {
-                padding: 0.75rem;
-            }
-            .modal-box {
-                padding: 1.25rem 1rem;
-                max-height: 94vh;
-            }
-            .form-save-footer {
-                text-align: stretch !important;
-            }
-            .form-save-footer .btn {
-                width: 100%;
-                justify-content: center;
+                align-items: center;
             }
         }
 
-        @media (max-width: 480px) {
-            .brand-logo span {
-                display: none;
-            }
-            .header-actions .btn-text {
-                display: none;
-            }
-            .header-actions .btn {
-                padding: 0.45rem 0.65rem;
-            }
-            .donut-legend {
-                grid-template-columns: 1fr;
-                gap: 0.45rem;
-            }
-            .card-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .card-header > div:last-child {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 0.4rem;
-                width: 100%;
-            }
-            .card-header > div:last-child .btn {
-                flex: 1 1 auto;
-                justify-content: center;
-            }
-        }
-
-        /* ─── Images & SEO Management Styles ─── */
-        .seo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .image-card {
-            background: rgba(15, 23, 42, 0.65);
-            border: 1px solid rgba(14, 116, 144, 0.25);
-            border-radius: 6px;
-            padding: 1.25rem;
+        .bars-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            transition: all 0.2s ease;
+            gap: 0.85rem;
         }
-        .image-card:hover {
-            border-color: rgba(6, 182, 212, 0.45);
-            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
         }
-        .image-card-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #ffffff;
+
+        .bar-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+        }
+
+        .bar-label-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #e2e8f0;
         }
-        .image-preview-box {
-            position: relative;
-            width: 100%;
-            height: 200px;
-            background: #090d16;
-            border: 1px dashed rgba(14, 116, 144, 0.35);
-            border-radius: 6px;
+
+        .bar-track {
+            background: rgba(3, 24, 37, 0.9);
+            height: 10px;
+            border-radius: 999px;
             overflow: hidden;
+            border: 1px solid rgba(14, 116, 144, 0.2);
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .donut-wrapper {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+
+        .donut-legend {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            width: 100%;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.775rem;
+            color: var(--text-muted);
+        }
+
+        .legend-color-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 0.4rem;
+        }
+
+        /* ─── Security Tab ─── */
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(14, 116, 144, 0.25);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+
+        .admin-table th {
+            background: rgba(14, 116, 144, 0.2);
+            color: var(--cyan-light);
+            padding: 0.85rem 1rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid rgba(14, 116, 144, 0.15);
+            color: #ffffff;
+        }
+
+        .admin-table tr:hover td {
+            background: rgba(14, 116, 144, 0.08);
+        }
+
+        /* ─── Modals ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 116, 144, 0.3);
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ─── Toast Notifications ─── */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: rgba(5, 20, 32, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--emerald-accent);
+            color: #ffffff;
+            padding: 0.85rem 1.35rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(5, 150, 105, 0.3);
+            display: none;
+            direction: rtl;
+        }
+
+        .toast.show {
+            display: block;
+            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.error {
+            border-color: #ef4444;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        @keyframes toastIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Sticky Save Action Bar ─── */
+        .sticky-save-bar {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 85;
+            background: rgba(4, 20, 32, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            border-radius: var(--radius-xl);
+            padding: 0.55rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 116, 144, 0.35);
+            transition: all 0.3s ease;
+            max-width: 92vw;
+        }
+
+        .sticky-save-info {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-size: 0.825rem;
+            color: var(--cyan-light);
+        }
+
+        .kbd-badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            font-size: 0.725rem;
+            font-family: monospace;
+            color: #ffffff;
+            background: rgba(14, 116, 144, 0.45);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+
+        /* ─── Images & SEO Tab ─── */
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .image-card {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            transition: all 0.25s ease;
+        }
+
+        .image-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.35);
+        }
+
+        .image-card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .image-preview-box {
+            position: relative;
+            background: rgba(2, 14, 23, 0.9);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 0.5rem;
+        }
+
         .image-preview-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            transition: transform 0.25s ease;
+            border-radius: 4px;
         }
+
         .image-preview-badge {
             position: absolute;
-            top: 0.5rem;
-            left: 0.5rem;
-            background: rgba(6, 182, 212, 0.85);
+            top: 8px;
+            right: 8px;
+            background: rgba(14, 116, 144, 0.85);
             color: #ffffff;
             font-size: 0.7rem;
-            font-weight: 700;
             padding: 0.2rem 0.5rem;
             border-radius: 4px;
-            letter-spacing: 0.5px;
+            font-weight: 600;
         }
+
         .image-actions {
             display: flex;
-            gap: 0.5rem;
             flex-wrap: wrap;
+            gap: 0.5rem;
         }
-        .image-actions .btn {
-            flex: 1 1 calc(50% - 0.25rem);
-        }
+
         .file-upload-input {
             display: none;
         }
-        /* Google SERP Live Simulator */
+
         .preview-columns-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
+
+        @media (max-width: 900px) {
+            .preview-columns-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .google-serp-preview {
             background: #202124;
             border: 1px solid #3c4043;
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             padding: 1.25rem;
-            font-family: Arial, sans-serif;
-            text-align: right;
             direction: rtl;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            font-family: Arial, sans-serif;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
+
         .serp-url-row {
             display: flex;
             align-items: center;
             gap: 0.65rem;
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.5rem;
         }
+
         .serp-favicon-img {
-            width: 30px;
-            height: 30px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             object-fit: contain;
             background: #303134;
             padding: 2px;
-            border: 1px solid rgba(255,255,255,0.15);
-            flex-shrink: 0;
         }
+
         .serp-site-info {
             display: flex;
             flex-direction: column;
-            gap: 1px;
-            line-height: 1.3;
         }
+
         .serp-site-name {
-            font-weight: 600;
+            font-size: 0.8rem;
             color: #dadce0;
-            font-size: 0.85rem;
         }
+
         .serp-site-url {
-            color: #bdc1c6;
             font-size: 0.75rem;
+            color: #9aa0a6;
             direction: ltr;
             text-align: right;
         }
+
         .serp-title {
+            color: #8ab4f8;
             font-size: 1.15rem;
             font-weight: 400;
-            color: #8ab4f8;
+            line-height: 1.35;
             margin-bottom: 0.4rem;
-            line-height: 1.4;
-            word-break: break-word;
             cursor: pointer;
         }
+
         .serp-title:hover {
             text-decoration: underline;
         }
+
         .serp-description {
-            font-size: 0.875rem;
             color: #bdc1c6;
-            line-height: 1.58;
-            word-break: break-word;
+            font-size: 0.85rem;
+            line-height: 1.6;
         }
 
-        /* ─── Messenger / Social Share Simulator (Telegram / Eitaa / Bale) ─── */
         .messenger-preview-container {
-            background: #0e1621;
+            background: #17212b;
             border: 1px solid rgba(14, 116, 144, 0.35);
-            border-radius: 10px;
+            border-radius: var(--radius-md);
             padding: 1.25rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
+
         .messenger-chat-bubble {
-            background: #182533;
-            border-radius: 12px;
-            padding: 10px 12px 10px;
-            color: #ffffff;
-            position: relative;
-            width: 100%;
+            background: #242f3d;
+            border-radius: var(--radius-md);
+            padding: 0.85rem;
             max-width: 440px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            margin: 0 auto;
         }
+
         .messenger-link-header {
-            color: #5eb5f7;
-            font-size: 0.85rem;
-            direction: ltr;
-            text-align: left;
-            margin-bottom: 0.5rem;
             display: block;
-            text-decoration: underline;
-        }
-        .messenger-rich-card {
-            border-left: 2.5px solid #5eb5f7;
-            background: rgba(0, 0, 0, 0.18);
-            border-radius: 4px;
-            padding: 8px 10px 8px 12px;
-            position: relative;
-        }
-        .messenger-site-name {
-            font-size: 0.825rem;
-            font-weight: 600;
-            color: #70b4f0;
-            margin-bottom: 0.25rem;
+            color: #6ab2f2;
+            font-size: 0.8rem;
+            direction: ltr;
             text-align: right;
+            margin-bottom: 0.5rem;
         }
+
+        .messenger-rich-card {
+            border-right: 3px solid #6ab2f2;
+            padding-right: 0.75rem;
+        }
+
+        .messenger-site-name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6ab2f2;
+            margin-bottom: 0.25rem;
+        }
+
         .messenger-title {
-            font-size: 0.925rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 0.35rem;
             line-height: 1.4;
-            word-break: break-word;
-            text-align: right;
         }
+
         .messenger-desc {
             font-size: 0.8rem;
-            color: #d5dbe0;
+            color: #9bb2c9;
             line-height: 1.5;
-            margin-bottom: 0.6rem;
-            word-break: break-word;
-            text-align: right;
+            margin-bottom: 0.65rem;
         }
+
         .messenger-image-wrapper {
-            position: relative;
             width: 100%;
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255,255,255,0.08);
-            margin-top: 0.5rem;
+            background: #0e1621;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .messenger-image-wrapper img {
             width: 100%;
             height: auto;
             max-height: 520px;
             object-fit: contain;
             display: block;
-            border-radius: 6px;
         }
 
-        /* ─── Refined SEO Input Groups ─── */
         .seo-input-group {
-            background: rgba(15, 23, 42, 0.45);
-            border: 1px solid rgba(14, 116, 144, 0.25);
-            border-radius: 8px;
-            padding: 1.1rem;
-            margin-bottom: 1.15rem;
-            transition: all 0.2s ease;
-        }
-        .seo-input-group:focus-within {
-            border-color: var(--cyan-light);
-            background: rgba(15, 23, 42, 0.7);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.12);
-        }
-        .seo-input-group .form-label {
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        .seo-input-group .form-control {
+            margin-bottom: 1.25rem;
             width: 100%;
-            background: rgba(8, 14, 26, 0.95);
-            border: 1px solid rgba(14, 116, 144, 0.35);
-            border-radius: 6px;
-            padding: 0.65rem 0.85rem;
-            color: #ffffff;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            transition: border 0.2s;
         }
-        .seo-input-group .form-control:focus {
-            border-color: var(--cyan-light);
-            outline: none;
-        }
+
         .seo-counter-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
             font-size: 0.75rem;
             color: var(--text-muted);
-            padding: 0 0.25rem;
         }
+
         .seo-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            padding: 0.2rem 0.55rem;
+            background: rgba(14, 116, 144, 0.25);
+            color: var(--cyan-light);
+            padding: 0.15rem 0.55rem;
             border-radius: 4px;
             font-weight: 600;
-            background: rgba(255,255,255,0.06);
-            color: #94a3b8;
         }
+
         .seo-badge.good {
-            background: rgba(16, 185, 129, 0.18);
-            color: #10b981;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
             border: 1px solid rgba(16, 185, 129, 0.35);
         }
+
         .seo-badge.warn {
             background: rgba(245, 158, 11, 0.18);
             color: #f59e0b;
             border: 1px solid rgba(245, 158, 11, 0.35);
         }
+
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 0.75rem 1rem;
+            }
+            .main-container {
+                padding: 0 1rem;
+            }
+            .panel-card {
+                padding: 1.25rem 1rem;
+            }
+            .brand-subtitle, .header-status-pill {
+                display: none;
+            }
+            .sticky-save-bar {
+                bottom: 1rem;
+                padding: 0.5rem 1rem;
+                gap: 0.75rem;
+            }
+            .kbd-badge {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -1153,11 +1296,25 @@ $is_auth = is_authenticated();
     <?php else: ?>
     <!-- ─── DASHBOARD VIEW ─── -->
     <header class="admin-header">
-        <a href="#" class="brand-logo">
-            <img src="/logo.png" alt="لوگو دفتر وکالت" style="width: 30px; height: 30px; object-fit: contain; border-radius: 4px; border: 1px solid rgba(14, 116, 144, 0.4);">
-            <span>مدیریت وب‌سایت کیان‌ارثی</span>
-        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="#" class="brand-logo">
+                <img src="/logo.png" alt="لوگو دفتر وکالت" class="brand-logo-img">
+                <div class="brand-info">
+                    <span class="brand-title">مدیریت وب‌سایت کیان‌ارثی</span>
+                    <span class="brand-subtitle">دفتر وکالت تخصصی دعاوی آب و املاک</span>
+                </div>
+            </a>
+            <div class="header-status-pill">
+                <span class="status-dot"></span>
+                <span>سامانه فعال و امن</span>
+            </div>
+        </div>
+
         <div class="header-actions">
+            <div class="admin-user-chip" title="حساب مدیر جاری">
+                <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>مدیر: <?= htmlspecialchars($_SESSION['admin_username'] ?? 'admin') ?></span>
+            </div>
             <a href="api.php?action=download_backup" class="btn btn-outline" style="border-color: #059669; color: #34d399;" title="دانلود کل اطلاعات سایت در یک فایل">
                 <svg class="admin-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span class="btn-text">بک‌آپ</span>
@@ -1215,10 +1372,20 @@ $is_auth = is_authenticated();
         
         <!-- TAB 1: GENERAL & CONTACT SETTINGS -->
         <div id="tab-general" class="tab-content">
+            
+            <!-- Card 1: Identity & Official Titles -->
             <div class="panel-card">
                 <div class="card-header">
-                    <h2 class="card-title">تنظیمات اصلی و اطلاعات تماس</h2>
-                    <button onclick="saveGeneralData()" class="btn btn-success">
+                    <div class="card-header-main">
+                        <div class="card-icon-badge">
+                            <svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="card-title">هویت و عناوین اصلی وکیل</h2>
+                            <p class="card-subtitle">تنظیم نام رسمی وکیل، تیتر هدر و زیرعنوان تخصصی معرفی در صفحه اول</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="saveGeneralData()" class="btn btn-success">
                         <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                         <span>ذخیره تغییرات</span>
                     </button>
@@ -1226,90 +1393,226 @@ $is_auth = is_authenticated();
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">نام وکیل:</label>
-                        <input type="text" id="lawyerName" class="form-control">
+                        <label class="form-label" for="lawyerName">نام و نشان وکیل:</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </span>
+                            <input type="text" id="lawyerName" class="form-control has-icon" placeholder="مثال: محمدحسن کیان‌ارثی">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">عنوان اصلی هدر:</label>
-                        <input type="text" id="lawyerTitle" class="form-control">
+                        <label class="form-label" for="lawyerTitle">عنوان اصلی هدر (Title):</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            </span>
+                            <input type="text" id="lawyerTitle" class="form-control has-icon" placeholder="مثال: وکیل پایه یک دادگستری | دعاوی تخصصی آب و املاک">
+                        </div>
                     </div>
                     <div class="form-group" style="grid-column: 1 / -1;">
-                        <label class="form-label">زیرعنوان تخصصی:</label>
-                        <input type="text" id="lawyerSubtitle" class="form-control">
-                    </div>
-                </div>
-
-                <div style="margin: 1.5rem 0 1rem; border-top: 1px solid rgba(14,116,144,0.2); padding-top: 1rem;">
-                    <h3 style="font-size: 0.95rem; color: var(--cyan-light); margin-bottom: 1rem;">آمار سوابق و تجربه (کارت‌های هدر)</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">سال‌های سابقه وکالت (عدد):</label>
-                            <input type="text" id="expYears" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">سابقه در کمیسیون‌ها (عدد):</label>
-                            <input type="text" id="commYears" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">رشته تحصیلی کارشناسی ارشد:</label>
-                            <input type="text" id="eduField" class="form-control">
+                        <label class="form-label" for="lawyerSubtitle">زیرعنوان تخصصی و حوزه فعالیت:</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="3" y2="18"/></svg>
+                            </span>
+                            <input type="text" id="lawyerSubtitle" class="form-control has-icon" placeholder="مثال: مشاوره و وکالت تخصصی در دعاوی حریم تأسیسات آبی، چاه‌های کشاورزی، کمیسیون‌های آب منطقه‌ای و دیوان عدالت اداری">
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div style="margin: 1.5rem 0 1rem; border-top: 1px solid rgba(14,116,144,0.2); padding-top: 1rem;">
-                    <h3 style="font-size: 0.95rem; color: var(--cyan-light); margin-bottom: 1rem;">راه‌های ارتباط و شبکه‌های اجتماعی</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">شماره تلفن مستقیم:</label>
-                            <input type="text" id="phone" class="form-control" placeholder="۰۹۱۲۷۶۹۸۸۶۴">
+            <!-- Card 2: Professional Records & Experience -->
+            <div class="panel-card">
+                <div class="card-header">
+                    <div class="card-header-main">
+                        <div class="card-icon-badge">
+                            <svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
                         </div>
-                        <div class="form-group" style="grid-column: 1 / -1;">
-                            <label class="form-label">نشانی کامل دفتر وکالت کرج:</label>
-                            <textarea id="address" class="form-control" style="min-height: 70px;"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">آیدی اینستاگرام:</label>
-                            <input type="text" id="instagram" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">لینک صفحه اینستاگرام:</label>
-                            <input type="text" id="instagramUrl" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">آیدی پیام‌رسان ایتا:</label>
-                            <input type="text" id="eitaa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">لینک ارتباط در ایتا:</label>
-                            <input type="text" id="eitaaUrl" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">آیدی پیام‌رسان بله:</label>
-                            <input type="text" id="bale" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">لینک ارتباط در بله:</label>
-                            <input type="text" id="baleUrl" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">آیدی پیام‌رسان روبیکا:</label>
-                            <input type="text" id="rubika" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">لینک ارتباط در روبیکا:</label>
-                            <input type="text" id="rubikaUrl" class="form-control">
+                        <div>
+                            <h2 class="card-title">سوابق حرفه‌ای و صلاحیت‌های علمی</h2>
+                            <p class="card-subtitle">کارت‌های شاخص‌های آماری و اعتمادساز در بخش بالایی سایت</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-save-footer" style="text-align: left; margin-top: 1.5rem;">
-                    <button onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.65rem 1.5rem;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="expYears">سال‌های سابقه وکالت پایه یک دادگستری (عدد):</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            </span>
+                            <input type="text" id="expYears" class="form-control has-icon" placeholder="مثال: ۱۷">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="commYears">سابقه حضور در کمیسیون‌های آب (عدد):</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+                            </span>
+                            <input type="text" id="commYears" class="form-control has-icon" placeholder="مثال: ۷">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="eduField">رشته و مقطع تحصیلی دانشگاهی:</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                            </span>
+                            <input type="text" id="eduField" class="form-control has-icon" placeholder="مثال: کارشناسی ارشد حقوق خصوصی">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Contact & Office Location -->
+            <div class="panel-card">
+                <div class="card-header">
+                    <div class="card-header-main">
+                        <div class="card-icon-badge">
+                            <svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="card-title">ارتباط مستقیم تلفنی و نشانی دفتر کرج</h2>
+                            <p class="card-subtitle">تنظیم شماره تماس تماس مستقیم و آدرس دقیق دفتر جهت مراجعه حضوری موکلین</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label" for="phone">شماره تلفن مستقیم همراه / دفتر:</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </span>
+                            <input type="text" id="phone" class="form-control has-icon" placeholder="۰۹۱۲۷۶۹۸۸۶۴" style="direction: ltr; text-align: right;">
+                        </div>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label" for="address">نشانی کامل دفتر وکالت در کرج:</label>
+                        <div class="input-wrap textarea-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </span>
+                            <textarea id="address" class="form-control has-icon" style="min-height: 85px;" placeholder="کرج، میدان آزادگان، ..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Iranian & Global Social Networks -->
+            <div class="panel-card">
+                <div class="card-header">
+                    <div class="card-header-main">
+                        <div class="card-icon-badge">
+                            <svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                        </div>
+                        <div>
+                            <h2 class="card-title">پیام‌رسان‌های ایرانی و درگاه‌های شبکه‌های اجتماعی</h2>
+                            <p class="card-subtitle">مدیریت آیدی و لینک ارتباط آنلاین در ایتا، بله، روبیکا و اینستاگرام</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-cards-grid">
+                    
+                    <!-- 1. Instagram -->
+                    <div class="social-channel-box instagram-box">
+                        <div class="social-channel-header">
+                            <div class="social-icon-box" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);">
+                                <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            </div>
+                            <div>
+                                <strong style="font-size: 0.95rem; color: #ffffff;">اینستاگرام (Instagram)</strong>
+                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">صفحه رسمی و ویدیوهای حقوقی</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label class="form-label" for="instagram">آیدی / نام کاربری اینستاگرام:</label>
+                            <input type="text" id="instagram" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="instagramUrl">لینک مستقیم صفحه اینستاگرام:</label>
+                            <input type="text" id="instagramUrl" class="form-control" placeholder="https://instagram.com/vakilkianersi" style="direction: ltr;">
+                        </div>
+                    </div>
+
+                    <!-- 2. Eitaa -->
+                    <div class="social-channel-box eitaa-box">
+                        <div class="social-channel-header">
+                            <div class="social-icon-box" style="background: #e67e22;">
+                                <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <div>
+                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان ایتا (Eitaa)</strong>
+                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">مشاوره و ارسال مدارک در ایتا</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label class="form-label" for="eitaa">آیدی کاربری در ایتا:</label>
+                            <input type="text" id="eitaa" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="eitaaUrl">لینک ارتباط مستقیم در ایتا:</label>
+                            <input type="text" id="eitaaUrl" class="form-control" placeholder="https://eitaa.com/vakilkianersi" style="direction: ltr;">
+                        </div>
+                    </div>
+
+                    <!-- 3. Bale -->
+                    <div class="social-channel-box bale-box">
+                        <div class="social-channel-header">
+                            <div class="social-icon-box" style="background: #10b981;">
+                                <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <div>
+                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان بله (Bale)</strong>
+                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">ارتباط و ارسال اسناد در بله</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label class="form-label" for="bale">آیدی کاربری در بله:</label>
+                            <input type="text" id="bale" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="baleUrl">لینک ارتباط مستقیم در بله:</label>
+                            <input type="text" id="baleUrl" class="form-control" placeholder="https://ble.ir/vakilkianersi" style="direction: ltr;">
+                        </div>
+                    </div>
+
+                    <!-- 4. Rubika -->
+                    <div class="social-channel-box rubika-box">
+                        <div class="social-channel-header">
+                            <div class="social-icon-box" style="background: #8e44ad;">
+                                <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <div>
+                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان روبیکا (Rubika)</strong>
+                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">کانال و ارتباط در روبیکا</span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                            <label class="form-label" for="rubika">آیدی کاربری در روبیکا:</label>
+                            <input type="text" id="rubika" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="rubikaUrl">لینک ارتباط مستقیم در روبیکا:</label>
+                            <input type="text" id="rubikaUrl" class="form-control" placeholder="https://rubika.ir/vakilkianersi" style="direction: ltr;">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="form-save-footer" style="text-align: left; margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+                    <button type="button" onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.75rem 1.75rem; font-size: 0.9rem;">
                         <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                        <span>ذخیره کلیه تنظیمات</span>
+                        <span>ذخیره کلیه تنظیمات عمومی</span>
                     </button>
                 </div>
             </div>
+
         </div>
 
         <!-- TAB 2: LAWS & DYNAMIC CATEGORIES MANAGEMENT -->
@@ -1745,6 +2048,20 @@ $is_auth = is_authenticated();
             </div>
         </div>
 
+    
+        <!-- Floating Smart Action Bar -->
+        <div id="stickySaveBar" class="sticky-save-bar">
+            <div class="sticky-save-info">
+                <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                <span id="stickySaveText">آماده برای ثبت تغییرات</span>
+                <span class="kbd-badge">Ctrl + S</span>
+            </div>
+            <button type="button" id="stickySaveBtn" onclick="handleActiveSave()" class="btn btn-success btn-sm">
+                <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                <span id="stickySaveBtnLabel">ذخیره سریع</span>
+            </button>
+        </div>
+
     </main>
 
     <!-- ─── CATEGORY ADD / EDIT MODAL ─── -->
@@ -1861,7 +2178,26 @@ $is_auth = is_authenticated();
         }
 
         // Switch Tabs
+        let currentActiveTabId = 'general';
+
+        function handleActiveSave() {
+            if (currentActiveTabId === 'seo') {
+                saveSeoData();
+            } else {
+                saveGeneralData();
+            }
+        }
+
+        // Global Keyboard Shortcut: Ctrl + S / Cmd + S
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+                e.preventDefault();
+                handleActiveSave();
+            }
+        });
+
         function switchTab(tabId) {
+            currentActiveTabId = tabId;
             document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             
@@ -1870,6 +2206,24 @@ $is_auth = is_authenticated();
 
             const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
             if (activeBtn) activeBtn.classList.add('active');
+
+            // Manage Sticky Bar Visibility and Context
+            const stickyBar = document.getElementById('stickySaveBar');
+            const stickyText = document.getElementById('stickySaveText');
+            const stickyBtnLabel = document.getElementById('stickySaveBtnLabel');
+            if (stickyBar) {
+                if (tabId === 'general') {
+                    stickyBar.style.display = 'flex';
+                    if (stickyText) stickyText.textContent = 'تنظیمات عمومی و تماس';
+                    if (stickyBtnLabel) stickyBtnLabel.textContent = 'ذخیره عمومی';
+                } else if (tabId === 'seo') {
+                    stickyBar.style.display = 'flex';
+                    if (stickyText) stickyText.textContent = 'تنظیمات سئو و متادیتا';
+                    if (stickyBtnLabel) stickyBtnLabel.textContent = 'ذخیره سئو';
+                } else {
+                    stickyBar.style.display = 'none';
+                }
+            }
 
             if (tabId === 'analytics') {
                 loadAnalytics();
