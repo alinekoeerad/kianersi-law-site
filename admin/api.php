@@ -4,7 +4,8 @@ require_once __DIR__ . '/config.php';
 header('Content-Type: application/json; charset=utf-8');
 
 // Parse JSON input
-$input = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+$raw_input = file_get_contents('php://input');
+$input = json_decode($raw_input, true) ?? $_POST;
 $action = $_GET['action'] ?? $input['action'] ?? '';
 
 // Helper response
@@ -18,21 +19,40 @@ function json_out($data, $status = 200) {
 if ($action === 'check_auth') {
     json_out([
         'authenticated' => is_authenticated(),
-        'username' => $_SESSION['admin_username'] ?? ''
+        'username' => $_SESSION['admin_username'] ?? '',
+        'csrf_token' => get_csrf_token()
     ]);
 }
 
-// 2. Login
+// 2. Login (with Anti-Brute-Force Protection)
 if ($action === 'login') {
+    // Check if IP is currently locked due to too many failed attempts
+    $bf = check_brute_force_status();
+    if (!$bf['allowed']) {
+        json_out(['success' => false, 'error' => $bf['error']], 429);
+    }
+
     $username = trim($input['username'] ?? '');
     $password = $input['password'] ?? '';
 
     $auth = get_auth_config();
     if ($username === $auth['username'] && password_verify($password, $auth['password_hash'])) {
+        // Success: Reset failed attempts & regenerate session ID (anti-fixation)
+        reset_failed_logins();
+        session_regenerate_id(true);
+
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_username'] = $username;
-        json_out(['success' => true, 'message' => 'ورود با موفقیت انجام شد.']);
+        $_SESSION['last_activity'] = time();
+
+        json_out([
+            'success' => true,
+            'message' => 'ورود با موفقیت انجام شد.',
+            'csrf_token' => get_csrf_token()
+        ]);
     } else {
+        // Failed attempt: Record failure
+        record_failed_login();
         json_out(['success' => false, 'error' => 'نام کاربری یا رمز عبور اشتباه است.'], 401);
     }
 }
@@ -46,32 +66,47 @@ if ($action === 'logout') {
     json_out(['success' => true]);
 }
 
-// ─── Protected Routes (Requires Auth) ───────────────────────────
+// ─── Protected Routes (Requires Authentication) ───────────────────
 if (!is_authenticated()) {
     json_out(['success' => false, 'error' => 'لطفاً ابتدا وارد سیستم شوید.'], 403);
+}
+
+// ─── CSRF Verification for State-Changing POST Requests ───────────
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $client_token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $input['csrf_token'] ?? '';
+    if (!verify_csrf_token($client_token)) {
+        json_out(['success' => false, 'error' => 'خطای امنیتی: نشست یا توکن امنیتی (CSRF) نامعتبر است. لطفاً صفحه را بازنشانی کنید.'], 403);
+    }
 }
 
 // Read site data file
 function read_site_data() {
     $file = get_data_filepath();
     if (file_exists($file)) {
-        $content = file_get_contents($file);
+        $content = @file_get_contents($file);
         $data = json_decode($content, true);
         if ($data) return $data;
     }
     return ['general' => [], 'laws' => []];
 }
 
-// Save site data file
+// Save site data file with Atomic Lock & Automatic Backup
 function write_site_data($data) {
     $file = get_data_filepath();
-    return file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) !== false;
+    $backup_file = dirname($file) . '/site-data-backup.json';
+
+    // Auto-backup before saving
+    if (file_exists($file)) {
+        @copy($file, $backup_file);
+    }
+
+    return @file_put_contents($file, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX) !== false;
 }
 
 // 4. Get Data
 if ($action === 'get_data') {
     $data = read_site_data();
-    json_out(['success' => true, 'data' => $data]);
+    json_out(['success' => true, 'data' => $data, 'csrf_token' => get_csrf_token()]);
 }
 
 // 5. Save General Settings
@@ -81,8 +116,14 @@ if ($action === 'save_general') {
         json_out(['success' => false, 'error' => 'اطلاعات ارسالی نامعتبر است.'], 400);
     }
 
+    // Sanitize string inputs
+    $sanitized = [];
+    foreach ($general as $k => $v) {
+        $sanitized[$k] = is_string($v) ? trim($v) : $v;
+    }
+
     $siteData = read_site_data();
-    $siteData['general'] = array_merge($siteData['general'] ?? [], $general);
+    $siteData['general'] = array_merge($siteData['general'] ?? [], $sanitized);
     
     if (write_site_data($siteData)) {
         json_out(['success' => true, 'message' => 'تنظیمات عمومی با موفقیت ذخیره شد.']);
@@ -98,6 +139,13 @@ if ($action === 'save_law') {
         json_out(['success' => false, 'error' => 'عنوان و متن قانون الزامی است.'], 400);
     }
 
+    $title = trim($law['title']);
+    $content = trim($law['content']);
+
+    if (empty($title) || empty($content)) {
+        json_out(['success' => false, 'error' => 'عنوان یا متن قانون نمی‌تواند خالی باشد.'], 400);
+    }
+
     $siteData = read_site_data();
     $laws = $siteData['laws'] ?? [];
     
@@ -108,8 +156,8 @@ if ($action === 'save_law') {
         $found = false;
         foreach ($laws as &$l) {
             if ((int)$l['id'] === $lawId) {
-                $l['title'] = trim($law['title']);
-                $l['content'] = $law['content'];
+                $l['title'] = $title;
+                $l['content'] = $content;
                 $found = true;
                 break;
             }
@@ -117,8 +165,8 @@ if ($action === 'save_law') {
         if (!$found) {
             $laws[] = [
                 'id' => $lawId,
-                'title' => trim($law['title']),
-                'content' => $law['content']
+                'title' => $title,
+                'content' => $content
             ];
         }
     } else {
@@ -130,8 +178,8 @@ if ($action === 'save_law') {
         $newId = $maxId + 1;
         $laws[] = [
             'id' => $newId,
-            'title' => trim($law['title']),
-            'content' => $law['content']
+            'title' => $title,
+            'content' => $content
         ];
     }
 
@@ -179,6 +227,8 @@ if ($action === 'change_password') {
     }
 
     if (save_auth_config($auth['username'], $new_pass)) {
+        // Regenerate session ID for extra safety
+        session_regenerate_id(true);
         json_out(['success' => true, 'message' => 'رمز عبور با موفقیت به‌روزرسانی شد.']);
     } else {
         json_out(['success' => false, 'error' => 'خطا در ذخیره رمز عبور جدید.'], 500);
