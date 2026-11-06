@@ -125,7 +125,7 @@ const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
     if (action === 'check_auth') {
-      res.end(JSON.stringify({ authenticated: auth, username: auth ? 'admin' : '' }));
+      res.end(JSON.stringify({ authenticated: auth, username: auth ? 'admin' : '', csrf_token: 'local_csrf_token_123' }));
       return;
     }
 
@@ -134,7 +134,7 @@ const server = http.createServer(async (req, res) => {
       const conf = getAuthConfig();
       if (username === conf.username && (password === conf.password || password === 'Kianersi@1403')) {
         res.setHeader('Set-Cookie', 'local_admin_session=authenticated; Path=/; HttpOnly');
-        res.end(JSON.stringify({ success: true, message: 'ورود موفقیت‌آمیز بود.' }));
+        res.end(JSON.stringify({ success: true, message: 'ورود موفقیت‌آمیز بود.', csrf_token: 'local_csrf_token_123' }));
       } else {
         res.statusCode = 401;
         res.end(JSON.stringify({ success: false, error: 'نام کاربری یا کلمه عبور نادرست است.' }));
@@ -157,7 +157,7 @@ const server = http.createServer(async (req, res) => {
 
     if (action === 'get_data') {
       const data = getSiteData();
-      res.end(JSON.stringify({ success: true, data }));
+      res.end(JSON.stringify({ success: true, data, csrf_token: 'local_csrf_token_123' }));
       return;
     }
 
