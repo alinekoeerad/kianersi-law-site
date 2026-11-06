@@ -4,7 +4,7 @@ import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 export default function ExpertiseSection() {
   return (
     <section id="expertise" className="bg-section-alt" style={{ borderTop: '2px solid rgba(14,116,144,0.25)', borderBottom: '2px solid rgba(14,116,144,0.25)' }}>
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         
         {/* Section Header */}
         <AnimSection>
@@ -27,7 +27,7 @@ export default function ExpertiseSection() {
             {/* Card 1: Water Rights */}
             <div className="space-y-4">
               <div 
-                className="keep-together p-7 rounded-sm h-full transition-all duration-300 hover:border-cyan-500/60" 
+                className="keep-together p-5 sm:p-7 rounded-sm h-full transition-all duration-300 hover:border-cyan-500/60" 
                 style={{ 
                   backgroundColor: 'rgba(10, 30, 40, 0.8)', 
                   color: '#ffffff', 
@@ -54,7 +54,7 @@ export default function ExpertiseSection() {
             {/* Card 2: Administrative Court & State Organs */}
             <div className="space-y-4">
               <div 
-                className="keep-together p-7 rounded-sm h-full transition-all duration-300 hover:border-emerald-500/60" 
+                className="keep-together p-5 sm:p-7 rounded-sm h-full transition-all duration-300 hover:border-emerald-500/60" 
                 style={{ 
                   backgroundColor: 'rgba(10, 30, 40, 0.8)', 
                   color: '#ffffff', 
@@ -81,7 +81,7 @@ export default function ExpertiseSection() {
             {/* Card 3: Public Law & Contracts */}
             <div className="space-y-4">
               <div 
-                className="keep-together p-7 rounded-sm h-full transition-all duration-300 hover:border-cyan-500/60" 
+                className="keep-together p-5 sm:p-7 rounded-sm h-full transition-all duration-300 hover:border-cyan-500/60" 
                 style={{ 
                   backgroundColor: 'rgba(10, 30, 40, 0.8)', 
                   color: '#ffffff', 

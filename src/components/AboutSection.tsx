@@ -30,8 +30,8 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-deep">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="about" className="py-12 sm:py-20 bg-deep">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
         <AnimSection>
@@ -71,7 +71,7 @@ export default function AboutSection() {
               </div>
 
               {/* National and Infrastructure Projects Section */}
-              <div className="mt-12 p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
+              <div className="mt-12 p-4 sm:p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
                 <p className="section-label mb-4" style={{ color: '#7dd3fc' }}>سوابق تخصصی در طرح‌های ملی و عمرانی</p>
                 <ul className="space-y-3">
                   {[
@@ -112,7 +112,7 @@ export default function AboutSection() {
               </div>
 
               {/* Professional Information Card */}
-              <div className="p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
+              <div className="p-4 sm:p-6 rounded-sm" style={{ border: '1px solid rgba(14,116,144,0.35)', backgroundColor: 'rgba(10,30,40,0.75)' }}>
                 <p className="section-label mb-4" style={{ color: '#7dd3fc' }}>اطلاعات حرفه‌ای</p>
                 <div className="space-y-4">
                   {[

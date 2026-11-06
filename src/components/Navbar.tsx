@@ -47,7 +47,7 @@ export default function Navbar() {
     <>
       {/* Top Banner */}
       <div style={{ backgroundColor: 'rgba(10, 30, 40, 0.85)', borderBottom: '2px solid #0e7490' }}>
-        <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
           <p className="text-xs tracking-widest font-medium" style={{ color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}>
             عضو کانون وکلای دادگستری البرز
           </p>
@@ -64,7 +64,7 @@ export default function Navbar() {
 
       {/* Main Navigation */}
       <nav className="nav-sticky">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           
           {/* Logo and Masthead Title Container */}
           <a href="#hero" className="flex items-center gap-3 masthead-title text-xl font-bold transition-opacity hover:opacity-80" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>

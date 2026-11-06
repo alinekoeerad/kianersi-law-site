@@ -29,7 +29,7 @@ export default function BackToTop() {
     <button
       onClick={scrollToTop}
       // کلاس‌های تیلویند برای انیمیشن محو شدن و جابجایی
-      className={`fixed bottom-8 left-8 z-50 p-3 transition-all duration-500 group ${
+      className={`fixed bottom-5 left-5 sm:bottom-8 sm:left-8 z-50 p-2.5 sm:p-3 transition-all duration-500 group ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
       }`}
       style={{

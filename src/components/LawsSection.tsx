@@ -132,16 +132,16 @@ export default function LawsSection() {
 
   return (
     <section id="laws" className="bg-section-alt" style={{ borderTop: '2px solid rgba(14,116,144,0.25)', borderBottom: '2px solid rgba(14,116,144,0.25)' }}>
-      <div className="max-w-5xl mx-auto px-6 py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         
         {/* Section Header */}
         <AnimSection>
           <div className="text-center mb-10">
             <SectionLabel>منابع و مستندات قانونی</SectionLabel>
-            <h2 className="article-title text-3xl md:text-4xl mt-2" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
+            <h2 className="article-title text-2xl sm:text-3xl md:text-4xl mt-2" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
               کتابخانه قوانین و مقررات کاربردی آب و اراضی
             </h2>
-            <p className="mt-3 text-sm max-w-2xl mx-auto leading-8" style={{ color: '#cbd5e1', fontFamily: 'Noto Sans Arabic' }}>
+            <p className="mt-3 text-xs sm:text-sm max-w-2xl mx-auto leading-7 sm:leading-8" style={{ color: '#cbd5e1', fontFamily: 'Noto Sans Arabic' }}>
               متن کامل قوانین، آیین‌نامه‌ها و دستورالعمل‌های موضوعه جهت بهره‌برداری و استناد در پرونده‌های حقوقی.
             </p>
             <OrnamentDivider className="max-w-md mx-auto mt-6" />
@@ -151,7 +151,7 @@ export default function LawsSection() {
         {/* Enhanced High-End Search & Filter Card */}
         <AnimSection delay={100}>
           <div 
-            className="p-6 mb-8 rounded-sm space-y-5 transition-all"
+            className="p-4 sm:p-6 mb-8 rounded-sm space-y-5 transition-all"
             style={{ 
               backgroundColor: 'rgba(10, 30, 40, 0.85)', 
               border: '1px solid rgba(14, 116, 144, 0.35)',
@@ -230,10 +230,10 @@ export default function LawsSection() {
             </div>
 
             {/* Editorial Category Tabs & Expand/Collapse Controls */}
-            <div className="pt-3 border-t flex flex-wrap items-center justify-between gap-4" style={{ borderColor: 'rgba(14, 116, 144, 0.2)' }}>
+            <div className="pt-3 border-t flex flex-wrap items-center justify-between gap-3 sm:gap-4" style={{ borderColor: 'rgba(14, 116, 144, 0.2)' }}>
               
               {/* Category Tabs */}
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {categories.map((cat) => {
                   const isSelected = selectedCategory === cat.id;
                   const count = categoryCounts[cat.id as keyof typeof categoryCounts];
@@ -242,7 +242,7 @@ export default function LawsSection() {
                       key={cat.id}
                       type="button"
                       onClick={() => setSelectedCategory(cat.id as any)}
-                      className="text-xs py-1.5 px-3 rounded-sm transition-all duration-200 flex items-center gap-1.5"
+                      className="text-xs py-1.5 px-2.5 sm:px-3 rounded-sm transition-all duration-200 flex items-center gap-1.5"
                       style={{
                         backgroundColor: isSelected ? 'rgba(14, 116, 144, 0.25)' : 'transparent',
                         color: isSelected ? '#ffffff' : '#94a3b8',
@@ -267,11 +267,11 @@ export default function LawsSection() {
               </div>
 
               {/* Expand / Collapse Controls */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                 <button
                   type="button"
                   onClick={() => setOpenAll(true)}
-                  className="text-xs px-2.5 py-1 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1 flex-1 sm:flex-none justify-center"
                   style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
                 >
                   <span>⤢</span>
@@ -280,7 +280,7 @@ export default function LawsSection() {
                 <button
                   type="button"
                   onClick={() => setOpenAll(false)}
-                  className="text-xs px-2.5 py-1 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1 flex-1 sm:flex-none justify-center"
                   style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
                 >
                   <span>⤡</span>
@@ -291,7 +291,7 @@ export default function LawsSection() {
             </div>
 
             {/* Results Counter Bar */}
-            <div className="pt-2 flex items-center justify-between text-xs text-gray-400">
+            <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-gray-400">
               <p>
                 نمایش <strong className="text-cyan-300 font-bold">{toPersianDigits(filteredLaws.length)}</strong> قانون از مجموع <strong className="text-cyan-300 font-bold">{toPersianDigits(lawsDatabase.length)}</strong> قانون
               </p>
@@ -308,7 +308,7 @@ export default function LawsSection() {
         {/* Laws Accordion List */}
         <AnimSection delay={200}>
           {filteredLaws.length === 0 ? (
-            <div className="p-10 text-center rounded-sm bg-slate-900/60 border border-cyan-900/40 space-y-3">
+            <div className="p-6 sm:p-10 text-center rounded-sm bg-slate-900/60 border border-cyan-900/40 space-y-3">
               <span className="text-3xl inline-block text-cyan-400">⚖️</span>
               <p className="text-sm font-semibold text-gray-200">
                 موردی متناسب با عبارت جستجوی «{searchTerm}» یافت نشد.
@@ -335,24 +335,24 @@ export default function LawsSection() {
                   <details 
                     key={`${law.id}-${openAll}-${searchTerm}`} 
                     open={isOpen}
-                    className="group p-5 rounded-sm transition-colors duration-300 hover:bg-cyan-950/40" 
+                    className="group p-4 sm:p-5 rounded-sm transition-colors duration-300 hover:bg-cyan-950/40 overflow-hidden break-words min-w-0 max-w-full" 
                     style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}
                   >
                     
-                    <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-sm outline-none gap-3" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc' }}>
-                      <div className="flex items-center gap-2.5 flex-wrap flex-1">
-                        <span className="text-xs px-2 py-0.5 rounded-sm bg-cyan-950 text-cyan-300 border border-cyan-800/50">
-                          قانون شماره {toPersianDigits(law.id)}
+                    <summary className="flex items-center justify-between cursor-pointer list-none font-semibold text-sm outline-none gap-2 sm:gap-3 min-w-0" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc' }}>
+                      <div className="flex items-center gap-2 flex-wrap flex-1 min-w-0">
+                        <span className="text-[11px] sm:text-xs px-2 py-0.5 rounded-sm bg-cyan-950 text-cyan-300 border border-cyan-800/50 flex-shrink-0">
+                          قانون {toPersianDigits(law.id)}
                         </span>
-                        <span className="group-hover:text-white transition-colors duration-300 text-sm md:text-base">
+                        <span className="group-hover:text-white transition-colors duration-300 text-xs sm:text-sm md:text-base break-words">
                           {highlightSearchTerm(law.title, searchTerm)}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-3 flex-shrink-0">
+                      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
                         {searchTerm.trim() && law.totalMatches > 0 && (
-                          <span className="text-xs px-2.5 py-0.5 rounded-sm bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 font-sans">
-                            {toPersianDigits(law.totalMatches)} مورد منطبق
+                          <span className="text-[11px] sm:text-xs px-2 sm:px-2.5 py-0.5 rounded-sm bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 font-sans">
+                            {toPersianDigits(law.totalMatches)} مورد
                           </span>
                         )}
                         <span className="text-cyan-400 group-open:rotate-180 transition-transform duration-300 text-xs">
@@ -361,7 +361,7 @@ export default function LawsSection() {
                       </div>
                     </summary>
                     
-                    <div className="mt-4 pt-4 legal-article" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', whiteSpace: 'pre-wrap' }}>
+                    <div className="mt-4 pt-4 legal-article overflow-hidden break-words min-w-0 max-w-full" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', whiteSpace: 'pre-wrap' }}>
                       {formatLegalText(law.content, searchTerm)}
                     </div>
                     

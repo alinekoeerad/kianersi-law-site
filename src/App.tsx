@@ -20,7 +20,7 @@ const SectionLoader = () => (
 
 export default function App() {
   return (
-    <div className="min-h-screen paper-texture bg-deep" style={{ color: '#ffffff' }}>
+    <div className="min-h-screen paper-texture bg-deep overflow-x-hidden w-full max-w-full" style={{ color: '#ffffff' }}>
       <Navbar />
       <HeroSection />
 

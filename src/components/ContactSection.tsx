@@ -79,8 +79,8 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-deep">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="contact" className="py-12 sm:py-20 bg-deep">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
         <AnimSection>
@@ -100,7 +100,7 @@ export default function ContactSection() {
           <AnimSection className="md:col-span-5 space-y-6">
             
             {/* Contact Methods List Card */}
-            <div className="p-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
+            <div className="p-4 sm:p-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
               <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)' }}>
                 <p className="section-label mb-0" style={{ color: '#7dd3fc' }}>راه‌های ارتباط و پیام‌رسان‌ها</p>
                 <span className="text-xs" style={{ color: '#e2e8f0' }}>ارتباط مستقیم با وکیل</span>
@@ -137,7 +137,7 @@ export default function ContactSection() {
             </div>
 
             {/* Consultation Action Card */}
-            <div className="p-6 rounded-sm text-center" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
+            <div className="p-4 sm:p-6 rounded-sm text-center" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
               <div className="mb-4 pb-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)' }}>
                 <p className="section-label mb-1" style={{ color: '#7dd3fc' }}>پذیرش پرونده و تعیین وقت مشاوره</p>
                 <p className="text-sm font-semibold text-white mt-1" style={{ fontFamily: 'Noto Naskh Arabic, serif' }}>
@@ -167,7 +167,7 @@ export default function ContactSection() {
           <AnimSection className="md:col-span-7 space-y-6" delay={150}>
             
             {/* Address Info Card */}
-            <div className="p-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
+            <div className="p-4 sm:p-6 rounded-sm" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
               
               <div className="flex items-center justify-between mb-4 pb-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)' }}>
                 <div className="flex items-center gap-2">
@@ -253,18 +253,18 @@ export default function ContactSection() {
               </div>
 
               {/* Quick Navigation Direct Links Bar */}
-              <div className="p-4" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', backgroundColor: 'rgba(3,24,37,0.7)' }}>
+              <div className="p-3 sm:p-4" style={{ borderTop: '1px solid rgba(14,116,144,0.2)', backgroundColor: 'rgba(3,24,37,0.7)' }}>
                 <p className="text-xs section-label mb-3" style={{ color: '#7dd3fc' }}>
                   مسیریابی مستقیم با برنامه‌های نقشه و بلد:
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {navigationApps.map((app) => (
                     <a
                       key={app.name}
                       href={app.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs rounded-sm transition-all duration-300 hover:brightness-125 hover:-translate-y-0.5 text-center font-medium"
+                      className="flex items-center justify-center gap-1 py-2 px-2 text-[11px] sm:text-xs rounded-sm transition-all duration-300 hover:brightness-125 hover:-translate-y-0.5 text-center font-medium"
                       style={{
                         backgroundColor: 'rgba(10,30,40,0.85)',
                         border: '1px solid rgba(14,116,144,0.4)',

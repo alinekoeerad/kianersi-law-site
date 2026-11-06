@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: 'rgba(10, 30, 40, 0.95)', borderTop: '2px solid #0e7490' }}>
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
         <div className="grid md:grid-cols-3 gap-8 pb-8" style={{ borderBottom: '1px solid rgba(14,116,144,0.3)' }}>
           <div>
             <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>

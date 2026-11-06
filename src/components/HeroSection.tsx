@@ -14,7 +14,7 @@ export default function HeroSection() {
       <div className="absolute top-8 left-8 w-24 h-24 opacity-20 hidden md:block"
         style={{ border: '1px solid #0e7490', borderRight: 'none', borderBottom: 'none' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 md:pt-16 pb-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 pt-10 md:pt-16 pb-0">
         {/* Top section label and divider */}
         <div className="text-center mb-8">
           <SectionLabel>پرونده ویژه — حقوق آب و اراضی</SectionLabel>
@@ -70,9 +70,9 @@ export default function HeroSection() {
               <div className="grid grid-cols-3 mt-6 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.3)', borderLeft: 'none', backgroundColor: 'rgba(10,30,40,0.5)' }}>
                 <StatCard number="۲۰" label="سال تجربه" suffix="+" />
                 <StatCard number="۱۳" label="سال در کمیسیون" />
-                <div className="text-center py-6 px-4">
-                  <div className="stat-number text-4xl md:text-5xl mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
-                  <div className="text-xs tracking-widest section-label">حقوق بین‌الملل</div>
+                <div className="text-center py-3 sm:py-6 px-1.5 sm:px-4">
+                  <div className="stat-number text-2xl sm:text-4xl md:text-5xl mb-1 sm:mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
+                  <div className="text-[10px] sm:text-xs tracking-tight sm:tracking-widest section-label">حقوق بین‌الملل</div>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function HeroSection() {
 
         {/* Bottom Banner Title */}
         <div className="mt-14 mb-10 py-8 text-center border-t border-b" style={{ borderColor: 'rgba(14,116,144,0.3)' }}>
-          <h2 className="article-title text-2xl md:text-4xl lg:text-5xl tracking-tight" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontWeight: 700, color: '#ffffff' }}>
+          <h2 className="article-title text-xl sm:text-3xl md:text-4xl lg:text-5xl tracking-tight" style={{ fontFamily: 'Noto Naskh Arabic, serif', fontWeight: 700, color: '#ffffff' }}>
             رویکردی نوین و مقتدرانه در حقوق تخصصی آب و اراضی
           </h2>
         </div>
