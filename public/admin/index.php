@@ -977,7 +977,12 @@ $is_auth = is_authenticated();
             </div>
 
             <div class="form-group">
-                <label class="form-label">دسته‌بندی موضوعی قانون در سایت:</label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                    <label class="form-label" style="margin-bottom: 0;">دسته‌بندی موضوعی قانون در سایت:</label>
+                    <button type="button" onclick="openCategoryModal()" style="background: none; border: none; color: var(--cyan-light); font-size: 0.775rem; cursor: pointer; text-decoration: underline;">
+                        ➕ ایجاد دسته‌بندی جدید
+                    </button>
+                </div>
                 <select id="modalLawCategory" class="form-control" style="background-color: var(--bg-input);">
                     <!-- Dynamically populated -->
                 </select>
@@ -1292,6 +1297,12 @@ $is_auth = is_authenticated();
                     closeCategoryModal();
                     currentSiteData.categories = result.categories;
                     renderCategorizedLaws();
+                    populateLawCategoryDropdown();
+                    if (!id && result.categories && result.categories.length > 0) {
+                        const newCat = result.categories[result.categories.length - 1];
+                        const sel = document.getElementById('modalLawCategory');
+                        if (sel) sel.value = newCat.id;
+                    }
                 } else {
                     showToast(result.error || 'خطا در ذخیره دسته‌بندی', true);
                 }

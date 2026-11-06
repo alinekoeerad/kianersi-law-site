@@ -78,6 +78,9 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (json && json.laws && Array.isArray(json.laws) && json.general) {
           setData({
             general: { ...defaultSiteData.general, ...json.general },
+            categories: Array.isArray(json.categories) && json.categories.length > 0 
+              ? json.categories 
+              : defaultSiteData.categories,
             laws: json.laws
           });
         }

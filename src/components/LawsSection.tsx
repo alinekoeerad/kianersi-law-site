@@ -28,15 +28,32 @@ export default function LawsSection() {
   const [openAll, setOpenAll] = useState<boolean | null>(null);
 
   const categories = useMemo(() => {
-    return [
+    const list = [
       { id: 'all', label: 'همه قوانین' },
-      ...(customCategories || [
-        { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
-        { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
-        { id: 'lands', label: 'اراضی موقوفه و منابع طبیعی' }
-      ])
+      ...(customCategories && customCategories.length > 0
+        ? customCategories
+        : [
+            { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
+            { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
+            { id: 'lands', label: 'اراضی موقوفه، منابع طبیعی و سایر' }
+          ])
     ];
-  }, [customCategories]);
+
+    // Ensure any category ID found in laws is represented in tabs even if not listed
+    const knownIds = new Set(list.map((c) => c.id));
+    laws.forEach((l) => {
+      const catId = getCategoryForLaw(l);
+      if (catId && !knownIds.has(catId)) {
+        list.push({
+          id: catId,
+          label: catId
+        });
+        knownIds.add(catId);
+      }
+    });
+
+    return list;
+  }, [customCategories, laws]);
 
   // Quick suggestion tags for faster user discovery
   const quickTags = [
@@ -57,6 +74,12 @@ export default function LawsSection() {
     if (text.includes('چاه') || text.includes('قنات') || text.includes('آبخوان') || text.includes('زیرزمینی')) return 'wells';
     if (text.includes('بستر') || text.includes('حریم') || text.includes('رودخانه') || text.includes('مسیل')) return 'rivers';
     return 'lands';
+  };
+
+  const getCategoryLabel = (catId?: string) => {
+    if (!catId || catId === 'all') return null;
+    const found = categories.find((c) => c.id === catId);
+    return found ? found.label : null;
   };
 
   // Category counts
@@ -354,6 +377,11 @@ export default function LawsSection() {
                         <span className="text-[11px] sm:text-xs px-2 py-0.5 rounded-sm bg-cyan-950 text-cyan-300 border border-cyan-800/50 flex-shrink-0">
                           قانون {toPersianDigits(law.id)}
                         </span>
+                        {getCategoryLabel(getCategoryForLaw(law)) && (
+                          <span className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-sm bg-cyan-900/30 text-cyan-200 border border-cyan-700/40 flex-shrink-0">
+                            {getCategoryLabel(getCategoryForLaw(law))}
+                          </span>
+                        )}
                         <span className="group-hover:text-white transition-colors duration-300 text-xs sm:text-sm md:text-base break-words">
                           {highlightSearchTerm(law.title, searchTerm)}
                         </span>
