@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
+import { useSiteData } from '../context/SiteDataContext';
 
 export default function ContactSection() {
+  const { general } = useSiteData();
   const [copied, setCopied] = useState(false);
   const [mapActive, setMapActive] = useState(false);
   const [mapProvider, setMapProvider] = useState<'neshan' | 'osm'>('neshan');
 
-  const fullAddress = 'کرج، بلوار ملاصدرا، بالاتر از دبیرستان سلام البرز، ساختمان وکلای صدرا، طبقه دوم، واحد ۸';
+  const fullAddress = general.address;
   const latitude = 35.8427497;
   const longitude = 50.991522;
 
@@ -21,36 +23,36 @@ export default function ContactSection() {
     { 
       icon: <img src="./phone.webp" alt="شماره تماس مستقیم دفتر وکالت محمدحسن کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'تلفن مستقیم', 
-      value: '۰۹۱۲۷۶۹۸۸۶۴', 
-      href: 'tel:+989127698864', 
+      value: general.phone, 
+      href: `tel:${general.rawPhone}`, 
       target: '_self' 
     },
     { 
       icon: <img src="./instagram.svg" alt="صفحه رسمی اینستاگرام وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'صفحه رسمی اینستاگرام', 
-      value: '@kianersi.mohamad', 
-      href: 'https://www.instagram.com/kianersi.mohamad?mdxt=eGZjdzN2MWMyaXEx', 
+      value: general.instagram, 
+      href: general.instagramUrl, 
       target: '_blank' 
     },
     { 
       icon: <img src="./eitaa.webp" alt="ارسال اسناد در پیام‌رسان ایتا به وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان ایتا', 
-      value: '@Mohamadhasankianersi', 
-      href: 'https://eitaa.com/Mohamadhasankianersi', 
+      value: general.eitaa, 
+      href: general.eitaaUrl, 
       target: '_blank' 
     },
     { 
       icon: <img src="./bale.webp" alt="ارتباط در پیام‌رسان بله با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان بله', 
-      value: '@Mohamadhasankianersi', 
-      href: 'https://ble.ir/Mohamadhasankianersi', 
+      value: general.bale, 
+      href: general.baleUrl, 
       target: '_blank' 
     },
     { 
       icon: <img src="./rubika.webp" alt="ارتباط در پیام‌رسان روبیکا با وکیل کیان‌ارثی" className="w-7 h-7 object-contain" />,
       label: 'پیام‌رسان روبیکا', 
-      value: '@Mka12345666', 
-      href: 'https://rubika.ir/Mka12345666', 
+      value: general.rubika, 
+      href: general.rubikaUrl, 
       target: '_blank' 
     },
   ];
@@ -147,12 +149,12 @@ export default function ContactSection() {
 
               <div>
                 <a 
-                  href="tel:+989127698864" 
+                  href={`tel:${general.rawPhone}`} 
                   className="flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-md text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >
                   <span>📞</span>
-                  <span>تماس مستقیم با وکیل: ۰۹۱۲۷۶۹۸۸۶۴</span>
+                  <span>تماس مستقیم با وکیل: {general.phone}</span>
                 </a>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
-import { lawsDatabase } from '../data/laws';
+import { useSiteData } from '../context/SiteDataContext';
 
 // Helper function to convert English digits to Persian digits
 const toPersianDigits = (n: number | string) => {
@@ -22,6 +22,7 @@ const countOccurrences = (text: string, term: string) => {
 };
 
 export default function LawsSection() {
+  const { laws } = useSiteData();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'wells' | 'rivers' | 'lands'>('all');
   const [openAll, setOpenAll] = useState<boolean | null>(null);
@@ -43,30 +44,34 @@ export default function LawsSection() {
     'آلودگی آب'
   ];
 
-  // Map law id to category
-  const getCategoryForLaw = (id: number) => {
-    if ([1, 2, 3, 5].includes(id)) return 'wells';
-    if ([4, 8].includes(id)) return 'rivers';
+  // Map law to category intelligently
+  const getCategoryForLaw = (law: { id: number; title: string; content: string; category?: string }) => {
+    if (law.category) return law.category;
+    if ([1, 2, 3, 5].includes(law.id)) return 'wells';
+    if ([4, 8].includes(law.id)) return 'rivers';
+    const text = (law.title + ' ' + law.content).toLowerCase();
+    if (text.includes('چاه') || text.includes('قنات') || text.includes('آبخوان') || text.includes('زیرزمینی')) return 'wells';
+    if (text.includes('بستر') || text.includes('حریم') || text.includes('رودخانه') || text.includes('مسیل')) return 'rivers';
     return 'lands';
   };
 
   // Category counts
   const categoryCounts = useMemo(() => {
     return {
-      all: lawsDatabase.length,
-      wells: lawsDatabase.filter((l) => [1, 2, 3, 5].includes(l.id)).length,
-      rivers: lawsDatabase.filter((l) => [4, 8].includes(l.id)).length,
-      lands: lawsDatabase.filter((l) => ![1, 2, 3, 5, 4, 8].includes(l.id)).length
+      all: laws.length,
+      wells: laws.filter((l) => getCategoryForLaw(l) === 'wells').length,
+      rivers: laws.filter((l) => getCategoryForLaw(l) === 'rivers').length,
+      lands: laws.filter((l) => getCategoryForLaw(l) === 'lands').length
     };
-  }, []);
+  }, [laws]);
 
   // Filtered laws with match counts
   const filteredLaws = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
 
-    return lawsDatabase
+    return laws
       .map((law) => {
-        const matchesCategory = selectedCategory === 'all' || getCategoryForLaw(law.id) === selectedCategory;
+        const matchesCategory = selectedCategory === 'all' || getCategoryForLaw(law) === selectedCategory;
         const titleMatches = countOccurrences(law.title, normalizedSearch);
         const contentMatches = countOccurrences(law.content, normalizedSearch);
         const totalMatches = titleMatches + contentMatches;
@@ -79,7 +84,7 @@ export default function LawsSection() {
         };
       })
       .filter((law) => law.isMatch);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, laws]);
 
   // Helper function to highlight the searched keyword
   const highlightSearchTerm = (text: string, term: string) => {
@@ -293,7 +298,7 @@ export default function LawsSection() {
             {/* Results Counter Bar */}
             <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs text-gray-400">
               <p>
-                نمایش <strong className="text-cyan-300 font-bold">{toPersianDigits(filteredLaws.length)}</strong> قانون از مجموع <strong className="text-cyan-300 font-bold">{toPersianDigits(lawsDatabase.length)}</strong> قانون
+                نمایش <strong className="text-cyan-300 font-bold">{toPersianDigits(filteredLaws.length)}</strong> قانون از مجموع <strong className="text-cyan-300 font-bold">{toPersianDigits(laws.length)}</strong> قانون
               </p>
               {searchTerm && (
                 <p className="text-cyan-300 font-medium">

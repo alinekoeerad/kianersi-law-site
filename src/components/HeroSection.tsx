@@ -1,7 +1,9 @@
 // Import necessary UI components
 import { SectionLabel, OrnamentDivider, StatCard } from './SharedUI';
+import { useSiteData } from '../context/SiteDataContext';
 
 export default function HeroSection() {
+  const { general } = useSiteData();
   return (
     <section id="hero" className="relative overflow-hidden bg-deep">
       {/* Background image overlay */}
@@ -35,25 +37,25 @@ export default function HeroSection() {
               </h1>
 
               <p className="text-sm md:text-base mb-5 font-medium leading-relaxed" style={{ color: '#7dd3fc', fontFamily: 'Noto Naskh Arabic, serif' }}>
-                متخصص دعاوی حقوقی منابع آب، کمیسیون‌های آب‌های زیرزمینی و دیوان عدالت اداری
+                {general.subtitle}
               </p>
 
               <div className="styled-hr my-4" />
 
               {/* Comprehensive 20-year experience text */}
               <p className="body-text text-sm leading-8 mb-6 text-justify" style={{ color: '#e2e8f0', fontFamily: 'Noto Sans Arabic' }}>
-                بیش از ۲۰ سال تجربه تخصصی در حوزه حقوق آب، دعاوی حقوقی و اداری، دفاع از پرونده‌های مطروحه در محاکم قضایی و دیوان عدالت اداری، عضویت در کمیسیون‌های تخصصی وزارت نیرو و ارائه مشاوره حقوقی در طرح‌های ملی انتقال آب، استملاک اراضی و پروژه‌های عمرانی.
+                بیش از {general.experienceYears} سال تجربه تخصصی در حوزه حقوق آب، دعاوی حقوقی و اداری، دفاع از پرونده‌های مطروحه در محاکم قضایی و دیوان عدالت اداری، عضویت در کمیسیون‌های تخصصی وزارت نیرو و ارائه مشاوره حقوقی در طرح‌های ملی انتقال آب، استملاک اراضی و پروژه‌های عمرانی.
               </p>
 
               {/* High-Converting CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 my-6">
                 <a 
-                  href="tel:+989127698864" 
+                  href={`tel:${general.rawPhone}`} 
                   className="flex items-center justify-center gap-2 px-5 py-3 text-xs md:text-sm font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-lg text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >
                   <span>📞</span>
-                  <span>تماس و مشاوره فوری: ۰۹۱۲۷۶۹۸۸۶۴</span>
+                  <span>تماس و مشاوره فوری: {general.phone}</span>
                 </a>
                 
                 <a 
@@ -68,11 +70,11 @@ export default function HeroSection() {
 
               {/* Statistics cards */}
               <div className="grid grid-cols-3 mt-6 rounded-sm overflow-hidden" style={{ border: '1px solid rgba(14,116,144,0.4)', backgroundColor: 'rgba(10,30,40,0.5)' }}>
-                <StatCard number="۲۰" label="سال تجربه" suffix="+" hasBorderLeft={true} />
-                <StatCard number="۱۳" label="سال در کمیسیون" hasBorderLeft={true} />
+                <StatCard number={general.experienceYears} label="سال تجربه" suffix="+" hasBorderLeft={true} />
+                <StatCard number={general.commissionYears} label="سال در کمیسیون" hasBorderLeft={true} />
                 <div className="text-center py-3 sm:py-6 px-1.5 sm:px-4">
-                  <div className="stat-number text-2xl sm:text-4xl md:text-5xl mb-1 sm:mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>M.A</div>
-                  <div className="text-[10px] sm:text-xs tracking-tight sm:tracking-widest section-label">حقوق بین‌الملل</div>
+                  <div className="stat-number text-2xl sm:text-4xl md:text-5xl mb-1 sm:mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>{general.educationDegree}</div>
+                  <div className="text-[10px] sm:text-xs tracking-tight sm:tracking-widest section-label">{general.educationField}</div>
                 </div>
               </div>
             </div>

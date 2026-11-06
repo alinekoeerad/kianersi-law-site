@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
+import { SiteDataProvider } from "./context/SiteDataContext";
 
 const AboutSection = React.lazy(() => import('./components/AboutSection'));
 const ExpertiseSection = React.lazy(() => import('./components/ExpertiseSection'));
@@ -20,20 +21,22 @@ const SectionLoader = () => (
 
 export default function App() {
   return (
-    <div className="min-h-screen paper-texture bg-deep w-full max-w-full" style={{ color: '#ffffff' }}>
-      <Navbar />
-      <HeroSection />
+    <SiteDataProvider>
+      <div className="min-h-screen paper-texture bg-deep w-full max-w-full" style={{ color: '#ffffff' }}>
+        <Navbar />
+        <HeroSection />
 
-      <Suspense fallback={<SectionLoader />}>
-        <AboutSection />
-        <ExpertiseSection />
-        <DistinguishingSection />
-        <LawsSection />
-        <ContactSection />
-      </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <AboutSection />
+          <ExpertiseSection />
+          <DistinguishingSection />
+          <LawsSection />
+          <ContactSection />
+        </Suspense>
 
-      <Footer />
-      <BackToTop />
-    </div>
+        <Footer />
+        <BackToTop />
+      </div>
+    </SiteDataProvider>
   );
 }

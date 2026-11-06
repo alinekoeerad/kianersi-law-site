@@ -1,0 +1,8 @@
+# Block access to config files
+<FilesMatch "^(config\.php|config\.json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Allow executing PHP scripts
+DirectoryIndex index.php

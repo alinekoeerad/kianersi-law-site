@@ -1,19 +1,23 @@
+import { useSiteData } from '../context/SiteDataContext';
+
 export default function Footer() {
+  const { general } = useSiteData();
+
   return (
     <footer style={{ backgroundColor: 'rgba(10, 30, 40, 0.95)', borderTop: '2px solid #0e7490' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
         <div className="grid md:grid-cols-3 gap-8 pb-8" style={{ borderBottom: '1px solid rgba(14,116,144,0.3)' }}>
           <div>
             <h3 className="text-xl font-bold mb-3" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#ffffff' }}>
-              محمدحسن کیان‌ارثی
+              {general.lawyerName}
             </h3>
             <p className="text-xs leading-7" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(255,255,255,0.65)' }}>
-              وکیل پایه یک دادگستری متمرکز بر دعاوی آب<br />
+              {general.title}<br />
               عضو کانون وکلای دادگستری البرز<br />
-              کارشناس ارشد حقوق بین‌الملل
+              کارشناس ارشد {general.educationField}
             </p>
             <p className="text-xs leading-6 mt-3" style={{ fontFamily: 'Noto Sans Arabic', color: 'rgba(125,211,252,0.85)' }}>
-              کرج، بلوار ملاصدرا، بالاتر از دبیرستان سلام، ساختمان وکلای صدرا، طبقه ۲، واحد ۸
+              {general.address}
             </p>
 
           </div>
