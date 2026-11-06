@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "zip": "powershell Compress-Archive -Path dist/* -DestinationPath website.zip -Force"
   },
   "dependencies": {
     "clsx": "2.1.1",
