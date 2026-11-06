@@ -72,11 +72,14 @@ function isAuth(req) {
 
 // Render admin HTML (resolving PHP blocks)
 function renderAdminHtml(auth) {
-  const adminIndex = path.join(DIST_DIR, 'admin', 'index.php');
+  const adminIndex = fs.existsSync(path.join(DIST_DIR, 'admin', 'index.php'))
+    ? path.join(DIST_DIR, 'admin', 'index.php')
+    : path.join(PUBLIC_DIR, 'admin', 'index.php');
   let content = fs.readFileSync(adminIndex, 'utf8');
 
-  // Strip top php block
+  // Strip top php block and replace CSRF token
   content = content.replace(/<\?php[\s\S]*?\?>/i, '');
+  content = content.replace(/<\?=\s*get_csrf_token\(\)\s*\?>/g, 'local_csrf_token_123');
 
   if (auth) {
     // Show dashboard: remove login block between <?php if (!$is_auth): ?> and <?php else: ?>

@@ -592,6 +592,7 @@ $is_auth = is_authenticated();
 
     <script>
         let currentSiteData = { general: {}, laws: [] };
+        let currentCsrfToken = '<?= get_csrf_token() ?>';
 
         function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
@@ -652,6 +653,7 @@ $is_auth = is_authenticated();
             try {
                 const res = await fetch('api.php?action=get_data');
                 const result = await res.json();
+                if (result.csrf_token) currentCsrfToken = result.csrf_token;
                 if (result.success && result.data) {
                     currentSiteData = result.data;
                     populateGeneralForm(currentSiteData.general || {});
@@ -705,7 +707,10 @@ $is_auth = is_authenticated();
             try {
                 const res = await fetch('api.php?action=save_general', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
                     body: JSON.stringify({ general })
                 });
                 const result = await res.json();
@@ -792,7 +797,10 @@ $is_auth = is_authenticated();
             try {
                 const res = await fetch('api.php?action=save_law', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
                     body: JSON.stringify({
                         law: {
                             id: id ? parseInt(id, 10) : undefined,
@@ -822,7 +830,10 @@ $is_auth = is_authenticated();
             try {
                 const res = await fetch('api.php?action=delete_law', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
                     body: JSON.stringify({ id })
                 });
                 const result = await res.json();
@@ -855,7 +866,10 @@ $is_auth = is_authenticated();
                 try {
                     const res = await fetch('api.php?action=change_password', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': currentCsrfToken
+                        },
                         body: JSON.stringify({ current_password, new_password })
                     });
                     const result = await res.json();
