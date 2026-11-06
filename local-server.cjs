@@ -304,12 +304,28 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`🚀 سرور لوکال با موفقیت راه‌اندازی شد!`);
-  console.log(`🌐 وبسایت اصلی:  http://localhost:${PORT}/`);
-  console.log(`⚙️  پنل مدیریت:   http://localhost:${PORT}/admin/`);
-  console.log(`🔑 نام کاربری:   admin`);
-  console.log(`🔒 رمز عبور:     Kianersi@1403`);
-  console.log(`======================================================\n`);
+let currentPort = PORT;
+
+function startServer(port) {
+  server.listen(port, () => {
+    console.log(`\n======================================================`);
+    console.log(`🚀 سرور لوکال با موفقیت راه‌اندازی شد!`);
+    console.log(`🌐 وبسایت اصلی:  http://localhost:${port}/`);
+    console.log(`⚙️  پنل مدیریت:   http://localhost:${port}/admin/`);
+    console.log(`🔑 نام کاربری:   admin`);
+    console.log(`🔒 رمز عبور:     Kianersi@1403`);
+    console.log(`======================================================\n`);
+  });
+}
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`⚠️ پورت ${currentPort} مشغول است؛ در حال جابجایی خودکار به پورت ${currentPort + 1}...`);
+    currentPort++;
+    startServer(currentPort);
+  } else {
+    console.error('Server error:', err);
+  }
 });
+
+startServer(currentPort);

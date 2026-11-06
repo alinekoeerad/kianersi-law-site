@@ -19,3 +19,4 @@ export function trackEvent(eventType: AnalyticsEventType) {
     // Fail silently without affecting user experience
   }
 }
+
