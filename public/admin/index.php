@@ -21,12 +21,14 @@ $is_auth = is_authenticated();
     
     <style>
         :root {
-            --bg-deep: #020b14;
-            --bg-card: rgba(7, 24, 38, 0.88);
-            --bg-card-subtle: rgba(4, 18, 29, 0.78);
-            --bg-input: rgba(2, 17, 27, 0.9);
-            --border-color: rgba(14, 116, 144, 0.32);
+            /* Main website design system tokens */
+            --bg-deep: #020f1a;
+            --bg-card: rgba(10, 30, 40, 0.85);
+            --bg-card-subtle: rgba(4, 21, 33, 0.75);
+            --bg-input: rgba(2, 15, 26, 0.85);
+            --border-color: rgba(14, 116, 144, 0.35);
             --border-hover: rgba(56, 189, 248, 0.65);
+            --border-focus: #38bdf8;
             --cyan-primary: #0e7490;
             --cyan-hover: #0891b2;
             --cyan-glow: rgba(14, 116, 144, 0.4);
@@ -36,16 +38,18 @@ $is_auth = is_authenticated();
             --emerald-hover: #10b981;
             --emerald-light: #34d399;
             --amber-accent: #f59e0b;
-            --rose-accent: #e11d48;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --text-dim: #64748b;
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 22px;
-            --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(14, 116, 144, 0.22);
-            --shadow-hover: 0 16px 40px -5px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(56, 189, 248, 0.45);
+            
+            /* Sharp, authoritative legal edges (2px-4px matching main website rounded-sm) */
+            --radius-sm: 2px;
+            --radius-md: 4px;
+            --radius-lg: 4px;
+            --radius-xl: 4px;
+            
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 6px 25px rgba(0, 0, 0, 0.6);
         }
 
         * {
@@ -59,6 +63,7 @@ $is_auth = is_authenticated();
             overflow-x: hidden;
             width: 100%;
             max-width: 100vw;
+            -webkit-text-size-adjust: 100%;
         }
 
         body {
@@ -67,14 +72,13 @@ $is_auth = is_authenticated();
             min-height: 100vh;
             direction: rtl;
             background-image: 
-                radial-gradient(ellipse at 15% 20%, rgba(14, 116, 144, 0.12) 0%, transparent 55%),
-                radial-gradient(ellipse at 85% 65%, rgba(6, 95, 70, 0.1) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 90%, rgba(2, 132, 199, 0.08) 0%, transparent 50%);
+                radial-gradient(ellipse at 15% 20%, rgba(14, 116, 144, 0.1) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 65%, rgba(6, 95, 70, 0.08) 0%, transparent 60%);
             background-attachment: fixed;
             line-height: 1.6;
         }
 
-        /* ─── Login Screen ─── */
+        /* ─── Login Screen (No Preview / Clean Auth) ─── */
         .login-wrap {
             display: flex;
             align-items: center;
@@ -86,26 +90,24 @@ $is_auth = is_authenticated();
 
         .login-card {
             background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-color);
-            padding: 2.75rem 2.25rem;
+            padding: 2.5rem 2rem;
             width: 100%;
-            max-width: 430px;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(14, 116, 144, 0.2);
+            max-width: 420px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
             text-align: center;
         }
 
         .login-title {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.4rem;
             color: #ffffff;
         }
 
         .login-desc {
-            font-size: 0.85rem;
+            font-size: 0.825rem;
             color: var(--text-muted);
             margin-bottom: 1.75rem;
             line-height: 1.6;
@@ -113,39 +115,38 @@ $is_auth = is_authenticated();
 
         /* ─── Dashboard Screen Header ─── */
         .admin-header {
-            background: rgba(5, 20, 32, 0.92);
-            border-bottom: 1px solid rgba(14, 116, 144, 0.35);
-            padding: 0.75rem 1.75rem;
+            background: rgba(5, 20, 32, 0.95);
+            border-bottom: 2px solid var(--cyan-primary);
+            padding: 0.75rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             position: sticky;
             top: 0;
             z-index: 50;
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             width: 100%;
-            gap: 1rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
             text-decoration: none;
             flex-shrink: 0;
         }
 
         .brand-logo-img {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
             border-radius: var(--radius-sm);
-            border: 1px solid rgba(56, 189, 248, 0.4);
+            border: 1px solid rgba(14, 116, 144, 0.4);
             background: rgba(3, 24, 37, 0.8);
             padding: 2px;
-            box-shadow: 0 2px 8px rgba(14, 116, 144, 0.3);
         }
 
         .brand-info {
@@ -154,14 +155,13 @@ $is_auth = is_authenticated();
         }
 
         .brand-title {
-            font-size: 1.05rem;
-            font-weight: 800;
+            font-size: 1rem;
+            font-weight: 700;
             color: #ffffff;
-            letter-spacing: -0.01em;
         }
 
         .brand-subtitle {
-            font-size: 0.725rem;
+            font-size: 0.7rem;
             color: var(--cyan-light);
             font-weight: 500;
         }
@@ -169,29 +169,29 @@ $is_auth = is_authenticated();
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
 
         .header-status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 0.45rem;
-            padding: 0.35rem 0.75rem;
+            gap: 0.4rem;
+            padding: 0.3rem 0.65rem;
             background: rgba(5, 150, 105, 0.15);
             border: 1px solid rgba(52, 211, 153, 0.35);
-            border-radius: 999px;
-            font-size: 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.725rem;
             color: var(--emerald-light);
             font-weight: 600;
         }
 
         .status-dot {
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: var(--emerald-light);
-            box-shadow: 0 0 8px var(--emerald-light);
+            box-shadow: 0 0 6px var(--emerald-light);
             animation: pulseStatus 2s infinite ease-in-out;
         }
 
@@ -203,12 +203,12 @@ $is_auth = is_authenticated();
         .admin-user-chip {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.35rem 0.75rem;
-            background: rgba(14, 116, 144, 0.18);
-            border: 1px solid rgba(14, 116, 144, 0.4);
+            gap: 0.45rem;
+            padding: 0.35rem 0.65rem;
+            background: rgba(14, 116, 144, 0.15);
+            border: 1px solid rgba(14, 116, 144, 0.35);
             border-radius: var(--radius-sm);
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             color: #e2e8f0;
             font-weight: 500;
         }
@@ -217,106 +217,90 @@ $is_auth = is_authenticated();
             color: var(--cyan-accent);
         }
 
-        /* ─── Buttons Design System ─── */
+        /* ─── Buttons Design System (Sharp Edges matching main site) ─── */
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.45rem;
-            padding: 0.55rem 1rem;
+            gap: 0.4rem;
+            padding: 0.45rem 0.85rem;
             border-radius: var(--radius-sm);
             font-size: 0.825rem;
             font-weight: 600;
             cursor: pointer;
             border: 1px solid transparent;
-            transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             text-decoration: none;
             white-space: nowrap;
             user-select: none;
         }
 
         .btn:hover:not([disabled]) {
-            transform: translateY(-1px);
+            filter: brightness(1.12);
         }
 
         .btn:active:not([disabled]) {
-            transform: translateY(0);
+            transform: translateY(1px);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--cyan-primary) 0%, #0284c7 100%);
+            background: var(--cyan-primary);
             color: #ffffff;
-            border-color: rgba(56, 189, 248, 0.35);
-            box-shadow: 0 3px 12px rgba(14, 116, 144, 0.35);
-        }
-        .btn-primary:hover:not([disabled]) {
-            background: linear-gradient(135deg, #0891b2 0%, #0369a1 100%);
-            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45);
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, var(--emerald-accent) 0%, #047857 100%);
+            background: var(--emerald-accent);
             color: #ffffff;
-            border-color: rgba(52, 211, 153, 0.35);
-            box-shadow: 0 3px 12px rgba(5, 150, 105, 0.3);
-        }
-        .btn-success:hover:not([disabled]) {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            box-shadow: 0 4px 16px rgba(52, 211, 153, 0.4);
+            border-color: rgba(52, 211, 153, 0.4);
         }
 
         .btn-outline {
-            background: rgba(14, 116, 144, 0.1);
+            background: transparent;
             border: 1px solid var(--border-color);
             color: var(--cyan-light);
         }
         .btn-outline:hover:not([disabled]) {
             border-color: var(--cyan-accent);
-            background: rgba(14, 116, 144, 0.25);
+            background: rgba(14, 116, 144, 0.2);
             color: #ffffff;
-            box-shadow: 0 3px 12px rgba(14, 116, 144, 0.25);
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+            background: #991b1b;
             color: #ffffff;
-            border-color: rgba(248, 113, 113, 0.3);
-            box-shadow: 0 3px 12px rgba(153, 27, 27, 0.3);
+            border-color: rgba(239, 68, 68, 0.4);
         }
         .btn-danger:hover:not([disabled]) {
-            background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
+            background: #b91c1c;
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #e2e8f0;
         }
         .btn-secondary:hover:not([disabled]) {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.25);
             color: #ffffff;
         }
 
         .btn-sm {
-            padding: 0.38rem 0.75rem;
-            font-size: 0.775rem;
-            border-radius: 6px;
+            padding: 0.32rem 0.65rem;
+            font-size: 0.75rem;
         }
 
         .btn[disabled] {
             opacity: 0.45;
             cursor: not-allowed;
             pointer-events: none;
-            transform: none !important;
-            box-shadow: none !important;
         }
 
         .admin-icon {
             display: inline-block;
-            width: 1.05rem;
-            height: 1.05rem;
+            width: 1rem;
+            height: 1rem;
             vertical-align: middle;
             stroke-width: 2;
             stroke: currentColor;
@@ -325,25 +309,21 @@ $is_auth = is_authenticated();
             stroke-linejoin: round;
             flex-shrink: 0;
         }
-        .admin-icon-sm { width: 0.9rem; height: 0.9rem; }
-        .admin-icon-lg { width: 1.35rem; height: 1.35rem; }
+        .admin-icon-sm { width: 0.85rem; height: 0.85rem; }
+        .admin-icon-lg { width: 1.25rem; height: 1.25rem; }
 
-        /* ─── Segmented Navigation Tabs Bar ─── */
+        /* ─── Navigation Tabs Bar (Sharp, Professional, Scrollable) ─── */
         .tabs-container {
             max-width: 1200px;
             margin: 1.25rem auto 0;
-            padding: 6px;
-            background: rgba(4, 20, 32, 0.78);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(14, 116, 144, 0.35);
-            border-radius: var(--radius-xl);
+            padding: 0 1.5rem;
             display: flex;
-            gap: 0.4rem;
+            gap: 0.35rem;
+            border-bottom: 1px solid var(--border-color);
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            width: 100%;
         }
         .tabs-container::-webkit-scrollbar {
             display: none;
@@ -352,32 +332,32 @@ $is_auth = is_authenticated();
         .tab-btn {
             background: transparent;
             border: 1px solid transparent;
-            border-radius: var(--radius-md);
-            padding: 0.65rem 1.15rem;
+            border-bottom: 2px solid transparent;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            padding: 0.7rem 1.1rem;
             color: var(--text-muted);
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
             display: inline-flex;
             align-items: center;
-            gap: 0.55rem;
+            gap: 0.5rem;
         }
 
         .tab-btn:hover:not(.active) {
-            background: rgba(14, 116, 144, 0.15);
+            background: rgba(14, 116, 144, 0.12);
             color: #f1f5f9;
-            border-color: rgba(14, 116, 144, 0.3);
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, #0e7490 0%, #0284c7 100%);
+            background: rgba(14, 116, 144, 0.22);
+            border-color: var(--border-color);
+            border-bottom-color: var(--cyan-light);
             color: #ffffff;
-            border-color: rgba(56, 189, 248, 0.4);
             font-weight: 700;
-            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
         /* ─── Main Content Container ─── */
@@ -390,42 +370,40 @@ $is_auth = is_authenticated();
 
         .panel-card {
             background: var(--bg-card);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 1.65rem;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             box-shadow: var(--shadow-card);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             width: 100%;
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            transition: border-color 0.2s ease;
         }
 
         .panel-card:hover {
-            border-color: rgba(14, 116, 144, 0.45);
+            border-color: rgba(14, 116, 144, 0.5);
         }
 
         .card-header {
-            margin-bottom: 1.35rem;
-            padding-bottom: 0.95rem;
-            border-bottom: 1px solid rgba(14, 116, 144, 0.22);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.85rem;
+            border-bottom: 1px solid rgba(14, 116, 144, 0.2);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.85rem;
+            gap: 0.75rem;
         }
 
         .card-header-main {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
+            gap: 0.75rem;
         }
 
         .card-icon-badge {
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-md);
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
             background: rgba(14, 116, 144, 0.2);
             border: 1px solid rgba(56, 189, 248, 0.35);
             display: flex;
@@ -433,42 +411,41 @@ $is_auth = is_authenticated();
             justify-content: center;
             color: var(--cyan-accent);
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(14, 116, 144, 0.2);
         }
 
         .card-title {
-            font-size: 1.125rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: #ffffff;
             line-height: 1.3;
         }
 
         .card-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             color: var(--text-muted);
-            margin-top: 0.25rem;
+            margin-top: 0.2rem;
             line-height: 1.5;
         }
 
-        /* ─── Forms & Input Fields ─── */
+        /* ─── Forms & Input Fields (Sharp, Exact Widths) ─── */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+            gap: 1.15rem;
             width: 100%;
         }
 
         .form-group {
-            margin-bottom: 1.15rem;
+            margin-bottom: 1rem;
             width: 100%;
         }
 
         .form-label {
             display: block;
-            font-size: 0.825rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: var(--cyan-light);
-            margin-bottom: 0.45rem;
+            margin-bottom: 0.4rem;
         }
 
         .input-wrap {
@@ -478,7 +455,7 @@ $is_auth = is_authenticated();
 
         .input-wrap .input-icon {
             position: absolute;
-            right: 12px;
+            right: 11px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--cyan-accent);
@@ -490,66 +467,79 @@ $is_auth = is_authenticated();
         }
 
         .input-wrap.textarea-wrap .input-icon {
-            top: 16px;
+            top: 15px;
             transform: none;
         }
 
         .form-control {
             width: 100%;
             max-width: 100%;
-            padding: 0.7rem 0.95rem;
+            padding: 0.65rem 0.85rem;
             background: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             color: #ffffff;
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             outline: none;
             transition: all 0.2s ease;
             line-height: 1.6;
         }
 
         .form-control.has-icon {
-            padding-right: 2.6rem;
+            padding-right: 2.5rem;
         }
 
         .form-control:focus {
             border-color: var(--cyan-accent);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-            background: rgba(3, 26, 42, 0.95);
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+            background: rgba(3, 24, 37, 0.95);
         }
 
         .form-control::placeholder {
             color: var(--text-dim);
-            font-size: 0.825rem;
+            font-size: 0.8rem;
         }
 
         textarea.form-control {
-            min-height: 110px;
+            min-height: 100px;
             resize: vertical;
             line-height: 1.8;
+        }
+
+        /* ─── Location & Map Help Box ─── */
+        .location-guide-box {
+            background: rgba(14, 116, 144, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 0.85rem 1rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.65rem;
         }
 
         /* ─── Social Media Channel Cards ─── */
         .social-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-            gap: 1.25rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: 1.15rem;
             width: 100%;
         }
 
         .social-channel-box {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            border-radius: var(--radius-sm);
+            padding: 1.15rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
         }
 
         .social-channel-box:hover {
             border-color: var(--border-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
         .social-channel-box.instagram-box:hover { border-color: rgba(225, 48, 108, 0.7); }
@@ -560,84 +550,79 @@ $is_auth = is_authenticated();
         .social-channel-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.15rem;
-            padding-bottom: 0.75rem;
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .social-icon-box {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
         /* ─── Categorized Laws Section Cards ─── */
         .category-section-card {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            margin-bottom: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.15rem;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             width: 100%;
-            transition: all 0.25s ease;
-        }
-
-        .category-section-card:hover {
-            border-color: rgba(14, 116, 144, 0.5);
         }
 
         .category-header {
             background: rgba(14, 116, 144, 0.15);
             border-bottom: 1px solid var(--border-color);
-            padding: 0.95rem 1.35rem;
+            padding: 0.85rem 1.15rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .category-title-group {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
+            gap: 0.55rem;
         }
 
         .category-badge-count {
             background: rgba(14, 116, 144, 0.35);
             color: var(--cyan-light);
-            font-size: 0.75rem;
-            padding: 0.2rem 0.6rem;
-            border-radius: 999px;
+            font-size: 0.725rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: var(--radius-sm);
             border: 1px solid rgba(56, 189, 248, 0.3);
             font-weight: 600;
         }
 
         .category-actions {
             display: flex;
-            gap: 0.45rem;
+            gap: 0.4rem;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .category-laws-list {
-            padding: 0.6rem;
+            padding: 0.55rem;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
 
         .category-empty-state {
             padding: 1.5rem;
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.825rem;
         }
 
         .law-item {
@@ -647,36 +632,35 @@ $is_auth = is_authenticated();
             background: rgba(3, 24, 37, 0.6);
             border: 1px solid rgba(14, 116, 144, 0.2);
             border-radius: var(--radius-sm);
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.85rem;
             transition: all 0.2s ease;
-            gap: 0.75rem;
+            gap: 0.65rem;
         }
 
         .law-item:hover {
             background: rgba(14, 116, 144, 0.2);
             border-color: rgba(56, 189, 248, 0.4);
-            transform: translateX(-2px);
         }
 
         .law-info {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.65rem;
             overflow: hidden;
         }
 
         .law-badge {
-            font-size: 0.725rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: var(--cyan-light);
             background: rgba(14, 116, 144, 0.3);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.15rem 0.45rem;
+            border-radius: var(--radius-sm);
             white-space: nowrap;
         }
 
         .law-title {
-            font-size: 0.875rem;
+            font-size: 0.85rem;
             color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
@@ -686,25 +670,25 @@ $is_auth = is_authenticated();
 
         .law-actions {
             display: flex;
-            gap: 0.35rem;
+            gap: 0.3rem;
             flex-shrink: 0;
         }
 
         /* ─── Analytics Dashboard KPI Cards ─── */
         .analytics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.85rem;
             margin-top: 1rem;
         }
 
         .stat-box {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            padding: 1.25rem 1rem;
-            border-radius: var(--radius-md);
+            padding: 1.15rem 0.85rem;
+            border-radius: var(--radius-sm);
             text-align: center;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
         }
@@ -715,94 +699,76 @@ $is_auth = is_authenticated();
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 2px;
             background: var(--stat-accent, var(--cyan-accent));
-            opacity: 0.7;
         }
 
         .stat-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             border-color: var(--border-hover);
         }
 
         .chart-card {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            margin-top: 1.25rem;
         }
 
         .chart-title {
-            font-size: 0.95rem;
+            font-size: 0.925rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.15rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
 
         .chart-layout-grid {
             display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 2rem;
+            grid-template-columns: 1fr 260px;
+            gap: 1.5rem;
             align-items: center;
-        }
-
-        @media (max-width: 860px) {
-            .chart-layout-grid {
-                grid-template-columns: 1fr;
-            }
-            .donut-wrapper {
-                border-right: none !important;
-                border-top: 1px solid rgba(14, 116, 144, 0.2);
-                padding-right: 0 !important;
-                padding-top: 1.5rem;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         .bars-list {
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
+            gap: 0.75rem;
         }
 
         .bar-item {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.3rem;
         }
 
         .bar-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
+            font-size: 0.775rem;
         }
 
         .bar-label-group {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
             color: #e2e8f0;
         }
 
         .bar-track {
             background: rgba(3, 24, 37, 0.9);
-            height: 10px;
-            border-radius: 999px;
+            height: 8px;
+            border-radius: var(--radius-sm);
             overflow: hidden;
             border: 1px solid rgba(14, 116, 144, 0.2);
         }
 
         .bar-fill {
             height: 100%;
-            border-radius: 999px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: var(--radius-sm);
+            transition: width 0.8s ease;
         }
 
         .donut-wrapper {
@@ -816,7 +782,7 @@ $is_auth = is_authenticated();
             margin-top: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.45rem;
+            gap: 0.4rem;
             width: 100%;
         }
 
@@ -824,13 +790,13 @@ $is_auth = is_authenticated();
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.775rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
         .legend-color-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             display: inline-block;
             margin-left: 0.4rem;
@@ -839,13 +805,14 @@ $is_auth = is_authenticated();
         /* ─── Security Tab ─── */
         .security-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.25rem;
         }
 
         .table-responsive {
             overflow-x: auto;
             width: 100%;
+            -webkit-overflow-scrolling: touch;
             border-radius: var(--radius-sm);
             border: 1px solid rgba(14, 116, 144, 0.25);
         }
@@ -853,20 +820,21 @@ $is_auth = is_authenticated();
         .admin-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 0.825rem;
             text-align: right;
+            min-width: 480px;
         }
 
         .admin-table th {
             background: rgba(14, 116, 144, 0.2);
             color: var(--cyan-light);
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 0.85rem;
             font-weight: 600;
             border-bottom: 1px solid var(--border-color);
         }
 
         .admin-table td {
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 0.85rem;
             border-bottom: 1px solid rgba(14, 116, 144, 0.15);
             color: #ffffff;
         }
@@ -879,9 +847,9 @@ $is_auth = is_authenticated();
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 100;
             display: none;
             align-items: center;
@@ -892,16 +860,13 @@ $is_auth = is_authenticated();
         .modal-box {
             background: var(--bg-card);
             border: 1px solid rgba(56, 189, 248, 0.4);
-            border-radius: var(--radius-lg);
-            padding: 1.75rem;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             width: 100%;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 116, 144, 0.3);
-            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes modalPop {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
 
         /* ─── Toast Notifications ─── */
@@ -909,106 +874,95 @@ $is_auth = is_authenticated();
             position: fixed;
             bottom: 2rem;
             left: 2rem;
-            background: rgba(5, 20, 32, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(5, 20, 32, 0.98);
             border: 1px solid var(--emerald-accent);
             color: #ffffff;
-            padding: 0.85rem 1.35rem;
-            border-radius: var(--radius-md);
-            font-size: 0.875rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.825rem;
             font-weight: 500;
             z-index: 999;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(5, 150, 105, 0.3);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
             display: none;
             direction: rtl;
         }
 
         .toast.show {
             display: block;
-            animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .toast.error {
             border-color: #ef4444;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(239, 68, 68, 0.3);
         }
 
-        @keyframes toastIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ─── Sticky Save Action Bar ─── */
+        /* ─── Sticky Save Action Bar (Sharp 4px Edges) ─── */
         .sticky-save-bar {
             position: fixed;
-            bottom: 1.5rem;
+            bottom: 1.25rem;
             left: 50%;
             transform: translateX(-50%);
             z-index: 85;
-            background: rgba(4, 20, 32, 0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: rgba(5, 20, 32, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(56, 189, 248, 0.45);
-            border-radius: var(--radius-xl);
-            padding: 0.55rem 1.25rem;
+            border-radius: var(--radius-md);
+            padding: 0.5rem 1.15rem;
             display: flex;
             align-items: center;
-            gap: 1.25rem;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(14, 116, 144, 0.35);
-            transition: all 0.3s ease;
+            gap: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s ease;
             max-width: 92vw;
         }
 
         .sticky-save-info {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
-            font-size: 0.825rem;
+            gap: 0.55rem;
+            font-size: 0.8rem;
             color: var(--cyan-light);
         }
 
         .kbd-badge {
             display: inline-block;
-            padding: 0.15rem 0.5rem;
-            font-size: 0.725rem;
+            padding: 0.15rem 0.45rem;
+            font-size: 0.7rem;
             font-family: monospace;
             color: #ffffff;
             background: rgba(14, 116, 144, 0.45);
             border: 1px solid rgba(56, 189, 248, 0.35);
-            border-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+            border-radius: 2px;
         }
 
         /* ─── Images & SEO Tab ─── */
         .seo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 1.25rem;
             width: 100%;
         }
 
         .image-card {
             background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            padding: 1.15rem;
             display: flex;
             flex-direction: column;
-            gap: 0.85rem;
-            transition: all 0.25s ease;
+            gap: 0.75rem;
+            transition: all 0.2s ease;
         }
 
         .image-card:hover {
             border-color: var(--border-hover);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.35);
         }
 
         .image-card-title {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.95rem;
+            gap: 0.45rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: #ffffff;
         }
@@ -1023,32 +977,32 @@ $is_auth = is_authenticated();
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            padding: 0.5rem;
+            padding: 0.4rem;
         }
 
         .image-preview-box img {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .image-preview-badge {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: 6px;
+            right: 6px;
             background: rgba(14, 116, 144, 0.85);
             color: #ffffff;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            font-size: 0.675rem;
+            padding: 0.15rem 0.45rem;
+            border-radius: var(--radius-sm);
             font-weight: 600;
         }
 
         .image-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
 
         .file-upload-input {
@@ -1058,36 +1012,32 @@ $is_auth = is_authenticated();
         .preview-columns-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 900px) {
-            .preview-columns-grid {
-                grid-template-columns: 1fr;
-            }
+            gap: 1.25rem;
+            margin-top: 1.25rem;
         }
 
         .google-serp-preview {
             background: #202124;
             border: 1px solid #3c4043;
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            padding: 1.15rem;
             direction: rtl;
             font-family: Arial, sans-serif;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            word-break: break-word;
+            overflow: hidden;
         }
 
         .serp-url-row {
             display: flex;
             align-items: center;
-            gap: 0.65rem;
-            margin-bottom: 0.5rem;
+            gap: 0.55rem;
+            margin-bottom: 0.45rem;
         }
 
         .serp-favicon-img {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             object-fit: contain;
             background: #303134;
@@ -1097,27 +1047,35 @@ $is_auth = is_authenticated();
         .serp-site-info {
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         .serp-site-name {
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             color: #dadce0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .serp-site-url {
-            font-size: 0.75rem;
+            font-size: 0.725rem;
             color: #9aa0a6;
             direction: ltr;
             text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .serp-title {
             color: #8ab4f8;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 400;
             line-height: 1.35;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
             cursor: pointer;
+            word-break: break-word;
         }
 
         .serp-title:hover {
@@ -1126,60 +1084,64 @@ $is_auth = is_authenticated();
 
         .serp-description {
             color: #bdc1c6;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             line-height: 1.6;
+            word-break: break-word;
         }
 
         .messenger-preview-container {
             background: #17212b;
             border: 1px solid rgba(14, 116, 144, 0.35);
-            border-radius: var(--radius-md);
-            padding: 1.25rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border-radius: var(--radius-sm);
+            padding: 1.15rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            overflow: hidden;
         }
 
         .messenger-chat-bubble {
             background: #242f3d;
-            border-radius: var(--radius-md);
-            padding: 0.85rem;
+            border-radius: var(--radius-sm);
+            padding: 0.8rem;
             max-width: 440px;
             margin: 0 auto;
+            word-break: break-word;
         }
 
         .messenger-link-header {
             display: block;
             color: #6ab2f2;
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             direction: ltr;
             text-align: right;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.45rem;
+            word-break: break-all;
         }
 
         .messenger-rich-card {
             border-right: 3px solid #6ab2f2;
-            padding-right: 0.75rem;
+            padding-right: 0.65rem;
         }
 
         .messenger-site-name {
-            font-size: 0.75rem;
+            font-size: 0.725rem;
             font-weight: 700;
             color: #6ab2f2;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.2rem;
         }
 
         .messenger-title {
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.3rem;
             line-height: 1.4;
         }
 
         .messenger-desc {
-            font-size: 0.8rem;
+            font-size: 0.775rem;
             color: #9bb2c9;
             line-height: 1.5;
-            margin-bottom: 0.65rem;
+            margin-bottom: 0.55rem;
         }
 
         .messenger-image-wrapper {
@@ -1201,7 +1163,7 @@ $is_auth = is_authenticated();
         }
 
         .seo-input-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.15rem;
             width: 100%;
         }
 
@@ -1209,16 +1171,16 @@ $is_auth = is_authenticated();
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 0.4rem;
-            font-size: 0.75rem;
+            margin-top: 0.35rem;
+            font-size: 0.725rem;
             color: var(--text-muted);
         }
 
         .seo-badge {
             background: rgba(14, 116, 144, 0.25);
             color: var(--cyan-light);
-            padding: 0.15rem 0.55rem;
-            border-radius: 4px;
+            padding: 0.12rem 0.5rem;
+            border-radius: var(--radius-sm);
             font-weight: 600;
         }
 
@@ -1234,26 +1196,117 @@ $is_auth = is_authenticated();
             border: 1px solid rgba(245, 158, 11, 0.35);
         }
 
+        /* ─── Comprehensive Mobile & Tablet Responsive Media Queries ─── */
+        @media (max-width: 992px) {
+            .preview-columns-grid {
+                grid-template-columns: 1fr;
+            }
+            .chart-layout-grid {
+                grid-template-columns: 1fr;
+            }
+            .donut-wrapper {
+                border-right: none !important;
+                border-top: 1px solid rgba(14, 116, 144, 0.2);
+                padding-right: 0 !important;
+                padding-top: 1.25rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .admin-header {
-                padding: 0.75rem 1rem;
+                padding: 0.65rem 1rem;
+            }
+            .brand-subtitle {
+                display: none;
+            }
+            .header-status-pill {
+                display: none;
+            }
+            .tabs-container {
+                padding: 0 1rem;
+                gap: 0.25rem;
+            }
+            .tab-btn {
+                padding: 0.55rem 0.75rem;
+                font-size: 0.8rem;
+                gap: 0.35rem;
             }
             .main-container {
                 padding: 0 1rem;
+                margin-top: 1rem;
+                margin-bottom: 5.5rem;
             }
             .panel-card {
-                padding: 1.25rem 1rem;
+                padding: 1.15rem 1rem;
             }
-            .brand-subtitle, .header-status-pill {
+            .btn-text-long {
                 display: none;
             }
+            .analytics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
             .sticky-save-bar {
-                bottom: 1rem;
-                padding: 0.5rem 1rem;
-                gap: 0.75rem;
+                bottom: 0.85rem;
+                left: 0.75rem;
+                right: 0.75rem;
+                transform: none;
+                width: auto;
+                max-width: calc(100vw - 1.5rem);
+                justify-content: space-between;
+                padding: 0.45rem 0.85rem;
             }
             .kbd-badge {
                 display: none;
+            }
+            .toast {
+                left: 1rem;
+                right: 1rem;
+                bottom: 4.5rem;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .social-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .security-grid {
+                grid-template-columns: 1fr;
+            }
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.65rem;
+            }
+            .card-header > .btn,
+            .card-header > div:last-child {
+                width: 100%;
+                justify-content: center;
+            }
+            .admin-header {
+                gap: 0.5rem;
+            }
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .admin-user-chip {
+                order: -1;
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 0.25rem;
+            }
+            .stat-box {
+                padding: 0.85rem 0.5rem;
+            }
+            .admin-icon-lg {
+                width: 1.15rem;
+                height: 1.15rem;
+            }
+            .image-actions .btn {
+                flex: 1 1 100%;
             }
         }
 
@@ -1267,7 +1320,7 @@ $is_auth = is_authenticated();
     <!-- ─── LOGIN VIEW ─── -->
     <div class="login-wrap">
         <div class="login-card">
-            <img src="/logo.png" alt="لوگو دفتر وکالت کیان‌ارثی" style="width: 64px; height: 64px; object-fit: contain; margin: 0 auto 1rem; display: block; border-radius: 6px; box-shadow: 0 4px 15px rgba(14, 116, 144, 0.3);">
+            <img src="/logo.png" alt="لوگو دفتر وکالت کیان‌ارثی" style="width: 56px; height: 56px; object-fit: contain; margin: 0 auto 1rem; display: block; border-radius: 2px; box-shadow: 0 4px 15px rgba(14, 116, 144, 0.3);">
             <h1 class="login-title">ورود به پنل مدیریت</h1>
             <p class="login-desc">پایگاه رسمی دفتر وکالت محمدحسن کیان‌ارثی<br>جهت ورود اطلاعات کاربری خود را وارد کنید.</p>
             
@@ -1292,11 +1345,12 @@ $is_auth = is_authenticated();
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
-    <?php else: ?>
+    <?php if ($is_auth): ?>
     <!-- ─── DASHBOARD VIEW ─── -->
     <header class="admin-header">
-        <div style="display: flex; align-items: center; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
             <a href="#" class="brand-logo">
                 <img src="/logo.png" alt="لوگو دفتر وکالت" class="brand-logo-img">
                 <div class="brand-info">
@@ -1306,7 +1360,7 @@ $is_auth = is_authenticated();
             </a>
             <div class="header-status-pill">
                 <span class="status-dot"></span>
-                <span>سامانه فعال و امن</span>
+                <span>سامانه آنلاین</span>
             </div>
         </div>
 
@@ -1467,7 +1521,7 @@ $is_auth = is_authenticated();
                 </div>
             </div>
 
-            <!-- Card 3: Contact & Office Location -->
+            <!-- Card 3: Contact & Office Location & Map Coordinates -->
             <div class="panel-card">
                 <div class="card-header">
                     <div class="card-header-main">
@@ -1475,9 +1529,17 @@ $is_auth = is_authenticated();
                             <svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                         </div>
                         <div>
-                            <h2 class="card-title">ارتباط مستقیم تلفنی و نشانی دفتر کرج</h2>
-                            <p class="card-subtitle">تنظیم شماره تماس تماس مستقیم و آدرس دقیق دفتر جهت مراجعه حضوری موکلین</p>
+                            <h2 class="card-title">ارتباط مستقیم تلفنی، نشانی دفتر و مختصات نقشه</h2>
+                            <p class="card-subtitle">تنظیم شماره تماس، آدرس متنی و مختصات GPS جهت مسیریابی خودکار در نشان، بلد و Google Maps</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="location-guide-box">
+                    <svg class="admin-icon" style="color: var(--cyan-accent); margin-top: 2px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    <div>
+                        <strong>راهنمای موقعیت مکانی و لوکیشن:</strong>
+                        با وارد کردن <strong>عرض و طول جغرافیایی (Latitude / Longitude)</strong>، نقشه زنده سایت و کلیه دکمه‌های مسیریابی موکلین (نشان، بلد و گوگل مپ) به‌صورت خودکار بر روی دفتر جدید شما متمرکز می‌شوند. همچنین در صورت تمایل می‌توانید لینک اختصاصی مدنظر خود را در کادرهای مربوطه قرار دهید.
                     </div>
                 </div>
 
@@ -1497,8 +1559,42 @@ $is_auth = is_authenticated();
                             <span class="input-icon">
                                 <svg class="admin-icon" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                             </span>
-                            <textarea id="address" class="form-control has-icon" style="min-height: 85px;" placeholder="کرج، میدان آزادگان، ..."></textarea>
+                            <textarea id="address" class="form-control has-icon" style="min-height: 80px;" placeholder="کرج، بلوار ملاصدرا، بالاتر از دبیرستان سلام البرز، ساختمان وکلای صدرا، طبقه دوم، واحد ۸"></textarea>
                         </div>
+                    </div>
+
+                    <!-- Coordinates Group -->
+                    <div class="form-group">
+                        <label class="form-label" for="latitude">عرض جغرافیایی (Latitude):</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </span>
+                            <input type="text" id="latitude" class="form-control has-icon" placeholder="35.8427497" style="direction: ltr; text-align: left;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="longitude">طول جغرافیایی (Longitude):</label>
+                        <div class="input-wrap">
+                            <span class="input-icon">
+                                <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </span>
+                            <input type="text" id="longitude" class="form-control has-icon" placeholder="50.991522" style="direction: ltr; text-align: left;">
+                        </div>
+                    </div>
+
+                    <!-- Custom Map URLs (Optional) -->
+                    <div class="form-group">
+                        <label class="form-label" for="neshanUrl">لینک مستقیم مسیریابی نشان (اختیاری):</label>
+                        <input type="text" id="neshanUrl" class="form-control" placeholder="https://neshan.org/maps/@35.8427497,50.991522,17z" style="direction: ltr;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="baladUrl">لینک مستقیم مسیریابی بلد (اختیاری):</label>
+                        <input type="text" id="baladUrl" class="form-control" placeholder="https://balad.ir/location?latitude=35.8427497&longitude=50.991522" style="direction: ltr;">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label class="form-label" for="googleMapsUrl">لینک مستقیم مسیریابی Google Maps (اختیاری):</label>
+                        <input type="text" id="googleMapsUrl" class="form-control" placeholder="https://www.google.com/maps/dir/?api=1&destination=35.8427497,50.991522" style="direction: ltr;">
                     </div>
                 </div>
             </div>
@@ -1526,11 +1622,11 @@ $is_auth = is_authenticated();
                                 <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                             </div>
                             <div>
-                                <strong style="font-size: 0.95rem; color: #ffffff;">اینستاگرام (Instagram)</strong>
-                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">صفحه رسمی و ویدیوهای حقوقی</span>
+                                <strong style="font-size: 0.9rem; color: #ffffff;">اینستاگرام (Instagram)</strong>
+                                <span style="display: block; font-size: 0.725rem; color: var(--text-muted);">صفحه رسمی و ویدیوهای حقوقی</span>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <div class="form-group" style="margin-bottom: 0.65rem;">
                             <label class="form-label" for="instagram">آیدی / نام کاربری اینستاگرام:</label>
                             <input type="text" id="instagram" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
                         </div>
@@ -1547,11 +1643,11 @@ $is_auth = is_authenticated();
                                 <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                             </div>
                             <div>
-                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان ایتا (Eitaa)</strong>
-                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">مشاوره و ارسال مدارک در ایتا</span>
+                                <strong style="font-size: 0.9rem; color: #ffffff;">پیام‌رسان ایتا (Eitaa)</strong>
+                                <span style="display: block; font-size: 0.725rem; color: var(--text-muted);">مشاوره و ارسال مدارک در ایتا</span>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <div class="form-group" style="margin-bottom: 0.65rem;">
                             <label class="form-label" for="eitaa">آیدی کاربری در ایتا:</label>
                             <input type="text" id="eitaa" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
                         </div>
@@ -1568,11 +1664,11 @@ $is_auth = is_authenticated();
                                 <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                             </div>
                             <div>
-                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان بله (Bale)</strong>
-                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">ارتباط و ارسال اسناد در بله</span>
+                                <strong style="font-size: 0.9rem; color: #ffffff;">پیام‌رسان بله (Bale)</strong>
+                                <span style="display: block; font-size: 0.725rem; color: var(--text-muted);">ارتباط و ارسال اسناد در بله</span>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <div class="form-group" style="margin-bottom: 0.65rem;">
                             <label class="form-label" for="bale">آیدی کاربری در بله:</label>
                             <input type="text" id="bale" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
                         </div>
@@ -1589,11 +1685,11 @@ $is_auth = is_authenticated();
                                 <svg class="admin-icon" style="color: #ffffff;" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                             </div>
                             <div>
-                                <strong style="font-size: 0.95rem; color: #ffffff;">پیام‌رسان روبیکا (Rubika)</strong>
-                                <span style="display: block; font-size: 0.75rem; color: var(--text-muted);">کانال و ارتباط در روبیکا</span>
+                                <strong style="font-size: 0.9rem; color: #ffffff;">پیام‌رسان روبیکا (Rubika)</strong>
+                                <span style="display: block; font-size: 0.725rem; color: var(--text-muted);">کانال و ارتباط در روبیکا</span>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <div class="form-group" style="margin-bottom: 0.65rem;">
                             <label class="form-label" for="rubika">آیدی کاربری در روبیکا:</label>
                             <input type="text" id="rubika" class="form-control" placeholder="vakilkianersi" style="direction: ltr;">
                         </div>
@@ -1606,7 +1702,7 @@ $is_auth = is_authenticated();
                 </div>
 
                 <div class="form-save-footer" style="text-align: left; margin-top: 1.5rem; display: flex; justify-content: flex-end;">
-                    <button type="button" onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.75rem 1.75rem; font-size: 0.9rem;">
+                    <button type="button" onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.65rem 1.5rem; font-size: 0.85rem;">
                         <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                         <span>ذخیره کلیه تنظیمات عمومی</span>
                     </button>
@@ -2273,6 +2369,13 @@ $is_auth = is_authenticated();
             document.getElementById('rubika').value = gen.rubika || '';
             document.getElementById('rubikaUrl').value = gen.rubikaUrl || '';
 
+            // Office Location & Coordinates
+            if (document.getElementById('latitude')) document.getElementById('latitude').value = gen.latitude || '35.8427497';
+            if (document.getElementById('longitude')) document.getElementById('longitude').value = gen.longitude || '50.991522';
+            if (document.getElementById('neshanUrl')) document.getElementById('neshanUrl').value = gen.neshanUrl || '';
+            if (document.getElementById('baladUrl')) document.getElementById('baladUrl').value = gen.baladUrl || '';
+            if (document.getElementById('googleMapsUrl')) document.getElementById('googleMapsUrl').value = gen.googleMapsUrl || '';
+
             // SEO Text fields
             if (document.getElementById('seoTitle')) {
                 document.getElementById('seoTitle').value = gen.seoTitle || '';
@@ -2336,7 +2439,13 @@ $is_auth = is_authenticated();
                 baleUrl: document.getElementById('baleUrl').value,
                 rubika: document.getElementById('rubika').value,
                 rubikaUrl: document.getElementById('rubikaUrl').value,
+                latitude: document.getElementById('latitude') ? document.getElementById('latitude').value.trim() : '35.8427497',
+                longitude: document.getElementById('longitude') ? document.getElementById('longitude').value.trim() : '50.991522',
             };
+
+            if (document.getElementById('neshanUrl')) general.neshanUrl = document.getElementById('neshanUrl').value.trim();
+            if (document.getElementById('baladUrl')) general.baladUrl = document.getElementById('baladUrl').value.trim();
+            if (document.getElementById('googleMapsUrl')) general.googleMapsUrl = document.getElementById('googleMapsUrl').value.trim();
 
             // Preserve SEO if available
             if (document.getElementById('seoTitle')) general.seoTitle = document.getElementById('seoTitle').value.trim();

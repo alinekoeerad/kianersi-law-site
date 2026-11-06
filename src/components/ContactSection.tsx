@@ -11,8 +11,9 @@ export default function ContactSection() {
   const [mapProvider, setMapProvider] = useState<'google' | 'osm'>('google');
 
   const fullAddress = general.address;
-  const latitude = 35.8427497;
-  const longitude = 50.991522;
+  const latitude = general.latitude ? parseFloat(String(general.latitude)) || 35.8427497 : 35.8427497;
+  const longitude = general.longitude ? parseFloat(String(general.longitude)) || 50.991522 : 50.991522;
+  const osmBbox = `${(longitude - 0.0065).toFixed(4)},${(latitude - 0.0047).toFixed(4)},${(longitude + 0.0065).toFixed(4)},${(latitude + 0.0047).toFixed(4)}`;
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(fullAddress);
@@ -68,17 +69,17 @@ export default function ContactSection() {
   const navigationApps = [
     {
       name: 'نشان',
-      href: `https://neshan.org/maps/@${latitude},${longitude},17z`,
+      href: general.neshanUrl || `https://neshan.org/maps/@${latitude},${longitude},17z`,
       badge: 'محبوب'
     },
     {
       name: 'بلد',
-      href: `https://balad.ir/location?latitude=${latitude}&longitude=${longitude}`,
+      href: general.baladUrl || `https://balad.ir/location?latitude=${latitude}&longitude=${longitude}`,
       badge: ''
     },
     {
       name: 'Google Maps',
-      href: `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+      href: general.googleMapsUrl || `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
       badge: ''
     }
   ];
@@ -282,7 +283,7 @@ export default function ContactSection() {
                   src={
                     mapProvider === 'google'
                       ? `https://maps.google.com/maps?q=${latitude},${longitude}&hl=fa&z=16&output=embed`
-                      : `https://www.openstreetmap.org/export/embed.html?bbox=50.9850,35.8380,50.9980,35.8475&layer=mapnik&marker=${latitude},${longitude}`
+                      : `https://www.openstreetmap.org/export/embed.html?bbox=${osmBbox}&layer=mapnik&marker=${latitude},${longitude}`
                   }
                   className="w-full h-full border-0 pointer-events-auto"
                   loading="lazy"

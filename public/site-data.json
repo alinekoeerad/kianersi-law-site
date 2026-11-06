@@ -23,7 +23,12 @@
     "seoImage": "./preview.webp",
     "seoTitle": "محمدحسن کیان‌ارثی | وکیل پایه یک کرج | دعاوی آب و املاک",
     "seoDescription": "دفتر وکالت تخصصی کرج در دعاوی آب، چاه کشاورزی و حریم رودخانه",
-    "seoKeywords": "وکیل کرج, وکیل آب"
+    "seoKeywords": "وکیل کرج, وکیل آب",
+    "latitude": "35.8427497",
+    "longitude": "50.991522",
+    "neshanUrl": "https://neshan.org/maps/@35.8427497,50.991522,17z",
+    "baladUrl": "https://balad.ir/location?latitude=35.8427497&longitude=50.991522",
+    "googleMapsUrl": "https://www.google.com/maps/dir/?api=1&destination=35.8427497,50.991522"
   },
   "laws": [
     {

@@ -117,25 +117,24 @@ function renderAdminHtml(auth) {
   content = content.replace(/<\?=\s*get_csrf_token\(\)\s*\?>/g, 'local_csrf_token_123');
 
   if (auth) {
-    // Show dashboard: remove login block between <?php if (!$is_auth): ?> and <?php else: ?>
-    content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):[\s\S]*?<\?php\s*else:\s*\?>/i, '');
-    content = content.replace(/<\?php\s*endif;\s*\?>/i, '');
+    // 1. Remove login block completely
+    content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
+    content = content.replace(/<!-- ─── LOGIN VIEW ─── -->[\s\S]*?(?=<!-- ─── DASHBOARD VIEW ─── -->)/i, '');
 
-    // Handle security warning banner
+    // 2. Handle security warning banner
     if (isUsingDefaultPassword()) {
       content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):\s*\?>/i, '');
-      content = content.replace(/<\?php\s*endif;\s*\?>/i, '');
     } else {
-      content = content.replace(/<\?php\s*if\s*\(is_using_default_password\(\)\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
+      content = content.replace(/<div id="securityWarningBanner"[\s\S]*?<\/div>\s*<\/div>/i, '');
     }
 
-    // Init call
-    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?loadSiteData\(\);[\s\S]*?<\?php\s*endif;\s*\?>/i, 'loadSiteData();');
+    // 3. Remove is_auth tags without swallowing dashboard content
+    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):\s*\?>/gi, '');
+    content = content.replace(/<\?php\s*endif;\s*\?>/gi, '');
   } else {
-    // Show login: remove dashboard block between <?php else: ?> and <?php endif; ?>
-    content = content.replace(/<\?php\s*else:[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
-    content = content.replace(/<\?php\s*if\s*\(!\$is_auth\):\s*\?>/i, '');
-    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
+    // Completely remove dashboard block: everything from DASHBOARD VIEW to <script>
+    content = content.replace(/<!-- ─── DASHBOARD VIEW ─── -->[\s\S]*?(?=<script>)/i, '');
+    content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/gi, '');
   }
 
   // Strip any remaining helper php blocks

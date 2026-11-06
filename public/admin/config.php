@@ -5,11 +5,17 @@ if (!defined('CMS_ROOT')) {
 }
 
 // ─── 1. Security Headers ──────────────────────────────────────────
+@ini_set('expose_php', 'off');
+if (function_exists('header_remove')) {
+    @header_remove('X-Powered-By');
+}
 if (!headers_sent()) {
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: SAMEORIGIN');
     header('X-XSS-Protection: 1; mode=block');
     header('Referrer-Policy: strict-origin-when-cross-origin');
+    header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()');
+    header('X-Permitted-Cross-Domain-Policies: none');
 }
 
 // ─── 2. Hardened Session Settings ─────────────────────────────────

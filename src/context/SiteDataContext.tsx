@@ -26,6 +26,11 @@ export interface GeneralData {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string;
+  latitude?: string | number;
+  longitude?: string | number;
+  neshanUrl?: string;
+  baladUrl?: string;
+  googleMapsUrl?: string;
 }
 
 export interface LawCategory {
@@ -64,7 +69,9 @@ export const defaultSiteData: SiteData = {
     seoImage: './images/lawyer-portrait.webp',
     seoTitle: 'محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج - دعاوی تخصصی آب و اراضی',
     seoDescription: 'دفتر وکالت محمدحسن کیان‌ارثی؛ وکیل پایه یک دادگستری در کرج و تهران با ۲۰+ سال سابقه تخصصی در دعاوی حقوق آب، چاه‌های کشاورزی، حریم رودخانه، کمیسیون‌ها و دیوان عدالت اداری. مشاوره: ۰۹۱۲۷۶۹۸۸۶۴',
-    seoKeywords: 'محمدحسن کیان‌ارثی, محمد حسن کیان ارثی, وکیل کیان ارثی, وکیل پایه یک دادگستری کرج, وکیل دعاوی آب کرج, وکیل چاه کشاورزی البرز, وکیل کمیسیون آب‌های زیرزمینی, وکیل حریم رودخانه, وکیل دیوان عدالت اداری کرج'
+    seoKeywords: 'محمدحسن کیان‌ارثی, محمد حسن کیان ارثی, وکیل کیان ارثی, وکیل پایه یک دادگستری کرج, وکیل دعاوی آب کرج, وکیل چاه کشاورزی البرز, وکیل کمیسیون آب‌های زیرزمینی, وکیل حریم رودخانه, وکیل دیوان عدالت اداری کرج',
+    latitude: '35.8427497',
+    longitude: '50.991522',
   },
   categories: [
     { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },

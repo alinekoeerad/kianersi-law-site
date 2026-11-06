@@ -1,10 +1,21 @@
 # ─── Disable Directory Browsing ────────────────────────────────
 Options -Indexes
 
+# ─── Server Signature Off ──────────────────────────────────────
+ServerSignature Off
+
+# ─── MIME Types ────────────────────────────────────────────────
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+</IfModule>
+
 # ─── Force HTTPS ────────────────────────────────────────────────
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
 
 # ─── SPA Routing Fallback ──────────────────────────────────────
 <IfModule mod_rewrite.c>
@@ -35,16 +46,33 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
 </IfModule>
 
-# ─── Security Headers ──────────────────────────────────────────
+# ─── Comprehensive Network Security Headers ─────────────────────
 <IfModule mod_headers.c>
-  Header set X-Content-Type-Options "nosniff"
-  Header set X-XSS-Protection "1; mode=block"
-  Header set X-Frame-Options "SAMEORIGIN"
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  # 1. HSTS (Enforce HTTPS across domain & subdomains)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+  
+  # 2. Prevent MIME-Type sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # 3. Cross-Site Scripting (XSS) Filter Protection
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # 4. Anti-Clickjacking: Allow framing only from same origin for root
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # 5. Referrer Policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # 6. Permissions Policy (Disables unused privacy-invasive device APIs)
+  Header always set Permissions-Policy "camera=(), microphone=(), payment=(), usb=()"
+  
+  # 7. Cross-Origin Policies
+  Header set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+  Header set Cross-Origin-Resource-Policy "cross-origin"
 </IfModule>
 
 # ─── Block Direct Access to Hidden / Sensitive Files ───────────
-<FilesMatch "(\.git|\.env|package\.json|package-lock\.json|.*\.bak|.*-backup\.json)$">
+<FilesMatch "(\.(git|env|lock|log|bak|sql|sh|tar|gz)|package\.json|package-lock\.json|.*-backup\.json)$">
   <IfModule mod_authz_core.c>
     Require all denied
   </IfModule>
