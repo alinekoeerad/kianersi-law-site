@@ -8,7 +8,7 @@ export default function ContactSection() {
   const { general } = useSiteData();
   const [copied, setCopied] = useState(false);
   const [mapActive, setMapActive] = useState(false);
-  const [mapProvider, setMapProvider] = useState<'neshan' | 'osm'>('neshan');
+  const [mapProvider, setMapProvider] = useState<'google' | 'osm'>('google');
 
   const fullAddress = general.address;
   const latitude = 35.8427497;
@@ -239,15 +239,15 @@ export default function ContactSection() {
                 <div className="flex items-center gap-1.5 text-xs">
                   <button
                     type="button"
-                    onClick={() => setMapProvider('neshan')}
+                    onClick={() => setMapProvider('google')}
                     className="px-2.5 py-1 rounded-sm text-[11px] transition-all font-medium"
                     style={{
-                      backgroundColor: mapProvider === 'neshan' ? '#0e7490' : 'rgba(2,15,26,0.6)',
-                      color: mapProvider === 'neshan' ? '#ffffff' : '#94a3b8',
-                      border: mapProvider === 'neshan' ? '1px solid #7dd3fc' : '1px solid rgba(14,116,144,0.25)'
+                      backgroundColor: mapProvider === 'google' ? '#0e7490' : 'rgba(2,15,26,0.6)',
+                      color: mapProvider === 'google' ? '#ffffff' : '#94a3b8',
+                      border: mapProvider === 'google' ? '1px solid #7dd3fc' : '1px solid rgba(14,116,144,0.25)'
                     }}
                   >
-                    نقشه نشان
+                    Google Maps
                   </button>
                   <button
                     type="button"
@@ -280,8 +280,8 @@ export default function ContactSection() {
                 <iframe
                   title="نقشه موقعیت دفتر وکالت محمدحسن کیان‌ارثی در کرج"
                   src={
-                    mapProvider === 'neshan'
-                      ? `https://neshan.org/maps/iframe?lat=${latitude}&lng=${longitude}&zoom=16`
+                    mapProvider === 'google'
+                      ? `https://maps.google.com/maps?q=${latitude},${longitude}&hl=fa&z=16&output=embed`
                       : `https://www.openstreetmap.org/export/embed.html?bbox=50.9850,35.8380,50.9980,35.8475&layer=mapnik&marker=${latitude},${longitude}`
                   }
                   className="w-full h-full border-0 pointer-events-auto"
