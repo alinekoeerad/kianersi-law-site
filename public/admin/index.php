@@ -593,7 +593,7 @@ $is_auth = is_authenticated();
             </form>
             
             <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(14,116,144,0.2); font-size: 0.75rem; color: var(--text-muted);">
-                رمز عبور پیش‌فرض: <code style="color: var(--cyan-light);">Kianersi@1403</code>
+                سامانه مدیریت محتوای اختصاصی دفتر وکالت محمدحسن کیان‌ارثی
             </div>
         </div>
     </div>
@@ -619,6 +619,20 @@ $is_auth = is_authenticated();
             </button>
         </div>
     </header>
+
+    <?php if (is_using_default_password()): ?>
+    <div style="max-width: 1200px; margin: 1rem auto 0; padding: 0 1.5rem;">
+        <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 4px; padding: 0.85rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; color: #fca5a5; font-size: 0.85rem;">
+                <span style="font-size: 1.2rem;">⚠️</span>
+                <span><strong>هشدار امنیتی مهم:</strong> شما در حال حاضر از رمز عبور پیش‌فرض اولیه سیستم استفاده می‌کنید. لطفاً برای ارتقای امنیت وب‌سایت، هم‌اکنون از تب امنیت رمز خود را تغییر دهید.</span>
+            </div>
+            <button onclick="switchTab('security')" class="btn btn-danger btn-sm">
+                تغییر فوری رمز عبور
+            </button>
+        </div>
+    </div>
+    <?php endif; ?>
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('general')">⚙️ اطلاعات عمومی و تماس</button>

@@ -124,6 +124,9 @@ function renderAdminHtml(auth) {
     content = content.replace(/<\?php\s*if\s*\(\$is_auth\):[\s\S]*?<\?php\s*endif;\s*\?>/i, '');
   }
 
+  // Strip any remaining helper php blocks
+  content = content.replace(/<\?php[\s\S]*?\?>/g, '');
+
   return content;
 }
 

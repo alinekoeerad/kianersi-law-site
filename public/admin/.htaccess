@@ -1,8 +1,8 @@
 # Disable directory browsing
 Options -Indexes
 
-# Block direct access to configuration and sensitive data files
-<FilesMatch "^(config\.php|config\.json|login_attempts\.json|analytics\.json|\.htaccess|.*\.log|.*\.lock)$">
+# Block direct access to configuration, sensitive data files, and logs
+<FilesMatch "(config\.php|.*\.json|.*\.lock|.*\.log|.*\.bak|.*\.env|\.htaccess)$">
     <IfModule mod_authz_core.c>
         Require all denied
     </IfModule>

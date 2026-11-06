@@ -149,15 +149,25 @@ function get_auth_admins() {
             }
         }
     }
-    // Default fallback credentials
-    return [
-        [
-            'id' => 'admin_1',
-            'username' => 'admin',
-            'password_hash' => password_hash('Kianersi@1403', PASSWORD_BCRYPT),
-            'created_at' => date('Y-m-d H:i:s')
-        ]
+    // Default fallback credentials - initialize file if not present
+    $default_admin = [
+        'id' => 'admin_1',
+        'username' => 'admin',
+        'password_hash' => password_hash('Kianersi@1403', PASSWORD_BCRYPT),
+        'created_at' => date('Y-m-d H:i:s')
     ];
+    save_all_admins([$default_admin]);
+    return [$default_admin];
+}
+
+function is_using_default_password() {
+    $admins = get_auth_admins();
+    foreach ($admins as $a) {
+        if ($a['username'] === 'admin' && password_verify('Kianersi@1403', $a['password_hash'])) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function save_all_admins($admins) {
