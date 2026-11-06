@@ -58,7 +58,7 @@ if ($action === 'track_event') {
     json_out(['success' => true]);
 }
 
-// 3. Login (with Anti-Brute-Force Protection)
+// 3. Multi-Admin Login (with Anti-Brute-Force Protection)
 if ($action === 'login') {
     // Check if IP is currently locked due to too many failed attempts
     $bf = check_brute_force_status();
@@ -69,14 +69,23 @@ if ($action === 'login') {
     $username = trim($input['username'] ?? '');
     $password = $input['password'] ?? '';
 
-    $auth = get_auth_config();
-    if ($username === $auth['username'] && password_verify($password, $auth['password_hash'])) {
+    $admins = get_auth_admins();
+    $matched_admin = null;
+    foreach ($admins as $a) {
+        if ($a['username'] === $username && password_verify($password, $a['password_hash'])) {
+            $matched_admin = $a;
+            break;
+        }
+    }
+
+    if ($matched_admin) {
         // Success: Reset failed attempts & regenerate session ID (anti-fixation)
         reset_failed_logins();
         session_regenerate_id(true);
 
         $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_username'] = $username;
+        $_SESSION['admin_username'] = $matched_admin['username'];
+        $_SESSION['admin_id'] = $matched_admin['id'];
         $_SESSION['last_activity'] = time();
 
         json_out([
@@ -121,7 +130,7 @@ function read_site_data() {
         $data = json_decode($content, true);
         if ($data) return $data;
     }
-    return ['general' => [], 'laws' => []];
+    return ['general' => [], 'categories' => [], 'laws' => []];
 }
 
 // Save site data file with Atomic Lock & Automatic Backup
@@ -140,6 +149,13 @@ function write_site_data($data) {
 // 5. Get Data
 if ($action === 'get_data') {
     $data = read_site_data();
+    if (empty($data['categories'])) {
+        $data['categories'] = [
+            ['id' => 'wells', 'label' => 'چاه‌ها و آب‌های زیرزمینی'],
+            ['id' => 'rivers', 'label' => 'بستر، حریم و تأسیسات آبی'],
+            ['id' => 'lands', 'label' => 'اراضی موقوفه، منابع طبیعی و سایر']
+        ];
+    }
     json_out(['success' => true, 'data' => $data, 'csrf_token' => get_csrf_token()]);
 }
 
@@ -198,7 +214,6 @@ if ($action === 'save_general') {
         json_out(['success' => false, 'error' => 'اطلاعات ارسالی نامعتبر است.'], 400);
     }
 
-    // Sanitize string inputs
     $sanitized = [];
     foreach ($general as $k => $v) {
         $sanitized[$k] = is_string($v) ? trim($v) : $v;
@@ -214,7 +229,84 @@ if ($action === 'save_general') {
     }
 }
 
-// 10. Save Single Law (Add or Edit) - Including Category
+// 10. Save Category (Add or Edit)
+if ($action === 'save_category') {
+    $cat = $input['category'] ?? null;
+    $label = trim($cat['label'] ?? '');
+    if (empty($label)) {
+        json_out(['success' => false, 'error' => 'عنوان دسته‌بندی الزامی است.'], 400);
+    }
+
+    $siteData = read_site_data();
+    $categories = $siteData['categories'] ?? [];
+    
+    $catId = trim($cat['id'] ?? '');
+    if (empty($catId)) {
+        // Generate slug / ID from timestamp
+        $catId = 'cat_' . time();
+        $categories[] = [
+            'id' => $catId,
+            'label' => $label
+        ];
+    } else {
+        $found = false;
+        foreach ($categories as &$c) {
+            if ($c['id'] === $catId) {
+                $c['label'] = $label;
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $categories[] = ['id' => $catId, 'label' => $label];
+        }
+    }
+
+    $siteData['categories'] = $categories;
+    if (write_site_data($siteData)) {
+        json_out(['success' => true, 'message' => 'دسته‌بندی با موفقیت ذخیره شد.', 'categories' => $categories]);
+    } else {
+        json_out(['success' => false, 'error' => 'خطا در ذخیره دسته‌بندی.'], 500);
+    }
+}
+
+// 11. Delete Category
+if ($action === 'delete_category') {
+    $catId = trim($input['id'] ?? '');
+    if (empty($catId)) {
+        json_out(['success' => false, 'error' => 'شناسه دسته‌بندی نامعتبر است.'], 400);
+    }
+
+    $siteData = read_site_data();
+    $categories = $siteData['categories'] ?? [];
+    if (count($categories) <= 1) {
+        json_out(['success' => false, 'error' => 'خطا: حداقل باید یک دسته‌بندی در سایت وجود داشته باشد.'], 400);
+    }
+
+    $filteredCategories = array_values(array_filter($categories, function($c) use ($catId) {
+        return $c['id'] !== $catId;
+    }));
+
+    // Reassign laws that belonged to deleted category to the first remaining category
+    $fallbackCatId = $filteredCategories[0]['id'];
+    $laws = $siteData['laws'] ?? [];
+    foreach ($laws as &$l) {
+        if (($l['category'] ?? '') === $catId) {
+            $l['category'] = $fallbackCatId;
+        }
+    }
+
+    $siteData['categories'] = $filteredCategories;
+    $siteData['laws'] = $laws;
+
+    if (write_site_data($siteData)) {
+        json_out(['success' => true, 'message' => 'دسته‌بندی حذف شد و قوانین به بخش دیگر منتقل شدند.', 'categories' => $filteredCategories, 'laws' => $laws]);
+    } else {
+        json_out(['success' => false, 'error' => 'خطا در حذف دسته‌بندی.'], 500);
+    }
+}
+
+// 12. Save Single Law (Add or Edit) - Including Category
 if ($action === 'save_law') {
     $law = $input['law'] ?? null;
     if (!$law || !isset($law['title'], $law['content'])) {
@@ -223,8 +315,7 @@ if ($action === 'save_law') {
 
     $title = trim($law['title']);
     $content = trim($law['content']);
-    $valid_categories = ['wells', 'rivers', 'lands'];
-    $category = in_array($law['category'] ?? '', $valid_categories) ? $law['category'] : 'wells';
+    $category = trim($law['category'] ?? 'wells');
 
     if (empty($title) || empty($content)) {
         json_out(['success' => false, 'error' => 'عنوان یا متن قانون نمی‌تواند خالی باشد.'], 400);
@@ -278,7 +369,7 @@ if ($action === 'save_law') {
     }
 }
 
-// 11. Delete Law
+// 13. Delete Law
 if ($action === 'delete_law') {
     $lawId = (int)($input['id'] ?? 0);
     if ($lawId <= 0) {
@@ -299,21 +390,121 @@ if ($action === 'delete_law') {
     }
 }
 
-// 12. Change Password
+// 14. Get Admins List
+if ($action === 'get_admins') {
+    $admins = get_auth_admins();
+    $list = array_map(function($a) {
+        return [
+            'id' => $a['id'],
+            'username' => $a['username'],
+            'created_at' => $a['created_at'] ?? '-',
+            'is_current' => (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] === $a['id']) || (isset($_SESSION['admin_username']) && $_SESSION['admin_username'] === $a['username'])
+        ];
+    }, $admins);
+    json_out(['success' => true, 'admins' => $list, 'can_delete' => count($list) > 1]);
+}
+
+// 15. Add Admin Account
+if ($action === 'add_admin') {
+    $new_user = trim($input['username'] ?? '');
+    $new_pass = $input['password'] ?? '';
+
+    if (strlen($new_user) < 3) {
+        json_out(['success' => false, 'error' => 'نام کاربری باید حداقل ۳ کاراکتر باشد.'], 400);
+    }
+    if (strlen($new_pass) < 6) {
+        json_out(['success' => false, 'error' => 'کلمه عبور باید حداقل ۶ کاراکتر باشد.'], 400);
+    }
+
+    $admins = get_auth_admins();
+    foreach ($admins as $a) {
+        if (strtolower($a['username']) === strtolower($new_user)) {
+            json_out(['success' => false, 'error' => 'این نام کاربری قبلاً در سیستم ثبت شده است.'], 400);
+        }
+    }
+
+    $admins[] = [
+        'id' => 'admin_' . time() . '_' . rand(100, 999),
+        'username' => $new_user,
+        'password_hash' => password_hash($new_pass, PASSWORD_BCRYPT),
+        'created_at' => date('Y-m-d H:i:s')
+    ];
+
+    if (save_all_admins($admins)) {
+        json_out(['success' => true, 'message' => "مدیر جدید ({$new_user}) با موفقیت به سیستم اضافه شد."]);
+    } else {
+        json_out(['success' => false, 'error' => 'خطا در ذخیره‌سازی مدیر جدید.'], 500);
+    }
+}
+
+// 16. Delete Admin Account (Rule: Never allow fewer than 1 admin!)
+if ($action === 'delete_admin') {
+    $id = trim($input['id'] ?? '');
+    $admins = get_auth_admins();
+
+    if (count($admins) <= 1) {
+        json_out(['success' => false, 'error' => 'خطا: حداقل باید یک مدیر در سیستم باقی بماند و امکان حذف آخرین مدیر وجود ندارد.'], 400);
+    }
+
+    $found = false;
+    $filtered = [];
+    $deleted_username = '';
+    foreach ($admins as $a) {
+        if ($a['id'] === $id) {
+            $found = true;
+            $deleted_username = $a['username'];
+        } else {
+            $filtered[] = $a;
+        }
+    }
+
+    if (!$found) {
+        json_out(['success' => false, 'error' => 'مدیر مورد نظر یافت نشد.'], 404);
+    }
+
+    if (save_all_admins($filtered)) {
+        // If the logged-in admin deleted their own account, log them out
+        $was_self = (isset($_SESSION['admin_id']) && $_SESSION['admin_id'] === $id);
+        if ($was_self) {
+            $_SESSION = [];
+            if (session_id()) session_destroy();
+            json_out(['success' => true, 'message' => "حساب کاربری شما ({$deleted_username}) حذف گردید.", 'logged_out' => true]);
+        }
+        json_out(['success' => true, 'message' => "مدیر ({$deleted_username}) با موفقیت حذف شد."]);
+    } else {
+        json_out(['success' => false, 'error' => 'خطا در حذف مدیر.'], 500);
+    }
+}
+
+// 17. Change Password
 if ($action === 'change_password') {
     $current_pass = $input['current_password'] ?? '';
     $new_pass = $input['new_password'] ?? '';
+    $target_username = trim($input['username'] ?? $_SESSION['admin_username'] ?? '');
 
     if (empty($new_pass) || strlen($new_pass) < 6) {
         json_out(['success' => false, 'error' => 'رمز عبور جدید باید حداقل ۶ کاراکتر باشد.'], 400);
     }
 
-    $auth = get_auth_config();
-    if (!password_verify($current_pass, $auth['password_hash'])) {
-        json_out(['success' => false, 'error' => 'رمز عبور فعلی نادرست است.'], 400);
+    $admins = get_auth_admins();
+    $found = false;
+    foreach ($admins as &$a) {
+        if ($a['username'] === $target_username) {
+            if (!password_verify($current_pass, $a['password_hash'])) {
+                json_out(['success' => false, 'error' => 'رمز عبور فعلی نادرست است.'], 400);
+            }
+            $a['password_hash'] = password_hash($new_pass, PASSWORD_BCRYPT);
+            $a['updated_at'] = date('Y-m-d H:i:s');
+            $found = true;
+            break;
+        }
     }
 
-    if (save_auth_config($auth['username'], $new_pass)) {
+    if (!$found) {
+        json_out(['success' => false, 'error' => 'حساب کاربری مورد نظر یافت نشد.'], 404);
+    }
+
+    if (save_all_admins($admins)) {
         session_regenerate_id(true);
         json_out(['success' => true, 'message' => 'رمز عبور با موفقیت به‌روزرسانی شد.']);
     } else {

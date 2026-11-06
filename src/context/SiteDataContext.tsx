@@ -22,8 +22,14 @@ export interface GeneralData {
   rubikaUrl: string;
 }
 
+export interface LawCategory {
+  id: string;
+  label: string;
+}
+
 export interface SiteData {
   general: GeneralData;
+  categories: LawCategory[];
   laws: LawItem[];
 }
 
@@ -48,6 +54,11 @@ export const defaultSiteData: SiteData = {
     rubika: '@Mka12345666',
     rubikaUrl: 'https://rubika.ir/Mka12345666'
   },
+  categories: [
+    { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
+    { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
+    { id: 'lands', label: 'اراضی موقوفه، منابع طبیعی و سایر' }
+  ],
   laws: lawsDatabase
 };
 

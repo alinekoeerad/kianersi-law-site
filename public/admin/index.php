@@ -18,12 +18,15 @@ $is_auth = is_authenticated();
         :root {
             --bg-deep: #020f1a;
             --bg-card: rgba(10, 30, 40, 0.85);
+            --bg-card-subtle: rgba(4, 21, 33, 0.7);
             --bg-input: rgba(3, 24, 37, 0.9);
             --border-color: rgba(14, 116, 144, 0.35);
             --border-hover: rgba(125, 211, 252, 0.6);
             --cyan-primary: #0e7490;
             --cyan-light: #7dd3fc;
             --emerald-accent: #059669;
+            --emerald-light: #34d399;
+            --amber-accent: #f59e0b;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -157,9 +160,20 @@ $is_auth = is_authenticated();
             background: #b91c1c;
         }
 
+        .btn-sm {
+            padding: 0.35rem 0.65rem;
+            font-size: 0.775rem;
+        }
+
+        .btn[disabled] {
+            opacity: 0.45;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         /* ─── Navigation Tabs ─── */
         .tabs-container {
-            max-w: 1200px;
+            max-width: 1200px;
             margin: 1.5rem auto 0;
             padding: 0 1.5rem;
             display: flex;
@@ -210,6 +224,8 @@ $is_auth = is_authenticated();
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
         .card-title {
@@ -259,26 +275,88 @@ $is_auth = is_authenticated();
             line-height: 1.8;
         }
 
-        /* ─── Laws Table / List ─── */
-        .law-item {
-            background: rgba(3, 24, 37, 0.7);
+        /* ─── Categorized Laws Section Cards ─── */
+        .category-section-card {
+            background: var(--bg-card-subtle);
             border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+
+        .category-header {
+            background: rgba(14, 116, 144, 0.15);
+            border-bottom: 1px solid var(--border-color);
             padding: 1rem 1.25rem;
-            border-radius: 3px;
-            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .category-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .category-badge-count {
+            background: rgba(14, 116, 144, 0.4);
+            color: var(--cyan-light);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            border: 1px solid rgba(125, 211, 252, 0.3);
+        }
+
+        .category-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-laws-list {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .category-empty-state {
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-muted);
+            border: 1px dashed rgba(14, 116, 144, 0.3);
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .law-item {
+            background: rgba(3, 24, 37, 0.85);
+            border: 1px solid rgba(14, 116, 144, 0.25);
+            padding: 0.85rem 1.15rem;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
         .law-item:hover {
-            background: rgba(14, 116, 144, 0.15);
+            border-color: var(--cyan-light);
+            background: rgba(14, 116, 144, 0.12);
         }
 
         .law-info {
             flex: 1;
             min-width: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
         }
 
         .law-badge {
@@ -286,20 +364,148 @@ $is_auth = is_authenticated();
             background: rgba(14, 116, 144, 0.3);
             color: var(--cyan-light);
             padding: 0.2rem 0.5rem;
-            border-radius: 2px;
-            margin-left: 0.5rem;
+            border-radius: 3px;
+            font-weight: 600;
         }
 
         .law-title {
-            font-size: 0.95rem;
+            font-size: 0.925rem;
             font-weight: 600;
             color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .law-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.4rem;
             flex-shrink: 0;
+        }
+
+        /* ─── Visual Charts for Micro Analytics ─── */
+        .chart-card {
+            background: rgba(3, 24, 37, 0.75);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--cyan-light);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chart-layout-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .chart-layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Horizontal Bar Chart */
+        .bars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .bar-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .bar-label-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .bar-track {
+            width: 100%;
+            height: 10px;
+            background: rgba(14, 116, 144, 0.15);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Donut SVG Chart */
+        .donut-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .donut-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.6rem;
+            margin-top: 1.25rem;
+            width: 100%;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.775rem;
+            color: var(--text-muted);
+        }
+
+        .legend-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ─── Multi-Admin Table ─── */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 0.75rem 1rem;
+            text-align: right;
+            border-bottom: 1px solid rgba(14, 116, 144, 0.2);
+            font-size: 0.85rem;
+        }
+
+        .admin-table th {
+            color: var(--cyan-light);
+            font-weight: 600;
+            background: rgba(14, 116, 144, 0.1);
         }
 
         /* ─── Modal ─── */
@@ -410,9 +616,9 @@ $is_auth = is_authenticated();
 
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('general')">⚙️ اطلاعات عمومی و تماس</button>
-        <button class="tab-btn" onclick="switchTab('laws')">📜 کتابخانه قوانین و مقررات</button>
-        <button class="tab-btn" onclick="switchTab('analytics')">📊 آمار بازدید و کلیک‌ها</button>
-        <button class="tab-btn" onclick="switchTab('security')">🔐 تغییر رمز عبور</button>
+        <button class="tab-btn" onclick="switchTab('laws')">📜 کتابخانه قوانین و دسته‌بندی‌ها</button>
+        <button class="tab-btn" onclick="switchTab('analytics')">📊 آمار و نمودارهای تحلیلی</button>
+        <button class="tab-btn" onclick="switchTab('security')">🔐 امنیت و مدیریت مدیران</button>
     </div>
 
     <main class="main-container">
@@ -516,63 +722,43 @@ $is_auth = is_authenticated();
             </div>
         </div>
 
-        <!-- TAB 2: LAWS MANAGEMENT -->
+        <!-- TAB 2: LAWS & DYNAMIC CATEGORIES MANAGEMENT -->
         <div id="tab-laws" class="tab-content" style="display: none;">
             <div class="panel-card">
                 <div class="card-header">
                     <div>
-                        <h2 class="card-title">مدیریت کتابخانه قوانین و مقررات</h2>
+                        <h2 class="card-title">کتابخانه قوانین و مقررات تخصصی آب</h2>
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
-                            می‌توانید قوانین فعلی را ویرایش کرده یا قانون و آیین‌نامه جدیدی به کتابخانه اضافه فرمایید.
+                            هر دسته‌بندی دارای بخش اختصاصی است. می‌توانید دسته‌بندی جدید بسازید یا قوانین مربوط به هر بخش را مدیریت فرمایید.
                         </p>
                     </div>
-                    <button onclick="openLawModal()" class="btn btn-primary">
-                        <span>➕</span>
-                        <span>افزودن قانون جدید</span>
-                    </button>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="openCategoryModal()" class="btn btn-outline" style="border-color: #38bdf8; color: #38bdf8;">
+                            <span>📁</span>
+                            <span>دسته‌بندی جدید</span>
+                        </button>
+                        <button onclick="openLawModal()" class="btn btn-primary">
+                            <span>➕</span>
+                            <span>افزودن قانون جدید</span>
+                        </button>
+                    </div>
                 </div>
 
-                <div id="lawsListContainer">
-                    <p style="color: var(--text-muted); text-align: center; padding: 2rem;">در حال بارگذاری قوانین...</p>
+                <!-- Container where Category Blocks will be dynamically rendered -->
+                <div id="lawsCategorizedContainer">
+                    <p style="color: var(--text-muted); text-align: center; padding: 2rem;">در حال بارگذاری دسته‌بندی‌ها و قوانین...</p>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: SECURITY & PASSWORD -->
-        <div id="tab-security" class="tab-content" style="display: none;">
-            <div class="panel-card" style="max-width: 500px;">
-                <div class="card-header">
-                    <h2 class="card-title">تغییر کلمه عبور مدیر</h2>
-                </div>
-                
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label class="form-label">کلمه عبور فعلی:</label>
-                        <input type="password" id="currentPassword" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">کلمه عبور جدید (حداقل ۶ کاراکتر):</label>
-                        <input type="password" id="newPassword" class="form-control" required minlength="6">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">تکرار کلمه عبور جدید:</label>
-                        <input type="password" id="confirmPassword" class="form-control" required minlength="6">
-                    </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center; margin-top: 1rem;">
-                        به‌روزرسانی کلمه عبور
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- TAB 4: MICRO ANALYTICS -->
+        <!-- TAB 3: VISUAL MICRO ANALYTICS -->
         <div id="tab-analytics" class="tab-content" style="display: none;">
             <div class="panel-card">
                 <div class="card-header">
                     <div>
-                        <h2 class="card-title">آمار اختصاصی کلیک‌ها و مراجعین سایت</h2>
+                        <h2 class="card-title">داشبورد آماری و نمودارهای مراجعین</h2>
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
-                            گزارش آنی و فوق‌سبک تعامل مراجعین با دکمه‌های تماس، پیام‌رسان‌ها و نقشه
+                            گزارش گرافیکی و عددی تعامل مراجعین با دکمه‌های تماس، پیام‌رسان‌ها و مسیریابی
                         </p>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
@@ -587,52 +773,193 @@ $is_auth = is_authenticated();
                     </div>
                 </div>
 
-                <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👁️</div>
-                        <div id="statViews" style="font-size: 1.75rem; font-weight: 700; color: var(--cyan-light);">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">بازدید کل سایت</div>
+                <!-- Numerical KPI Cards -->
+                <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">👁️</div>
+                        <div id="statViews" style="font-size: 1.65rem; font-weight: 700; color: var(--cyan-light);">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">بازدید کل سایت</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📞</div>
-                        <div id="statPhone" style="font-size: 1.75rem; font-weight: 700; color: #34d399;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">کلیک تماس تلفنی</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">📞</div>
+                        <div id="statPhone" style="font-size: 1.65rem; font-weight: 700; color: #34d399;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">تماس مستقیم تلفنی</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
-                        <div id="statEitaa" style="font-size: 1.75rem; font-weight: 700; color: #f59e0b;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به ایتا</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div id="statEitaa" style="font-size: 1.65rem; font-weight: 700; color: #f59e0b;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به ایتا</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
-                        <div id="statInstagram" style="font-size: 1.75rem; font-weight: 700; color: #ec4899;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">صفحه اینستاگرام</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">📱</div>
+                        <div id="statInstagram" style="font-size: 1.65rem; font-weight: 700; color: #ec4899;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">صفحه اینستاگرام</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
-                        <div id="statBale" style="font-size: 1.75rem; font-weight: 700; color: #10b981;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به بله</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div id="statBale" style="font-size: 1.65rem; font-weight: 700; color: #10b981;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به بله</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
-                        <div id="statRubika" style="font-size: 1.75rem; font-weight: 700; color: #6366f1;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به روبیکا</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div id="statRubika" style="font-size: 1.65rem; font-weight: 700; color: #6366f1;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به روبیکا</div>
                     </div>
-                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🗺️</div>
-                        <div id="statMaps" style="font-size: 1.75rem; font-weight: 700; color: #38bdf8;">۰</div>
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مسیریابی نقشه و بلد</div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">🗺️</div>
+                        <div id="statMaps" style="font-size: 1.65rem; font-weight: 700; color: #38bdf8;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مسیریابی نقشه و بلد</div>
                     </div>
                 </div>
 
-                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: gap; gap: 0.5rem;">
+                <!-- VISUAL CHARTS SECTION -->
+                <div class="chart-card">
+                    <h3 class="chart-title">
+                        <span>📈</span>
+                        <span>تحلیل نموداری تعاملات مراجعین و کانال‌های ارتباطی</span>
+                    </h3>
+
+                    <div class="chart-layout-grid">
+                        <!-- Left/Primary: Horizontal Bar Chart -->
+                        <div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                                مقایسه فراوانی کلیک‌ها روی کانال‌های ارتباطی و درصد سهم هر کانال:
+                            </div>
+                            <div id="barsChartContainer" class="bars-list">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Right/Secondary: Donut SVG Distribution Chart -->
+                        <div class="donut-wrapper" style="border-right: 1px solid rgba(14, 116, 144, 0.2); padding-right: 1.5rem;">
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; text-align: center;">
+                                سهم توزیع ارتباطات مراجعین (درصد کل)
+                            </div>
+                            <div style="position: relative; width: 180px; height: 180px;">
+                                <svg id="donutSvg" width="180" height="180" viewBox="0 0 100 100" style="transform: rotate(-90deg); border-radius: 50%;">
+                                    <!-- Donut arcs dynamically inserted -->
+                                </svg>
+                                <div id="donutCenterText" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
+                                    <span style="font-size: 0.7rem; color: var(--text-muted);">کل تعاملات</span>
+                                    <strong id="donutTotalCount" style="font-size: 1.2rem; color: var(--cyan-light);">۰</strong>
+                                </div>
+                            </div>
+                            <div id="donutLegend" class="donut-legend">
+                                <!-- Legend items dynamically inserted -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
                     <span>آخرین ثبت رویداد: <strong id="statLastUpdated" style="color: var(--text-main);">-</strong></span>
                     <span>سیستم آمارگیر درون‌سازمانی با حجم و رم نزدیک به صفر</span>
                 </div>
             </div>
         </div>
 
+        <!-- TAB 4: SECURITY & MULTI-ADMIN MANAGEMENT -->
+        <div id="tab-security" class="tab-content" style="display: none;">
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+                
+                <!-- Box 1: Change Current Password -->
+                <div class="panel-card" style="margin-bottom: 0;">
+                    <div class="card-header">
+                        <h2 class="card-title">🔐 تغییر کلمه عبور حساب جاری</h2>
+                    </div>
+                    
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label class="form-label">کلمه عبور فعلی:</label>
+                            <input type="password" id="currentPassword" class="form-control" required placeholder="••••••••">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">کلمه عبور جدید (حداقل ۶ کاراکتر):</label>
+                            <input type="password" id="newPassword" class="form-control" required minlength="6" placeholder="کلمه عبور قوی">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">تکرار کلمه عبور جدید:</label>
+                            <input type="password" id="confirmPassword" class="form-control" required minlength="6" placeholder="تکرار کلمه عبور">
+                        </div>
+                        <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                            به‌روزرسانی کلمه عبور
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Box 2: Add New Admin -->
+                <div class="panel-card" style="margin-bottom: 0;">
+                    <div class="card-header">
+                        <h2 class="card-title">➕ افزودن مدیر جدید به سیستم</h2>
+                    </div>
+                    
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6;">
+                        مدیر جدید می‌تواند با نام کاربری و رمز اختصاصی خود وارد پنل مدیریت شود و تغییرات را ثبت کند.
+                    </p>
+
+                    <form id="addAdminForm">
+                        <div class="form-group">
+                            <label class="form-label">نام کاربری مدیر جدید:</label>
+                            <input type="text" id="newAdminUsername" class="form-control" required minlength="3" placeholder="مثال: admin2 یا mojtaba">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">کلمه عبور مدیر جدید (حداقل ۶ کاراکتر):</label>
+                            <input type="password" id="newAdminPassword" class="form-control" required minlength="6" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                            <span>➕</span>
+                            <span>ایجاد حساب مدیر جدید</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Box 3: Existing Admins List -->
+            <div class="panel-card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">👥 لیست مدیران فعال سیستم</h2>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                            توجه: طبق استاندارد امنیتی، همیشه باید حداقل ۱ مدیر در سیستم فعال باشد و امکان حذف آخرین مدیر وجود ندارد.
+                        </p>
+                    </div>
+                    <button onclick="loadAdmins()" class="btn btn-outline btn-sm">
+                        <span>🔄</span>
+                        <span>به‌روزرسانی لیست</span>
+                    </button>
+                </div>
+
+                <div id="adminsTableContainer">
+                    <p style="color: var(--text-muted); text-align: center; padding: 1.5rem;">در حال دریافت لیست مدیران...</p>
+                </div>
+            </div>
+
+        </div>
+
     </main>
+
+    <!-- ─── CATEGORY ADD / EDIT MODAL ─── -->
+    <div id="categoryModal" class="modal-overlay">
+        <div class="modal-box" style="max-width: 480px;">
+            <div class="card-header">
+                <h3 id="categoryModalHeading" class="card-title">دسته‌بندی جدید قوانین</h3>
+                <button onclick="closeCategoryModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+            </div>
+            
+            <input type="hidden" id="categoryModalId">
+            
+            <div class="form-group">
+                <label class="form-label">عنوان دسته‌بندی موضوعی:</label>
+                <input type="text" id="categoryModalLabel" class="form-control" required placeholder="مثال: دعاوی و جرایم مرتبط با آب">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+                <button type="button" onclick="closeCategoryModal()" class="btn btn-outline">انصراف</button>
+                <button type="button" onclick="saveCategoryItem()" class="btn btn-success">ذخیره دسته‌بندی</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ─── LAW EDIT / ADD MODAL ─── -->
     <div id="lawModal" class="modal-overlay">
@@ -652,15 +979,13 @@ $is_auth = is_authenticated();
             <div class="form-group">
                 <label class="form-label">دسته‌بندی موضوعی قانون در سایت:</label>
                 <select id="modalLawCategory" class="form-control" style="background-color: var(--bg-input);">
-                    <option value="wells">چاه‌ها و آب‌های زیرزمینی</option>
-                    <option value="rivers">بستر، حریم و تأسیسات آبی</option>
-                    <option value="lands">اراضی موقوفه، منابع طبیعی و سایر</option>
+                    <!-- Dynamically populated -->
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">متن کامل مواد و تبصره‌ها (پشتیبانی از چندخطی):</label>
-                <textarea id="modalLawContent" class="form-control" style="min-height: 300px; font-size: 0.875rem;" required placeholder="ماده ۱ - ...&#10;تبصره ۱ - ..."></textarea>
+                <textarea id="modalLawContent" class="form-control" style="min-height: 280px; font-size: 0.875rem;" required placeholder="ماده ۱ - ...&#10;تبصره ۱ - ..."></textarea>
             </div>
 
             <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
@@ -672,7 +997,7 @@ $is_auth = is_authenticated();
     <?php endif; ?>
 
     <script>
-        let currentSiteData = { general: {}, laws: [] };
+        let currentSiteData = { general: {}, laws: [], categories: [] };
         let currentCsrfToken = '<?= get_csrf_token() ?>';
 
         function showToast(message, isError = false) {
@@ -730,6 +1055,8 @@ $is_auth = is_authenticated();
 
             if (tabId === 'analytics') {
                 loadAnalytics();
+            } else if (tabId === 'security') {
+                loadAdmins();
             }
         }
 
@@ -741,8 +1068,15 @@ $is_auth = is_authenticated();
                 if (result.csrf_token) currentCsrfToken = result.csrf_token;
                 if (result.success && result.data) {
                     currentSiteData = result.data;
+                    if (!currentSiteData.categories || currentSiteData.categories.length === 0) {
+                        currentSiteData.categories = [
+                            { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
+                            { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
+                            { id: 'lands', label: 'اراضی موقوفه، منابع طبیعی و سایر' }
+                        ];
+                    }
                     populateGeneralForm(currentSiteData.general || {});
-                    renderLawsList(currentSiteData.laws || []);
+                    renderCategorizedLaws();
                 }
             } catch (err) {
                 console.error(err);
@@ -809,70 +1143,211 @@ $is_auth = is_authenticated();
             }
         }
 
-        const catLabels = {
-            wells: 'چاه‌ها و زیرزمینی',
-            rivers: 'بستر و حریم',
-            lands: 'اراضی و منابع طبیعی'
-        };
-        const catColors = {
-            wells: '#38bdf8',
-            rivers: '#2dd4bf',
-            lands: '#f59e0b'
-        };
-
-        // Render Laws List
-        function renderLawsList(laws) {
-            const container = document.getElementById('lawsListContainer');
-            if (!container) return;
-
-            if (!laws || laws.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">هیچ قانونی ثبت نشده است.</p>';
-                return;
-            }
-
-            container.innerHTML = laws.map(law => {
-                const cat = law.category || 'wells';
-                const catLabel = catLabels[cat] || 'عمومی';
-                const catColor = catColors[cat] || '#0e7490';
-                return `
-                <div class="law-item">
-                    <div class="law-info" style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
-                        <span class="law-badge">قانون ${law.id}</span>
-                        <span style="background: ${catColor}15; color: ${catColor}; border: 1px solid ${catColor}40; font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 3px; font-weight: 500;">
-                            ${catLabel}
-                        </span>
-                        <span class="law-title">${escapeHtml(law.title)}</span>
-                    </div>
-                    <div class="law-actions">
-                        <button onclick="editLaw(${law.id})" class="btn btn-outline" style="padding: 0.35rem 0.75rem;">
-                            ✏️ ویرایش
-                        </button>
-                        <button onclick="deleteLaw(${law.id})" class="btn btn-danger" style="padding: 0.35rem 0.75rem;">
-                            🗑️ حذف
-                        </button>
-                    </div>
-                </div>
-            `;
-            }).join('');
-        }
-
         function escapeHtml(str) {
             return (str || '').replace(/[&<>"']/g, m => ({
                 '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
             })[m]);
         }
 
-        // Open Modal (Add)
-        function openLawModal() {
+        /* ─── DYNAMIC CATEGORIES & DISTINCT CATEGORY SECTIONS ─── */
+        function renderCategorizedLaws() {
+            const container = document.getElementById('lawsCategorizedContainer');
+            if (!container) return;
+
+            const categories = currentSiteData.categories || [];
+            const laws = currentSiteData.laws || [];
+
+            if (categories.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <p>هیچ دسته‌بندی موضوعی تعریف نشده است.</p>
+                        <button onclick="openCategoryModal()" class="btn btn-primary" style="margin-top: 1rem;">
+                            ➕ ایجاد اولین دسته‌بندی
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // Sync category dropdown in law modal
+            populateLawCategoryDropdown();
+
+            let html = '';
+            categories.forEach(cat => {
+                const catLaws = laws.filter(l => (l.category || categories[0].id) === cat.id);
+                const countFa = catLaws.length.toLocaleString('fa-IR');
+
+                html += `
+                <div class="category-section-card" data-cat-id="${cat.id}">
+                    <div class="category-header">
+                        <div class="category-title-group">
+                            <span style="font-size: 1.25rem;">📁</span>
+                            <strong style="font-size: 1rem; color: #ffffff;">${escapeHtml(cat.label)}</strong>
+                            <span class="category-badge-count">${countFa} قانون</span>
+                        </div>
+                        <div class="category-actions">
+                            <button onclick="openLawModal('${cat.id}')" class="btn btn-success btn-sm" title="افزودن قانون مستقیماً به این بخش">
+                                <span>➕</span>
+                                <span>افزودن قانون به این بخش</span>
+                            </button>
+                            <button onclick="editCategory('${cat.id}', '${escapeHtml(cat.label)}')" class="btn btn-outline btn-sm" title="ویرایش عنوان دسته‌بندی">
+                                <span>✏️</span>
+                                <span>ویرایش نام</span>
+                            </button>
+                            <button onclick="deleteCategory('${cat.id}', '${escapeHtml(cat.label)}')" class="btn btn-danger btn-sm" title="حذف این دسته‌بندی">
+                                <span>🗑️</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="category-laws-list">
+                `;
+
+                if (catLaws.length === 0) {
+                    html += `
+                        <div class="category-empty-state">
+                            هنوز قانونی در بخش «${escapeHtml(cat.label)}» ثبت نشده است. 
+                            <a href="javascript:void(0)" onclick="openLawModal('${cat.id}')" style="color: var(--cyan-light); text-decoration: underline; margin-right: 0.5rem;">
+                                اولین قانون را به این بخش اضافه کنید
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    catLaws.forEach(law => {
+                        html += `
+                        <div class="law-item">
+                            <div class="law-info">
+                                <span class="law-badge">قانون #${law.id}</span>
+                                <span class="law-title" title="${escapeHtml(law.title)}">${escapeHtml(law.title)}</span>
+                            </div>
+                            <div class="law-actions">
+                                <button onclick="editLaw(${law.id})" class="btn btn-outline btn-sm">
+                                    ✏️ ویرایش
+                                </button>
+                                <button onclick="deleteLaw(${law.id})" class="btn btn-danger btn-sm">
+                                    🗑️ حذف
+                                </button>
+                            </div>
+                        </div>
+                        `;
+                    });
+                }
+
+                html += `
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function populateLawCategoryDropdown() {
+            const select = document.getElementById('modalLawCategory');
+            if (!select) return;
+            const categories = currentSiteData.categories || [];
+            select.innerHTML = categories.map(c => 
+                `<option value="${escapeHtml(c.id)}">${escapeHtml(c.label)}</option>`
+            ).join('');
+        }
+
+        // Category Modal Handlers
+        function openCategoryModal(id = '', label = '') {
+            document.getElementById('categoryModalId').value = id;
+            document.getElementById('categoryModalLabel').value = label;
+            document.getElementById('categoryModalHeading').textContent = id ? 'ویرایش عنوان دسته‌بندی' : 'دسته‌بندی جدید قوانین';
+            document.getElementById('categoryModal').style.display = 'flex';
+            setTimeout(() => document.getElementById('categoryModalLabel').focus(), 50);
+        }
+
+        function editCategory(id, label) {
+            openCategoryModal(id, label);
+        }
+
+        function closeCategoryModal() {
+            document.getElementById('categoryModal').style.display = 'none';
+        }
+
+        async function saveCategoryItem() {
+            const id = document.getElementById('categoryModalId').value.trim();
+            const label = document.getElementById('categoryModalLabel').value.trim();
+
+            if (!label) {
+                showToast('لطفاً عنوان دسته‌بندی را وارد کنید.', true);
+                return;
+            }
+
+            try {
+                const res = await fetch('api.php?action=save_category', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    body: JSON.stringify({ category: { id, label } })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast(result.message || 'دسته‌بندی با موفقیت ذخیره شد.');
+                    closeCategoryModal();
+                    currentSiteData.categories = result.categories;
+                    renderCategorizedLaws();
+                } else {
+                    showToast(result.error || 'خطا در ذخیره دسته‌بندی', true);
+                }
+            } catch (err) {
+                showToast('خطا در ذخیره اطلاعات', true);
+            }
+        }
+
+        async function deleteCategory(id, label) {
+            if ((currentSiteData.categories || []).length <= 1) {
+                showToast('حداقل یک دسته‌بندی باید در سایت وجود داشته باشد.', true);
+                return;
+            }
+
+            if (!confirm(`آیا از حذف دسته‌بندی «${label}» مطمئن هستید؟ در صورت وجود قوانین در این بخش، آنها به صورت خودکار به دسته‌بندی دیگر منتقل خواهند شد.`)) {
+                return;
+            }
+
+            try {
+                const res = await fetch('api.php?action=delete_category', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    body: JSON.stringify({ id })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast(result.message || 'دسته‌بندی با موفقیت حذف گردید.');
+                    currentSiteData.categories = result.categories;
+                    if (result.laws) currentSiteData.laws = result.laws;
+                    renderCategorizedLaws();
+                } else {
+                    showToast(result.error || 'خطا در حذف دسته‌بندی', true);
+                }
+            } catch (err) {
+                showToast('خطا در حذف اطلاعات', true);
+            }
+        }
+
+        // Open Law Modal (Add)
+        function openLawModal(preselectedCatId = '') {
             document.getElementById('modalLawId').value = '';
             document.getElementById('modalLawHeading').textContent = 'افزودن قانون جدید به کتابخانه';
             document.getElementById('modalLawTitle').value = '';
-            document.getElementById('modalLawCategory').value = 'wells';
             document.getElementById('modalLawContent').value = '';
+            
+            populateLawCategoryDropdown();
+            if (preselectedCatId) {
+                document.getElementById('modalLawCategory').value = preselectedCatId;
+            }
             document.getElementById('lawModal').style.display = 'flex';
         }
 
-        // Open Modal (Edit)
+        // Open Law Modal (Edit)
         function editLaw(id) {
             const law = (currentSiteData.laws || []).find(l => (l.id == id));
             if (!law) return;
@@ -880,7 +1355,8 @@ $is_auth = is_authenticated();
             document.getElementById('modalLawId').value = law.id;
             document.getElementById('modalLawHeading').textContent = 'ویرایش قانون شماره ' + law.id;
             document.getElementById('modalLawTitle').value = law.title;
-            document.getElementById('modalLawCategory').value = law.category || 'wells';
+            populateLawCategoryDropdown();
+            document.getElementById('modalLawCategory').value = law.category || (currentSiteData.categories[0] ? currentSiteData.categories[0].id : 'wells');
             document.getElementById('modalLawContent').value = law.content;
             document.getElementById('lawModal').style.display = 'flex';
         }
@@ -922,7 +1398,7 @@ $is_auth = is_authenticated();
                     showToast('قانون با موفقیت ذخیره شد.');
                     closeLawModal();
                     currentSiteData.laws = result.laws;
-                    renderLawsList(result.laws);
+                    renderCategorizedLaws();
                 } else {
                     showToast(result.error || 'خطا در ذخیره قانون', true);
                 }
@@ -948,12 +1424,304 @@ $is_auth = is_authenticated();
                 if (result.success) {
                     showToast('قانون با موفقیت حذف گردید.');
                     currentSiteData.laws = result.laws;
-                    renderLawsList(result.laws);
+                    renderCategorizedLaws();
                 } else {
                     showToast(result.error || 'خطا در حذف', true);
                 }
             } catch (err) {
                 showToast('خطا در حذف اطلاعات', true);
+            }
+        }
+
+        /* ─── VISUAL ANALYTICS & CHARTS ─── */
+        async function loadAnalytics() {
+            try {
+                const res = await fetch('api.php?action=get_analytics');
+                const result = await res.json();
+                if (result.success && result.analytics) {
+                    const a = result.analytics;
+                    const formatNum = (n) => (n || 0).toLocaleString('fa-IR');
+                    document.getElementById('statViews').textContent = formatNum(a.views);
+                    document.getElementById('statPhone').textContent = formatNum(a.phone);
+                    document.getElementById('statEitaa').textContent = formatNum(a.eitaa);
+                    document.getElementById('statInstagram').textContent = formatNum(a.instagram);
+                    document.getElementById('statBale').textContent = formatNum(a.bale);
+                    document.getElementById('statRubika').textContent = formatNum(a.rubika);
+                    document.getElementById('statMaps').textContent = formatNum(a.maps);
+                    document.getElementById('statLastUpdated').textContent = a.last_updated || '-';
+
+                    renderVisualCharts(a);
+                }
+            } catch (err) {
+                console.error('Error loading analytics', err);
+            }
+        }
+
+        function renderVisualCharts(a) {
+            const channels = [
+                { key: 'phone', label: 'تماس مستقیم تلفنی', icon: '📞', color: '#34d399', count: a.phone || 0 },
+                { key: 'eitaa', label: 'پیام‌رسان ایتا', icon: '💬', color: '#f59e0b', count: a.eitaa || 0 },
+                { key: 'instagram', label: 'صفحه اینستاگرام', icon: '📱', color: '#ec4899', count: a.instagram || 0 },
+                { key: 'bale', label: 'پیام‌رسان بله', icon: '💬', color: '#10b981', count: a.bale || 0 },
+                { key: 'rubika', label: 'پیام‌رسان روبیکا', icon: '💬', color: '#6366f1', count: a.rubika || 0 },
+                { key: 'maps', label: 'مسیریابی نقشه و بلد', icon: '🗺️', color: '#38bdf8', count: a.maps || 0 }
+            ];
+
+            const totalInteractions = channels.reduce((sum, ch) => sum + ch.count, 0);
+            const maxVal = Math.max(...channels.map(c => c.count), 1);
+
+            // 1. Render Horizontal Bar Chart
+            const barsContainer = document.getElementById('barsChartContainer');
+            if (barsContainer) {
+                barsContainer.innerHTML = channels.map(ch => {
+                    const pctOfMax = ((ch.count / maxVal) * 100).toFixed(1);
+                    const pctOfTotal = totalInteractions > 0 ? ((ch.count / totalInteractions) * 100).toFixed(1) : 0;
+                    return `
+                    <div class="bar-item">
+                        <div class="bar-meta">
+                            <span class="bar-label-group">
+                                <span>${ch.icon}</span>
+                                <strong>${ch.label}</strong>
+                            </span>
+                            <span>
+                                <strong style="color: ${ch.color}; margin-left: 0.4rem;">${ch.count.toLocaleString('fa-IR')}</strong>
+                                <span style="font-size: 0.75rem; color: var(--text-muted);">(${Number(pctOfTotal).toLocaleString('fa-IR')}٪)</span>
+                            </span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: ${ch.count > 0 ? Math.max(pctOfMax, 4) : 0}%; background-color: ${ch.color};"></div>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+            }
+
+            // 2. Render SVG Donut Chart
+            renderSvgDonut(channels, totalInteractions);
+        }
+
+        function renderSvgDonut(channels, total) {
+            const svg = document.getElementById('donutSvg');
+            const legend = document.getElementById('donutLegend');
+            const totalCountEl = document.getElementById('donutTotalCount');
+            if (!svg || !legend) return;
+
+            totalCountEl.textContent = total.toLocaleString('fa-IR');
+
+            if (total === 0) {
+                // Empty circle state
+                svg.innerHTML = `
+                    <circle cx="50" cy="50" r="40" fill="transparent" stroke="rgba(14, 116, 144, 0.2)" stroke-width="14" />
+                `;
+                legend.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 0.775rem;">
+                        هنوز رویداد و کلیکی ثبت نشده است
+                    </div>
+                `;
+                return;
+            }
+
+            const circumference = 2 * Math.PI * 38; // r = 38 => ~238.76
+            let currentOffset = 0;
+            let svgSlices = '';
+            let legendItems = '';
+
+            channels.forEach(ch => {
+                if (ch.count <= 0) return;
+                const ratio = ch.count / total;
+                const strokeDash = ratio * circumference;
+                const strokeSpace = circumference - strokeDash;
+                const pct = (ratio * 100).toFixed(1);
+
+                svgSlices += `
+                    <circle cx="50" cy="50" r="38" fill="transparent"
+                        stroke="${ch.color}"
+                        stroke-width="14"
+                        stroke-dasharray="${strokeDash} ${strokeSpace}"
+                        stroke-dashoffset="${-currentOffset}"
+                        style="transition: all 0.6s ease;"
+                    >
+                        <title>${ch.label}: ${ch.count} (${pct}%)</title>
+                    </circle>
+                `;
+                currentOffset += strokeDash;
+
+                legendItems += `
+                    <div class="legend-item">
+                        <span class="legend-color-dot" style="background-color: ${ch.color};"></span>
+                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${ch.label}:</span>
+                        <strong style="color: var(--text-main); margin-right: auto;">${Number(pct).toLocaleString('fa-IR')}٪</strong>
+                    </div>
+                `;
+            });
+
+            svg.innerHTML = svgSlices;
+            legend.innerHTML = legendItems;
+        }
+
+        async function resetAnalytics() {
+            if (!confirm('آیا از ریست و صفر کردن تمام آمارهای بازدید و کلیک مطمئن هستید؟')) return;
+            try {
+                const res = await fetch('api.php?action=reset_analytics', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    }
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast('آمارها با موفقیت صفر شدند.');
+                    loadAnalytics();
+                } else {
+                    showToast(result.error || 'خطا در بازنشانی آمار', true);
+                }
+            } catch (err) {
+                showToast('خطا در برقراری ارتباط با سرور', true);
+            }
+        }
+
+        /* ─── MULTI-ADMIN MANAGEMENT & PASSWORD CHANGE ─── */
+        async function loadAdmins() {
+            const container = document.getElementById('adminsTableContainer');
+            if (!container) return;
+
+            try {
+                const res = await fetch('api.php?action=get_admins');
+                const result = await res.json();
+                if (result.success && result.admins) {
+                    const admins = result.admins;
+                    const canDelete = admins.length > 1;
+
+                    let html = `
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>نام کاربری</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>وضعیت</th>
+                                <th style="text-align: left;">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    `;
+
+                    admins.forEach(adm => {
+                        const isCurrent = adm.is_current;
+                        html += `
+                        <tr>
+                            <td>
+                                <strong style="color: #ffffff; font-size: 0.95rem;">${escapeHtml(adm.username)}</strong>
+                                ${isCurrent ? '<span style="background: rgba(5,150,105,0.25); color: #34d399; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-right: 0.5rem; border: 1px solid rgba(5,150,105,0.4);">شما (لاگین جاری)</span>' : ''}
+                            </td>
+                            <td style="color: var(--text-muted); font-size: 0.8rem;">
+                                ${escapeHtml(adm.created_at)}
+                            </td>
+                            <td>
+                                <span style="color: #34d399; font-size: 0.8rem;">● فعال</span>
+                            </td>
+                            <td style="text-align: left;">
+                                <button onclick="deleteAdmin('${adm.id}', '${escapeHtml(adm.username)}')" 
+                                    class="btn btn-danger btn-sm" 
+                                    ${!canDelete ? 'disabled title="حداقل ۱ مدیر باید در سیستم باشد و امکان حذف وجود ندارد"' : ''}>
+                                    🗑️ حذف مدیر
+                                </button>
+                            </td>
+                        </tr>
+                        `;
+                    });
+
+                    html += `
+                        </tbody>
+                    </table>
+                    `;
+
+                    if (!canDelete) {
+                        html += `
+                        <div style="margin-top: 0.75rem; padding: 0.65rem 1rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 4px; font-size: 0.775rem; color: #fbbf24;">
+                            ⚠️ فقط ۱ مدیر در سیستم ثبت شده است. دکمه حذف جهت حفظ امنیت و جلوگیری از قفل شدن پنل، غیرفعال می‌باشد.
+                        </div>
+                        `;
+                    }
+
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p style="color: #ef4444; text-align: center; padding: 1rem;">خطا در دریافت لیست مدیران.</p>';
+                }
+            } catch (err) {
+                container.innerHTML = '<p style="color: #ef4444; text-align: center; padding: 1rem;">خطا در برقراری ارتباط با سرور.</p>';
+            }
+        }
+
+        // Add New Admin
+        const addAdminForm = document.getElementById('addAdminForm');
+        if (addAdminForm) {
+            addAdminForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = document.getElementById('newAdminUsername').value.trim();
+                const password = document.getElementById('newAdminPassword').value;
+
+                if (username.length < 3) {
+                    showToast('نام کاربری باید حداقل ۳ کاراکتر باشد.', true);
+                    return;
+                }
+                if (password.length < 6) {
+                    showToast('کلمه عبور باید حداقل ۶ کاراکتر باشد.', true);
+                    return;
+                }
+
+                try {
+                    const res = await fetch('api.php?action=add_admin', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': currentCsrfToken
+                        },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        showToast(result.message || 'مدیر جدید با موفقیت اضافه شد.');
+                        addAdminForm.reset();
+                        loadAdmins();
+                    } else {
+                        showToast(result.error || 'خطا در ثبت مدیر جدید', true);
+                    }
+                } catch (err) {
+                    showToast('خطا در برقراری ارتباط با سرور', true);
+                }
+            });
+        }
+
+        // Delete Admin
+        async function deleteAdmin(id, username) {
+            if (!confirm(`آیا از حذف دسترسی مدیر «${username}» اطمینان دارید؟`)) {
+                return;
+            }
+
+            try {
+                const res = await fetch('api.php?action=delete_admin', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    },
+                    body: JSON.stringify({ id })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast(result.message || 'مدیر با موفقیت حذف شد.');
+                    if (result.logged_out) {
+                        alert('شما حساب کاربری جاری خود را حذف کردید و از سیستم خارج می‌شوید.');
+                        window.location.reload();
+                        return;
+                    }
+                    loadAdmins();
+                } else {
+                    showToast(result.error || 'خطا در حذف مدیر', true);
+                }
+            } catch (err) {
+                showToast('خطا در برقراری ارتباط با سرور', true);
             }
         }
 
@@ -993,50 +1761,6 @@ $is_auth = is_authenticated();
             });
         }
 
-        // Micro Analytics Functions
-        async function loadAnalytics() {
-            try {
-                const res = await fetch('api.php?action=get_analytics');
-                const result = await res.json();
-                if (result.success && result.analytics) {
-                    const a = result.analytics;
-                    const formatNum = (n) => (n || 0).toLocaleString('fa-IR');
-                    document.getElementById('statViews').textContent = formatNum(a.views);
-                    document.getElementById('statPhone').textContent = formatNum(a.phone);
-                    document.getElementById('statEitaa').textContent = formatNum(a.eitaa);
-                    document.getElementById('statInstagram').textContent = formatNum(a.instagram);
-                    document.getElementById('statBale').textContent = formatNum(a.bale);
-                    document.getElementById('statRubika').textContent = formatNum(a.rubika);
-                    document.getElementById('statMaps').textContent = formatNum(a.maps);
-                    document.getElementById('statLastUpdated').textContent = a.last_updated || '-';
-                }
-            } catch (err) {
-                console.error('Error loading analytics', err);
-            }
-        }
-
-        async function resetAnalytics() {
-            if (!confirm('آیا از ریست و صفر کردن تمام آمارهای بازدید و کلیک مطمئن هستید؟')) return;
-            try {
-                const res = await fetch('api.php?action=reset_analytics', {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': currentCsrfToken
-                    }
-                });
-                const result = await res.json();
-                if (result.success) {
-                    showToast('آمارها با موفقیت صفر شدند.');
-                    loadAnalytics();
-                } else {
-                    showToast(result.error || 'خطا در بازنشانی آمار', true);
-                }
-            } catch (err) {
-                showToast('خطا در برقراری ارتباط با سرور', true);
-            }
-        }
-
         <?php if ($is_auth): ?>
         // Init on load
         loadSiteData();
@@ -1044,4 +1768,3 @@ $is_auth = is_authenticated();
     </script>
 </body>
 </html>
-

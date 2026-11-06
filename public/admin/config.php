@@ -126,30 +126,52 @@ function reset_failed_logins() {
     }
 }
 
-// ─── 6. Authentication Config ─────────────────────────────────────
-function get_auth_config() {
+// ─── 6. Multi-Admin Authentication Engine ────────────────────────
+function get_auth_admins() {
     global $config_file;
     if (file_exists($config_file)) {
         $data = json_decode(@file_get_contents($config_file), true);
-        if ($data && isset($data['username'], $data['password_hash'])) {
-            return $data;
+        if ($data) {
+            if (isset($data['admins']) && is_array($data['admins']) && count($data['admins']) > 0) {
+                return $data['admins'];
+            }
+            if (isset($data['username'], $data['password_hash'])) {
+                $admins = [
+                    [
+                        'id' => 'admin_1',
+                        'username' => $data['username'],
+                        'password_hash' => $data['password_hash'],
+                        'created_at' => $data['updated_at'] ?? date('Y-m-d H:i:s')
+                    ]
+                ];
+                save_all_admins($admins);
+                return $admins;
+            }
         }
     }
     // Default fallback credentials
     return [
-        'username' => 'admin',
-        'password_hash' => password_hash('Kianersi@1403', PASSWORD_BCRYPT)
+        [
+            'id' => 'admin_1',
+            'username' => 'admin',
+            'password_hash' => password_hash('Kianersi@1403', PASSWORD_BCRYPT),
+            'created_at' => date('Y-m-d H:i:s')
+        ]
     ];
 }
 
-function save_auth_config($username, $new_password) {
+function save_all_admins($admins) {
     global $config_file;
     $new_config = [
-        'username' => $username,
-        'password_hash' => password_hash($new_password, PASSWORD_BCRYPT),
+        'admins' => array_values($admins),
         'updated_at' => date('Y-m-d H:i:s')
     ];
     return @file_put_contents($config_file, json_encode($new_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX) !== false;
+}
+
+function get_auth_config() {
+    $admins = get_auth_admins();
+    return $admins[0] ?? ['username' => 'admin', 'password_hash' => ''];
 }
 
 function is_authenticated() {

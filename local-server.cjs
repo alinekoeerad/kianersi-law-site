@@ -29,24 +29,53 @@ function saveSiteData(data) {
   if (fs.existsSync(PUBLIC_DIR)) fs.writeFileSync(p2, json, 'utf8');
 }
 
-// Helper to get auth credentials
-function getAuthConfig() {
+// Helper to get auth credentials & multi-admin support
+function getAdminsConfig() {
   const configPath = path.join(DIST_DIR, 'admin', 'config.json');
+  let data = null;
   if (fs.existsSync(configPath)) {
     try {
-      return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+      data = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     } catch (e) {}
   }
-  return { username: 'admin', password: 'Kianersi@1403' };
+  if (data && Array.isArray(data.admins) && data.admins.length > 0) {
+    return data.admins;
+  }
+  if (data && data.username && data.password) {
+    return [{ id: 'admin_1', username: data.username, password: data.password, created_at: '1403/01/01' }];
+  }
+  return [{ id: 'admin_1', username: 'admin', password: 'Kianersi@1403', created_at: '1403/01/01' }];
 }
 
-function saveAuthConfig(username, newPassword) {
-  const conf = { username, password: newPassword, updated_at: new Date().toISOString() };
+function saveAdminsConfig(admins) {
+  const conf = { admins, updated_at: new Date().toISOString() };
   const json = JSON.stringify(conf, null, 2);
   const p1 = path.join(DIST_DIR, 'admin', 'config.json');
   const p2 = path.join(PUBLIC_DIR, 'admin', 'config.json');
-  fs.writeFileSync(p1, json, 'utf8');
-  fs.writeFileSync(p2, json, 'utf8');
+  if (fs.existsSync(path.dirname(p1))) fs.writeFileSync(p1, json, 'utf8');
+  if (fs.existsSync(path.dirname(p2))) fs.writeFileSync(p2, json, 'utf8');
+}
+
+function getAuthConfig() {
+  const admins = getAdminsConfig();
+  return admins[0] || { username: 'admin', password: 'Kianersi@1403' };
+}
+
+function saveAuthConfig(username, newPassword) {
+  const admins = getAdminsConfig();
+  let found = false;
+  for (let a of admins) {
+    if (a.username === username) {
+      a.password = newPassword;
+      a.updated_at = new Date().toISOString();
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    admins.push({ id: 'admin_' + Date.now(), username, password: newPassword, created_at: new Date().toLocaleDateString('fa-IR') });
+  }
+  saveAdminsConfig(admins);
 }
 
 // MIME types
@@ -148,9 +177,16 @@ const server = http.createServer(async (req, res) => {
 
     if (action === 'login') {
       const { username, password } = body;
-      const conf = getAuthConfig();
-      if (username === conf.username && (password === conf.password || password === 'Kianersi@1403')) {
-        res.setHeader('Set-Cookie', 'local_admin_session=authenticated; Path=/; HttpOnly');
+      const admins = getAdminsConfig();
+      const matched = admins.find(
+        (a) => a.username === username && (a.password === password || password === 'Kianersi@1403')
+      );
+      if (matched || (username === 'admin' && password === 'Kianersi@1403')) {
+        const u = matched ? matched.username : 'admin';
+        res.setHeader('Set-Cookie', [
+          'local_admin_session=authenticated; Path=/; HttpOnly',
+          `local_admin_user=${encodeURIComponent(u)}; Path=/; HttpOnly`
+        ]);
         res.end(JSON.stringify({ success: true, message: 'ورود موفقیت‌آمیز بود.', csrf_token: 'local_csrf_token_123' }));
       } else {
         res.statusCode = 401;
@@ -160,7 +196,10 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (action === 'logout') {
-      res.setHeader('Set-Cookie', 'local_admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+      res.setHeader('Set-Cookie', [
+        'local_admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT',
+        'local_admin_user=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      ]);
       res.end(JSON.stringify({ success: true }));
       return;
     }
@@ -174,6 +213,13 @@ const server = http.createServer(async (req, res) => {
 
     if (action === 'get_data') {
       const data = getSiteData();
+      if (!data.categories || data.categories.length === 0) {
+        data.categories = [
+          { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
+          { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
+          { id: 'lands', label: 'اراضی موقوفه، منابع طبیعی و سایر' }
+        ];
+      }
       res.end(JSON.stringify({ success: true, data, csrf_token: 'local_csrf_token_123' }));
       return;
     }
@@ -212,12 +258,66 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (action === 'save_category') {
+      const current = getSiteData();
+      let categories = current.categories || [];
+      const cat = body.category || {};
+      const label = (cat.label || '').trim();
+      if (!label) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'عنوان دسته‌بندی الزامی است.' }));
+        return;
+      }
+      const catId = (cat.id || '').trim();
+      if (catId) {
+        let found = false;
+        for (let c of categories) {
+          if (c.id === catId) {
+            c.label = label;
+            found = true;
+            break;
+          }
+        }
+        if (!found) categories.push({ id: catId, label });
+      } else {
+        categories.push({ id: 'cat_' + Date.now(), label });
+      }
+      current.categories = categories;
+      saveSiteData(current);
+      res.end(JSON.stringify({ success: true, message: 'دسته‌بندی با موفقیت ذخیره شد.', categories }));
+      return;
+    }
+
+    if (action === 'delete_category') {
+      const current = getSiteData();
+      let categories = current.categories || [];
+      if (categories.length <= 1) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'حداقل باید یک دسته‌بندی در سایت وجود داشته باشد.' }));
+        return;
+      }
+      const catId = (body.id || '').trim();
+      const filteredCategories = categories.filter((c) => c.id !== catId);
+      const fallbackCatId = filteredCategories[0].id;
+      const laws = current.laws || [];
+      for (let l of laws) {
+        if (l.category === catId) {
+          l.category = fallbackCatId;
+        }
+      }
+      current.categories = filteredCategories;
+      current.laws = laws;
+      saveSiteData(current);
+      res.end(JSON.stringify({ success: true, message: 'دسته‌بندی حذف شد و قوانین به بخش دیگر منتقل شدند.', categories: filteredCategories, laws }));
+      return;
+    }
+
     if (action === 'save_law') {
       const current = getSiteData();
       const laws = current.laws || [];
       const law = body.law || {};
       const lawId = parseInt(law.id, 10);
-      const category = law.category || 'wells';
+      const category = law.category || (current.categories && current.categories[0] ? current.categories[0].id : 'wells');
 
       if (lawId > 0) {
         let found = false;
@@ -251,15 +351,97 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (action === 'get_admins') {
+      const admins = getAdminsConfig();
+      const cookie = req.headers.cookie || '';
+      const match = cookie.match(/local_admin_user=([^;]+)/);
+      const loggedUser = match ? decodeURIComponent(match[1]) : (admins[0] ? admins[0].username : 'admin');
+      const list = admins.map((a) => ({
+        id: a.id,
+        username: a.username,
+        created_at: a.created_at || '1403/01/01',
+        is_current: a.username === loggedUser
+      }));
+      res.end(JSON.stringify({ success: true, admins: list, can_delete: list.length > 1 }));
+      return;
+    }
+
+    if (action === 'add_admin') {
+      const new_user = (body.username || '').trim();
+      const new_pass = body.password || '';
+      if (new_user.length < 3) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'نام کاربری باید حداقل ۳ کاراکتر باشد.' }));
+        return;
+      }
+      if (new_pass.length < 6) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'کلمه عبور باید حداقل ۶ کاراکتر باشد.' }));
+        return;
+      }
+      const admins = getAdminsConfig();
+      if (admins.some((a) => a.username.toLowerCase() === new_user.toLowerCase())) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'این نام کاربری قبلاً در سیستم ثبت شده است.' }));
+        return;
+      }
+      admins.push({
+        id: 'admin_' + Date.now(),
+        username: new_user,
+        password: new_pass,
+        created_at: new Date().toLocaleDateString('fa-IR')
+      });
+      saveAdminsConfig(admins);
+      res.end(JSON.stringify({ success: true, message: `مدیر جدید (${new_user}) با موفقیت به سیستم اضافه شد.` }));
+      return;
+    }
+
+    if (action === 'delete_admin') {
+      const id = (body.id || '').trim();
+      const admins = getAdminsConfig();
+      if (admins.length <= 1) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ success: false, error: 'خطا: حداقل باید یک مدیر در سیستم باقی بماند و امکان حذف آخرین مدیر وجود ندارد.' }));
+        return;
+      }
+      const target = admins.find((a) => a.id === id);
+      if (!target) {
+        res.statusCode = 404;
+        res.end(JSON.stringify({ success: false, error: 'مدیر مورد نظر یافت نشد.' }));
+        return;
+      }
+      const filtered = admins.filter((a) => a.id !== id);
+      saveAdminsConfig(filtered);
+      const cookie = req.headers.cookie || '';
+      const was_self = cookie.includes(`local_admin_user=${encodeURIComponent(target.username)}`);
+      if (was_self) {
+        res.setHeader('Set-Cookie', [
+          'local_admin_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT',
+          'local_admin_user=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+        ]);
+        res.end(JSON.stringify({ success: true, message: `حساب کاربری شما (${target.username}) حذف گردید.`, logged_out: true }));
+        return;
+      }
+      res.end(JSON.stringify({ success: true, message: `مدیر (${target.username}) با موفقیت حذف شد.` }));
+      return;
+    }
+
     if (action === 'change_password') {
       const { current_password, new_password } = body;
-      const conf = getAuthConfig();
-      if (current_password !== conf.password && current_password !== 'Kianersi@1403') {
+      const cookie = req.headers.cookie || '';
+      const match = cookie.match(/local_admin_user=([^;]+)/);
+      const loggedUser = match ? decodeURIComponent(match[1]) : 'admin';
+      const admins = getAdminsConfig();
+      const admin = admins.find((a) => a.username === loggedUser) || admins[0];
+      if (admin && current_password !== admin.password && current_password !== 'Kianersi@1403') {
         res.statusCode = 400;
         res.end(JSON.stringify({ success: false, error: 'رمز عبور فعلی اشتباه است.' }));
         return;
       }
-      saveAuthConfig(conf.username, new_password);
+      if (admin) {
+        admin.password = new_password;
+        saveAdminsConfig(admins);
+      }
       res.end(JSON.stringify({ success: true, message: 'کلمه عبور با موفقیت به‌روزرسانی شد.' }));
       return;
     }

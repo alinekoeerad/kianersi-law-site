@@ -22,17 +22,21 @@ const countOccurrences = (text: string, term: string) => {
 };
 
 export default function LawsSection() {
-  const { laws } = useSiteData();
+  const { laws, categories: customCategories } = useSiteData();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'wells' | 'rivers' | 'lands'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [openAll, setOpenAll] = useState<boolean | null>(null);
 
-  const categories = [
-    { id: 'all', label: 'همه قوانین' },
-    { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
-    { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
-    { id: 'lands', label: 'اراضی موقوفه و آلودگی آب' }
-  ];
+  const categories = useMemo(() => {
+    return [
+      { id: 'all', label: 'همه قوانین' },
+      ...(customCategories || [
+        { id: 'wells', label: 'چاه‌ها و آب‌های زیرزمینی' },
+        { id: 'rivers', label: 'بستر، حریم و تأسیسات آبی' },
+        { id: 'lands', label: 'اراضی موقوفه و منابع طبیعی' }
+      ])
+    ];
+  }, [customCategories]);
 
   // Quick suggestion tags for faster user discovery
   const quickTags = [
@@ -57,13 +61,14 @@ export default function LawsSection() {
 
   // Category counts
   const categoryCounts = useMemo(() => {
-    return {
-      all: laws.length,
-      wells: laws.filter((l) => getCategoryForLaw(l) === 'wells').length,
-      rivers: laws.filter((l) => getCategoryForLaw(l) === 'rivers').length,
-      lands: laws.filter((l) => getCategoryForLaw(l) === 'lands').length
-    };
-  }, [laws]);
+    const counts: Record<string, number> = { all: laws.length };
+    categories.forEach(cat => {
+      if (cat.id !== 'all') {
+        counts[cat.id] = laws.filter((l) => getCategoryForLaw(l) === cat.id).length;
+      }
+    });
+    return counts;
+  }, [laws, categories]);
 
   // Filtered laws with match counts
   const filteredLaws = useMemo(() => {
@@ -264,7 +269,7 @@ export default function LawsSection() {
                           color: isSelected ? '#ffffff' : '#94a3b8'
                         }}
                       >
-                        {toPersianDigits(count)}
+                        {toPersianDigits(count ?? 0)}
                       </span>
                     </button>
                   );
