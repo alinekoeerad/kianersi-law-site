@@ -394,6 +394,10 @@ $is_auth = is_authenticated();
             <span>مدیریت وب‌سایت کیان‌ارثی</span>
         </a>
         <div class="header-actions">
+            <a href="api.php?action=download_backup" class="btn btn-outline" style="border-color: #059669; color: #34d399;" title="دانلود کل اطلاعات سایت در یک فایل">
+                <span>📥</span>
+                <span>دانلود نسخه پشتیبان</span>
+            </a>
             <a href="../" target="_blank" class="btn btn-outline">
                 <span>👁️</span>
                 <span>مشاهده سایت</span>
@@ -407,6 +411,7 @@ $is_auth = is_authenticated();
     <div class="tabs-container">
         <button class="tab-btn active" onclick="switchTab('general')">⚙️ اطلاعات عمومی و تماس</button>
         <button class="tab-btn" onclick="switchTab('laws')">📜 کتابخانه قوانین و مقررات</button>
+        <button class="tab-btn" onclick="switchTab('analytics')">📊 آمار بازدید و کلیک‌ها</button>
         <button class="tab-btn" onclick="switchTab('security')">🔐 تغییر رمز عبور</button>
     </div>
 
@@ -560,6 +565,73 @@ $is_auth = is_authenticated();
             </div>
         </div>
 
+        <!-- TAB 4: MICRO ANALYTICS -->
+        <div id="tab-analytics" class="tab-content" style="display: none;">
+            <div class="panel-card">
+                <div class="card-header">
+                    <div>
+                        <h2 class="card-title">آمار اختصاصی کلیک‌ها و مراجعین سایت</h2>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                            گزارش آنی و فوق‌سبک تعامل مراجعین با دکمه‌های تماس، پیام‌رسان‌ها و نقشه
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button onclick="loadAnalytics()" class="btn btn-outline">
+                            <span>🔄</span>
+                            <span>به‌روزرسانی</span>
+                        </button>
+                        <button onclick="resetAnalytics()" class="btn btn-danger">
+                            <span>🗑️</span>
+                            <span>صفر کردن آمار</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">👁️</div>
+                        <div id="statViews" style="font-size: 1.75rem; font-weight: 700; color: var(--cyan-light);">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">بازدید کل سایت</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📞</div>
+                        <div id="statPhone" style="font-size: 1.75rem; font-weight: 700; color: #34d399;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">کلیک تماس تلفنی</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
+                        <div id="statEitaa" style="font-size: 1.75rem; font-weight: 700; color: #f59e0b;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به ایتا</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📱</div>
+                        <div id="statInstagram" style="font-size: 1.75rem; font-weight: 700; color: #ec4899;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">صفحه اینستاگرام</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
+                        <div id="statBale" style="font-size: 1.75rem; font-weight: 700; color: #10b981;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به بله</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💬</div>
+                        <div id="statRubika" style="font-size: 1.75rem; font-weight: 700; color: #6366f1;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مراجعه به روبیکا</div>
+                    </div>
+                    <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.25rem; border-radius: 4px; text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🗺️</div>
+                        <div id="statMaps" style="font-size: 1.75rem; font-weight: 700; color: #38bdf8;">۰</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">مسیریابی نقشه و بلد</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; flex-wrap: gap; gap: 0.5rem;">
+                    <span>آخرین ثبت رویداد: <strong id="statLastUpdated" style="color: var(--text-main);">-</strong></span>
+                    <span>سیستم آمارگیر درون‌سازمانی با حجم و رم نزدیک به صفر</span>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <!-- ─── LAW EDIT / ADD MODAL ─── -->
@@ -574,12 +646,21 @@ $is_auth = is_authenticated();
             
             <div class="form-group">
                 <label class="form-label">عنوان کامل قانون یا آیین‌نامه:</label>
-                <input type="text" id="modalLawTitle" class="form-control" required placeholder="مثال: قانون توزیع عادلانه آب">
+                <input type="text" id="modalLawTitle" class="form-control" required placeholder="مثال: قانون تعیین تکلیف چاه‌های آب فاقد پروانه">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">دسته‌بندی موضوعی قانون در سایت:</label>
+                <select id="modalLawCategory" class="form-control" style="background-color: var(--bg-input);">
+                    <option value="wells">چاه‌ها و آب‌های زیرزمینی</option>
+                    <option value="rivers">بستر، حریم و تأسیسات آبی</option>
+                    <option value="lands">اراضی موقوفه، منابع طبیعی و سایر</option>
+                </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">متن کامل مواد و تبصره‌ها (پشتیبانی از چندخطی):</label>
-                <textarea id="modalLawContent" class="form-control" style="min-height: 320px; font-size: 0.875rem;" required placeholder="ماده ۱ - ...&#10;تبصره ۱ - ..."></textarea>
+                <textarea id="modalLawContent" class="form-control" style="min-height: 300px; font-size: 0.875rem;" required placeholder="ماده ۱ - ...&#10;تبصره ۱ - ..."></textarea>
             </div>
 
             <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
@@ -646,6 +727,10 @@ $is_auth = is_authenticated();
 
             const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
             if (activeBtn) activeBtn.classList.add('active');
+
+            if (tabId === 'analytics') {
+                loadAnalytics();
+            }
         }
 
         // Load Data on Startup
@@ -724,6 +809,17 @@ $is_auth = is_authenticated();
             }
         }
 
+        const catLabels = {
+            wells: 'چاه‌ها و زیرزمینی',
+            rivers: 'بستر و حریم',
+            lands: 'اراضی و منابع طبیعی'
+        };
+        const catColors = {
+            wells: '#38bdf8',
+            rivers: '#2dd4bf',
+            lands: '#f59e0b'
+        };
+
         // Render Laws List
         function renderLawsList(laws) {
             const container = document.getElementById('lawsListContainer');
@@ -734,10 +830,17 @@ $is_auth = is_authenticated();
                 return;
             }
 
-            container.innerHTML = laws.map(law => `
+            container.innerHTML = laws.map(law => {
+                const cat = law.category || 'wells';
+                const catLabel = catLabels[cat] || 'عمومی';
+                const catColor = catColors[cat] || '#0e7490';
+                return `
                 <div class="law-item">
-                    <div class="law-info">
+                    <div class="law-info" style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                         <span class="law-badge">قانون ${law.id}</span>
+                        <span style="background: ${catColor}15; color: ${catColor}; border: 1px solid ${catColor}40; font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 3px; font-weight: 500;">
+                            ${catLabel}
+                        </span>
                         <span class="law-title">${escapeHtml(law.title)}</span>
                     </div>
                     <div class="law-actions">
@@ -749,7 +852,8 @@ $is_auth = is_authenticated();
                         </button>
                     </div>
                 </div>
-            `).join('');
+            `;
+            }).join('');
         }
 
         function escapeHtml(str) {
@@ -763,6 +867,7 @@ $is_auth = is_authenticated();
             document.getElementById('modalLawId').value = '';
             document.getElementById('modalLawHeading').textContent = 'افزودن قانون جدید به کتابخانه';
             document.getElementById('modalLawTitle').value = '';
+            document.getElementById('modalLawCategory').value = 'wells';
             document.getElementById('modalLawContent').value = '';
             document.getElementById('lawModal').style.display = 'flex';
         }
@@ -775,6 +880,7 @@ $is_auth = is_authenticated();
             document.getElementById('modalLawId').value = law.id;
             document.getElementById('modalLawHeading').textContent = 'ویرایش قانون شماره ' + law.id;
             document.getElementById('modalLawTitle').value = law.title;
+            document.getElementById('modalLawCategory').value = law.category || 'wells';
             document.getElementById('modalLawContent').value = law.content;
             document.getElementById('lawModal').style.display = 'flex';
         }
@@ -787,6 +893,7 @@ $is_auth = is_authenticated();
         async function saveLawItem() {
             const id = document.getElementById('modalLawId').value;
             const title = document.getElementById('modalLawTitle').value.trim();
+            const category = document.getElementById('modalLawCategory').value;
             const content = document.getElementById('modalLawContent').value.trim();
 
             if (!title || !content) {
@@ -805,6 +912,7 @@ $is_auth = is_authenticated();
                         law: {
                             id: id ? parseInt(id, 10) : undefined,
                             title,
+                            category,
                             content
                         }
                     })
@@ -883,6 +991,50 @@ $is_auth = is_authenticated();
                     showToast('خطا در برقراری ارتباط با سرور', true);
                 }
             });
+        }
+
+        // Micro Analytics Functions
+        async function loadAnalytics() {
+            try {
+                const res = await fetch('api.php?action=get_analytics');
+                const result = await res.json();
+                if (result.success && result.analytics) {
+                    const a = result.analytics;
+                    const formatNum = (n) => (n || 0).toLocaleString('fa-IR');
+                    document.getElementById('statViews').textContent = formatNum(a.views);
+                    document.getElementById('statPhone').textContent = formatNum(a.phone);
+                    document.getElementById('statEitaa').textContent = formatNum(a.eitaa);
+                    document.getElementById('statInstagram').textContent = formatNum(a.instagram);
+                    document.getElementById('statBale').textContent = formatNum(a.bale);
+                    document.getElementById('statRubika').textContent = formatNum(a.rubika);
+                    document.getElementById('statMaps').textContent = formatNum(a.maps);
+                    document.getElementById('statLastUpdated').textContent = a.last_updated || '-';
+                }
+            } catch (err) {
+                console.error('Error loading analytics', err);
+            }
+        }
+
+        async function resetAnalytics() {
+            if (!confirm('آیا از ریست و صفر کردن تمام آمارهای بازدید و کلیک مطمئن هستید؟')) return;
+            try {
+                const res = await fetch('api.php?action=reset_analytics', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': currentCsrfToken
+                    }
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showToast('آمارها با موفقیت صفر شدند.');
+                    loadAnalytics();
+                } else {
+                    showToast(result.error || 'خطا در بازنشانی آمار', true);
+                }
+            } catch (err) {
+                showToast('خطا در برقراری ارتباط با سرور', true);
+            }
         }
 
         <?php if ($is_auth): ?>
