@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Scale, Maximize2, Minimize2, ChevronDown, X } from 'lucide-react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
 
@@ -248,7 +249,7 @@ export default function LawsSection() {
                     key={tag}
                     type="button"
                     onClick={() => setSearchTerm(isActive ? '' : tag)}
-                    className="text-[11px] px-2.5 py-1 rounded-sm transition-all"
+                    className="text-[11px] px-2.5 py-1 rounded-sm transition-all flex items-center gap-1"
                     style={{
                       backgroundColor: isActive ? 'rgba(14, 116, 144, 0.35)' : 'rgba(2, 15, 26, 0.6)',
                       color: isActive ? '#7dd3fc' : '#cbd5e1',
@@ -256,7 +257,8 @@ export default function LawsSection() {
                       fontFamily: 'Noto Sans Arabic'
                     }}
                   >
-                    {tag} {isActive && '✕'}
+                    <span>{tag}</span>
+                    {isActive && <X className="w-3 h-3 stroke-[2.5]" />}
                   </button>
                 );
               })}
@@ -304,19 +306,19 @@ export default function LawsSection() {
                 <button
                   type="button"
                   onClick={() => setOpenAll(true)}
-                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1 flex-1 sm:flex-none justify-center"
+                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1.5 flex-1 sm:flex-none justify-center"
                   style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
                 >
-                  <span>⤢</span>
+                  <Maximize2 className="w-3.5 h-3.5 stroke-[2]" />
                   <span>باز کردن همه</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setOpenAll(false)}
-                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1 flex-1 sm:flex-none justify-center"
+                  className="text-xs px-2.5 py-1.5 rounded-sm text-gray-300 hover:text-cyan-300 transition-colors flex items-center gap-1.5 flex-1 sm:flex-none justify-center"
                   style={{ border: '1px solid rgba(14, 116, 144, 0.3)', backgroundColor: 'rgba(2, 15, 26, 0.5)' }}
                 >
-                  <span>⤡</span>
+                  <Minimize2 className="w-3.5 h-3.5 stroke-[2]" />
                   <span>بستن همه</span>
                 </button>
               </div>
@@ -342,7 +344,7 @@ export default function LawsSection() {
         <AnimSection delay={200}>
           {filteredLaws.length === 0 ? (
             <div className="p-6 sm:p-10 text-center rounded-sm bg-slate-900/60 border border-cyan-900/40 space-y-3">
-              <span className="text-3xl inline-block text-cyan-400">⚖️</span>
+              <Scale className="w-10 h-10 mx-auto text-cyan-400 stroke-[1.8]" />
               <p className="text-sm font-semibold text-gray-200">
                 موردی متناسب با عبارت جستجوی «{searchTerm}» یافت نشد.
               </p>
@@ -393,9 +395,7 @@ export default function LawsSection() {
                             {toPersianDigits(law.totalMatches)} مورد
                           </span>
                         )}
-                        <span className="text-cyan-400 group-open:rotate-180 transition-transform duration-300 text-xs">
-                          ▼
-                        </span>
+                        <ChevronDown className="w-4 h-4 text-cyan-400 group-open:rotate-180 transition-transform duration-300 stroke-[2.2]" />
                       </div>
                     </summary>
                     

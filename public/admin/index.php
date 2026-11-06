@@ -189,6 +189,21 @@ $is_auth = is_authenticated();
             pointer-events: none;
         }
 
+        .admin-icon {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            vertical-align: middle;
+            stroke-width: 2;
+            stroke: currentColor;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+        .admin-icon-sm { width: 0.85rem; height: 0.85rem; }
+        .admin-icon-lg { width: 1.35rem; height: 1.35rem; }
+
         /* ─── Navigation Tabs ─── */
         .tabs-container {
             max-width: 1200px;
@@ -217,6 +232,9 @@ $is_auth = is_authenticated();
             transition: all 0.2s;
             white-space: nowrap;
             flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .tab-btn.active {
@@ -855,16 +873,16 @@ $is_auth = is_authenticated();
         </a>
         <div class="header-actions">
             <a href="api.php?action=download_backup" class="btn btn-outline" style="border-color: #059669; color: #34d399;" title="دانلود کل اطلاعات سایت در یک فایل">
-                <span>📥</span>
+                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span class="btn-text">بک‌آپ</span>
                 <span class="btn-text-long"> اطلاعات</span>
             </a>
             <a href="../" target="_blank" class="btn btn-outline" title="مشاهده وب‌سایت در صفحه جدید">
-                <span>👁️</span>
+                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span class="btn-text">مشاهده سایت</span>
             </a>
             <button onclick="handleLogout()" class="btn btn-danger" title="خروج از پنل مدیریت">
-                <span>🚪</span>
+                <svg class="admin-icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 <span class="btn-text">خروج</span>
             </button>
         </div>
@@ -874,7 +892,7 @@ $is_auth = is_authenticated();
     <div class="security-banner-wrap" style="max-width: 1200px; margin: 0.85rem auto 0; padding: 0 1.5rem;">
         <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 6px; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap;">
             <div style="display: flex; align-items: center; gap: 0.6rem; color: #fca5a5; font-size: 0.825rem; line-height: 1.5;">
-                <span style="font-size: 1.2rem; flex-shrink: 0;">⚠️</span>
+                <svg class="admin-icon" style="color: #ef4444; width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
                 <span><strong>هشدار امنیتی:</strong> کلمه عبور فعلی، رمز پیش‌فرض اولیه است. لطفاً برای ارتقای امنیت وب‌سایت، هم‌اکنون از تب امنیت رمز خود را تغییر دهید.</span>
             </div>
             <button onclick="switchTab('security')" class="btn btn-danger btn-sm" style="flex-shrink: 0;">
@@ -885,10 +903,22 @@ $is_auth = is_authenticated();
     <?php endif; ?>
 
     <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('general')">⚙️ اطلاعات عمومی و تماس</button>
-        <button class="tab-btn" onclick="switchTab('laws')">📜 کتابخانه قوانین و دسته‌بندی‌ها</button>
-        <button class="tab-btn" onclick="switchTab('analytics')">📊 آمار و نمودارهای تحلیلی</button>
-        <button class="tab-btn" onclick="switchTab('security')">🔐 امنیت و مدیریت مدیران</button>
+        <button class="tab-btn active" onclick="switchTab('general')">
+            <svg class="admin-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>اطلاعات عمومی و تماس</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('laws')">
+            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+            <span>کتابخانه قوانین و دسته‌بندی‌ها</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('analytics')">
+            <svg class="admin-icon" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+            <span>آمار و نمودارهای تحلیلی</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('security')">
+            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><rect width="6" height="4" x="9" y="11" rx="1"/><path d="M10 11V9a2 2 0 0 1 4 0v2"/></svg>
+            <span>امنیت و مدیریت مدیران</span>
+        </button>
     </div>
 
     <main class="main-container">
@@ -899,7 +929,7 @@ $is_auth = is_authenticated();
                 <div class="card-header">
                     <h2 class="card-title">تنظیمات اصلی و اطلاعات تماس</h2>
                     <button onclick="saveGeneralData()" class="btn btn-success">
-                        <span>💾</span>
+                        <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                         <span>ذخیره تغییرات</span>
                     </button>
                 </div>
@@ -985,7 +1015,7 @@ $is_auth = is_authenticated();
 
                 <div class="form-save-footer" style="text-align: left; margin-top: 1.5rem;">
                     <button onclick="saveGeneralData()" class="btn btn-success" style="padding: 0.65rem 1.5rem;">
-                        <span>💾</span>
+                        <svg class="admin-icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
                         <span>ذخیره کلیه تنظیمات</span>
                     </button>
                 </div>
@@ -1004,11 +1034,11 @@ $is_auth = is_authenticated();
                     </div>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button onclick="openCategoryModal()" class="btn btn-outline" style="border-color: #38bdf8; color: #38bdf8;">
-                            <span>📁</span>
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
                             <span>دسته‌بندی جدید</span>
                         </button>
                         <button onclick="openLawModal()" class="btn btn-primary">
-                            <span>➕</span>
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                             <span>افزودن قانون جدید</span>
                         </button>
                     </div>
@@ -1033,11 +1063,11 @@ $is_auth = is_authenticated();
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <button onclick="loadAnalytics()" class="btn btn-outline">
-                            <span>🔄</span>
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
                             <span>به‌روزرسانی</span>
                         </button>
                         <button onclick="resetAnalytics()" class="btn btn-danger">
-                            <span>🗑️</span>
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
                             <span>صفر کردن آمار</span>
                         </button>
                     </div>
@@ -1046,37 +1076,37 @@ $is_auth = is_authenticated();
                 <!-- Numerical KPI Cards -->
                 <div class="analytics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">👁️</div>
+                        <div style="margin-bottom: 0.4rem; color: var(--cyan-light);"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
                         <div id="statViews" style="font-size: 1.65rem; font-weight: 700; color: var(--cyan-light);">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">بازدید کل سایت</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">📞</div>
+                        <div style="margin-bottom: 0.4rem; color: #34d399;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
                         <div id="statPhone" style="font-size: 1.65rem; font-weight: 700; color: #34d399;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">تماس مستقیم تلفنی</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div style="margin-bottom: 0.4rem; color: #f59e0b;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                         <div id="statEitaa" style="font-size: 1.65rem; font-weight: 700; color: #f59e0b;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به ایتا</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">📱</div>
+                        <div style="margin-bottom: 0.4rem; color: #ec4899;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
                         <div id="statInstagram" style="font-size: 1.65rem; font-weight: 700; color: #ec4899;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">صفحه اینستاگرام</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div style="margin-bottom: 0.4rem; color: #10b981;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                         <div id="statBale" style="font-size: 1.65rem; font-weight: 700; color: #10b981;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به بله</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">💬</div>
+                        <div style="margin-bottom: 0.4rem; color: #6366f1;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                         <div id="statRubika" style="font-size: 1.65rem; font-weight: 700; color: #6366f1;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مراجعه به روبیکا</div>
                     </div>
                     <div class="stat-box" style="background: rgba(3, 24, 37, 0.7); border: 1px solid var(--border-color); padding: 1.15rem; border-radius: 4px; text-align: center;">
-                        <div style="font-size: 1.4rem; margin-bottom: 0.4rem;">🗺️</div>
+                        <div style="margin-bottom: 0.4rem; color: #38bdf8;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
                         <div id="statMaps" style="font-size: 1.65rem; font-weight: 700; color: #38bdf8;">۰</div>
                         <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">مسیریابی نقشه و بلد</div>
                     </div>
@@ -1085,7 +1115,7 @@ $is_auth = is_authenticated();
                 <!-- VISUAL CHARTS SECTION -->
                 <div class="chart-card">
                     <h3 class="chart-title">
-                        <span>📈</span>
+                        <svg class="admin-icon" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                         <span>تحلیل نموداری تعاملات مراجعین و کانال‌های ارتباطی</span>
                     </h3>
 
@@ -1136,7 +1166,10 @@ $is_auth = is_authenticated();
                 <!-- Box 1: Change Current Password -->
                 <div class="panel-card" style="margin-bottom: 0;">
                     <div class="card-header">
-                        <h2 class="card-title">🔐 تغییر کلمه عبور حساب جاری</h2>
+                        <h2 class="card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            <span>تغییر کلمه عبور حساب جاری</span>
+                        </h2>
                     </div>
                     
                     <form id="changePasswordForm">
@@ -1153,7 +1186,8 @@ $is_auth = is_authenticated();
                             <input type="password" id="confirmPassword" class="form-control" required minlength="6" placeholder="تکرار کلمه عبور">
                         </div>
                         <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center; margin-top: 1rem;">
-                            به‌روزرسانی کلمه عبور
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+                            <span>به‌روزرسانی کلمه عبور</span>
                         </button>
                     </form>
                 </div>
@@ -1161,7 +1195,10 @@ $is_auth = is_authenticated();
                 <!-- Box 2: Add New Admin -->
                 <div class="panel-card" style="margin-bottom: 0;">
                     <div class="card-header">
-                        <h2 class="card-title">➕ افزودن مدیر جدید به سیستم</h2>
+                        <h2 class="card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                            <span>افزودن مدیر جدید به سیستم</span>
+                        </h2>
                     </div>
                     
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.6;">
@@ -1178,7 +1215,7 @@ $is_auth = is_authenticated();
                             <input type="password" id="newAdminPassword" class="form-control" required minlength="6" placeholder="••••••••">
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
-                            <span>➕</span>
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
                             <span>ایجاد حساب مدیر جدید</span>
                         </button>
                     </form>
@@ -1189,13 +1226,16 @@ $is_auth = is_authenticated();
             <div class="panel-card" style="margin-top: 1.5rem;">
                 <div class="card-header">
                     <div>
-                        <h2 class="card-title">👥 لیست مدیران فعال سیستم</h2>
+                        <h2 class="card-title">
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <span>لیست مدیران فعال سیستم</span>
+                        </h2>
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
                             توجه: طبق استاندارد امنیتی، همیشه باید حداقل ۱ مدیر در سیستم فعال باشد و امکان حذف آخرین مدیر وجود ندارد.
                         </p>
                     </div>
                     <button onclick="loadAdmins()" class="btn btn-outline btn-sm">
-                        <span>🔄</span>
+                        <svg class="admin-icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
                         <span>به‌روزرسانی لیست</span>
                     </button>
                 </div>
@@ -1214,7 +1254,9 @@ $is_auth = is_authenticated();
         <div class="modal-box" style="max-width: 480px;">
             <div class="card-header">
                 <h3 id="categoryModalHeading" class="card-title">دسته‌بندی جدید قوانین</h3>
-                <button onclick="closeCategoryModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+                <button onclick="closeCategoryModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center;" aria-label="بستن">
+                    <svg class="admin-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
             </div>
             
             <input type="hidden" id="categoryModalId">
@@ -1236,7 +1278,9 @@ $is_auth = is_authenticated();
         <div class="modal-box">
             <div class="card-header">
                 <h3 id="modalLawHeading" class="card-title">ویرایش قانون</h3>
-                <button onclick="closeLawModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">✕</button>
+                <button onclick="closeLawModal()" style="background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; align-items: center;" aria-label="بستن">
+                    <svg class="admin-icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
             </div>
             
             <input type="hidden" id="modalLawId">
@@ -1249,8 +1293,9 @@ $is_auth = is_authenticated();
             <div class="form-group">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
                     <label class="form-label" style="margin-bottom: 0;">دسته‌بندی موضوعی قانون در سایت:</label>
-                    <button type="button" onclick="openCategoryModal()" style="background: none; border: none; color: var(--cyan-light); font-size: 0.775rem; cursor: pointer; text-decoration: underline;">
-                        ➕ ایجاد دسته‌بندی جدید
+                    <button type="button" onclick="openCategoryModal()" style="background: none; border: none; color: var(--cyan-light); font-size: 0.775rem; cursor: pointer; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.25rem;">
+                        <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                        <span>ایجاد دسته‌بندی جدید</span>
                     </button>
                 </div>
                 <select id="modalLawCategory" class="form-control" style="background-color: var(--bg-input);">
@@ -1437,7 +1482,8 @@ $is_auth = is_authenticated();
                     <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
                         <p>هیچ دسته‌بندی موضوعی تعریف نشده است.</p>
                         <button onclick="openCategoryModal()" class="btn btn-primary" style="margin-top: 1rem;">
-                            ➕ ایجاد اولین دسته‌بندی
+                            <svg class="admin-icon" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            <span>ایجاد اولین دسته‌بندی</span>
                         </button>
                     </div>
                 `;
@@ -1456,21 +1502,21 @@ $is_auth = is_authenticated();
                 <div class="category-section-card" data-cat-id="${cat.id}">
                     <div class="category-header">
                         <div class="category-title-group">
-                            <span style="font-size: 1.25rem;">📁</span>
+                            <span style="color: var(--cyan-light); display: flex; align-items: center;"><svg class="admin-icon admin-icon-lg" viewBox="0 0 24 24"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span>
                             <strong style="font-size: 1rem; color: #ffffff;">${escapeHtml(cat.label)}</strong>
                             <span class="category-badge-count">${countFa} قانون</span>
                         </div>
                         <div class="category-actions">
                             <button onclick="openLawModal('${cat.id}')" class="btn btn-success btn-sm" title="افزودن قانون مستقیماً به این بخش">
-                                <span>➕</span>
+                                <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
                                 <span>افزودن قانون به این بخش</span>
                             </button>
                             <button onclick="editCategory('${cat.id}', '${escapeHtml(cat.label)}')" class="btn btn-outline btn-sm" title="ویرایش عنوان دسته‌بندی">
-                                <span>✏️</span>
+                                <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
                                 <span>ویرایش نام</span>
                             </button>
                             <button onclick="deleteCategory('${cat.id}', '${escapeHtml(cat.label)}')" class="btn btn-danger btn-sm" title="حذف این دسته‌بندی">
-                                <span>🗑️</span>
+                                <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                             </button>
                         </div>
                     </div>
@@ -1497,10 +1543,12 @@ $is_auth = is_authenticated();
                             </div>
                             <div class="law-actions">
                                 <button onclick="editLaw(${law.id})" class="btn btn-outline btn-sm">
-                                    ✏️ ویرایش
+                                    <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                                    <span>ویرایش</span>
                                 </button>
                                 <button onclick="deleteLaw(${law.id})" class="btn btn-danger btn-sm">
-                                    🗑️ حذف
+                                    <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                                    <span>حذف</span>
                                 </button>
                             </div>
                         </div>
@@ -1740,12 +1788,12 @@ $is_auth = is_authenticated();
 
         function renderVisualCharts(a) {
             const channels = [
-                { key: 'phone', label: 'تماس مستقیم تلفنی', icon: '📞', color: '#34d399', count: a.phone || 0 },
-                { key: 'eitaa', label: 'پیام‌رسان ایتا', icon: '💬', color: '#f59e0b', count: a.eitaa || 0 },
-                { key: 'instagram', label: 'صفحه اینستاگرام', icon: '📱', color: '#ec4899', count: a.instagram || 0 },
-                { key: 'bale', label: 'پیام‌رسان بله', icon: '💬', color: '#10b981', count: a.bale || 0 },
-                { key: 'rubika', label: 'پیام‌رسان روبیکا', icon: '💬', color: '#6366f1', count: a.rubika || 0 },
-                { key: 'maps', label: 'مسیریابی نقشه و بلد', icon: '🗺️', color: '#38bdf8', count: a.maps || 0 }
+                { key: 'phone', label: 'تماس مستقیم تلفنی', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>', color: '#34d399', count: a.phone || 0 },
+                { key: 'eitaa', label: 'پیام‌رسان ایتا', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>', color: '#f59e0b', count: a.eitaa || 0 },
+                { key: 'instagram', label: 'صفحه اینستاگرام', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>', color: '#ec4899', count: a.instagram || 0 },
+                { key: 'bale', label: 'پیام‌رسان بله', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>', color: '#10b981', count: a.bale || 0 },
+                { key: 'rubika', label: 'پیام‌رسان روبیکا', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>', color: '#6366f1', count: a.rubika || 0 },
+                { key: 'maps', label: 'مسیریابی نقشه و بلد', iconSvg: '<svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>', color: '#38bdf8', count: a.maps || 0 }
             ];
 
             const totalInteractions = channels.reduce((sum, ch) => sum + ch.count, 0);
@@ -1761,7 +1809,7 @@ $is_auth = is_authenticated();
                     <div class="bar-item">
                         <div class="bar-meta">
                             <span class="bar-label-group">
-                                <span>${ch.icon}</span>
+                                <span style="display: inline-flex; align-items: center; color: ${ch.color};">${ch.iconSvg}</span>
                                 <strong>${ch.label}</strong>
                             </span>
                             <span>
@@ -1906,7 +1954,8 @@ $is_auth = is_authenticated();
                                 <button onclick="deleteAdmin('${adm.id}', '${escapeHtml(adm.username)}')" 
                                     class="btn btn-danger btn-sm" 
                                     ${!canDelete ? 'disabled title="حداقل ۱ مدیر باید در سیستم باشد و امکان حذف وجود ندارد"' : ''}>
-                                    🗑️ حذف مدیر
+                                    <svg class="admin-icon admin-icon-sm" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                                    <span>حذف مدیر</span>
                                 </button>
                             </td>
                         </tr>
@@ -1921,8 +1970,9 @@ $is_auth = is_authenticated();
 
                     if (!canDelete) {
                         html += `
-                        <div style="margin-top: 0.75rem; padding: 0.65rem 1rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 4px; font-size: 0.775rem; color: #fbbf24;">
-                            ⚠️ فقط ۱ مدیر در سیستم ثبت شده است. دکمه حذف جهت حفظ امنیت و جلوگیری از قفل شدن پنل، غیرفعال می‌باشد.
+                        <div style="margin-top: 0.75rem; padding: 0.65rem 1rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 4px; font-size: 0.775rem; color: #fbbf24; display: flex; align-items: center; gap: 0.4rem;">
+                            <svg class="admin-icon admin-icon-sm" style="color: #fbbf24;" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                            <span>فقط ۱ مدیر در سیستم ثبت شده است. دکمه حذف جهت حفظ امنیت و جلوگیری از قفل شدن پنل، غیرفعال می‌باشد.</span>
                         </div>
                         `;
                     }

@@ -1,4 +1,5 @@
 // Import required UI components
+import { Droplets, Scale, FileText } from 'lucide-react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 
 export default function ExpertiseSection() {
@@ -36,7 +37,9 @@ export default function ExpertiseSection() {
                 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl flex-shrink-0 p-2.5 rounded-sm bg-cyan-950/60 border border-cyan-800/40">💧</span>
+                  <div className="flex-shrink-0 p-2.5 rounded-sm bg-cyan-950/60 border border-cyan-800/40 text-cyan-400">
+                    <Droplets className="w-7 h-7 stroke-[1.8]" />
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-base mb-4" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc', lineHeight: '1.6' }}>
                       حقوق آب و منابع آبی
@@ -63,7 +66,9 @@ export default function ExpertiseSection() {
                 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl flex-shrink-0 p-2.5 rounded-sm bg-emerald-950/60 border border-emerald-800/40">⚖️</span>
+                  <div className="flex-shrink-0 p-2.5 rounded-sm bg-emerald-950/60 border border-emerald-800/40 text-emerald-400">
+                    <Scale className="w-7 h-7 stroke-[1.8]" />
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-base mb-4" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#6ee7b7', lineHeight: '1.6' }}>
                       دعاوی دستگاه‌های اجرایی و دیوان عدالت
@@ -90,7 +95,9 @@ export default function ExpertiseSection() {
                 }}
               >
                 <div className="flex items-start gap-4">
-                  <span className="text-3xl flex-shrink-0 p-2.5 rounded-sm bg-cyan-950/60 border border-cyan-800/40">📄</span>
+                  <div className="flex-shrink-0 p-2.5 rounded-sm bg-cyan-950/60 border border-cyan-800/40 text-cyan-400">
+                    <FileText className="w-7 h-7 stroke-[1.8]" />
+                  </div>
                   <div className="flex-1">
                     <h3 className="font-bold text-base mb-4" style={{ fontFamily: 'Noto Naskh Arabic, serif', color: '#7dd3fc', lineHeight: '1.6' }}>
                       حقوق عمومی و قراردادها

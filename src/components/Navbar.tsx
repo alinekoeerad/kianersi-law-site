@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Phone, Menu, X } from 'lucide-react';
 import { SmallOrnament } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
 import { trackEvent } from '../utils/analytics';
@@ -116,7 +117,7 @@ export default function Navbar() {
               onClick={() => trackEvent('phone')}
               className="hidden md:flex items-center gap-2 text-xs px-5 py-2.5 transition-all duration-300 rounded-sm hover:brightness-110 font-semibold"
               style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}>
-              <span>📞</span>
+              <Phone className="w-3.5 h-3.5 stroke-[2.2]" />
               <span>مشاوره تلفنی ({general.phone})</span>
             </a>
 
@@ -129,16 +130,16 @@ export default function Navbar() {
                 style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
                 aria-label="تماس تلفنی"
               >
-                <span>📞</span>
+                <Phone className="w-3 h-3 stroke-[2.2]" />
                 <span>تماس</span>
               </a>
 
               <button 
-                className="text-lg px-2.5 py-1 text-cyan-400 hover:text-white border border-cyan-800/80 rounded-sm bg-slate-900/60" 
+                className="p-1.5 text-cyan-400 hover:text-white border border-cyan-800/80 rounded-sm bg-slate-900/60 flex items-center justify-center" 
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="منوی سایت"
               >
-                {menuOpen ? '✕' : '☰'}
+                {menuOpen ? <X className="w-4 h-4 stroke-[2.5]" /> : <Menu className="w-4 h-4 stroke-[2.5]" />}
               </button>
             </div>
           </div>
@@ -176,7 +177,7 @@ export default function Navbar() {
                 className="flex items-center justify-center gap-2 w-full py-3 text-center text-xs font-semibold rounded-sm"
                 style={{ backgroundColor: '#0e7490', color: '#ffffff' }}
               >
-                <span>📞</span>
+                <Phone className="w-4 h-4 stroke-[2.2]" />
                 <span>تماس مستقیم با وکیل: {general.phone}</span>
               </a>
             </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Phone, Check, Copy, Navigation } from 'lucide-react';
 import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
 import { trackEvent, AnalyticsEventType } from '../utils/analytics';
@@ -161,7 +162,7 @@ export default function ContactSection() {
                   className="flex items-center justify-center gap-2 w-full py-3.5 px-4 text-xs font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-md text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >
-                  <span>📞</span>
+                  <Phone className="w-4 h-4 stroke-[2.2]" />
                   <span>تماس مستقیم با وکیل: {general.phone}</span>
                 </a>
               </div>
@@ -192,12 +193,12 @@ export default function ContactSection() {
                 >
                   {copied ? (
                     <>
-                      <span>✓</span>
+                      <Check className="w-3.5 h-3.5" />
                       <span>آدرس کپی شد</span>
                     </>
                   ) : (
                     <>
-                      <span>📋</span>
+                      <Copy className="w-3.5 h-3.5" />
                       <span>کپی آدرس</span>
                     </>
                   )}
@@ -302,7 +303,7 @@ export default function ContactSection() {
                       onClick={() => trackEvent('maps')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1 py-2 px-2 text-[11px] sm:text-xs rounded-sm transition-all duration-300 hover:brightness-125 hover:-translate-y-0.5 text-center font-medium"
+                      className="flex items-center justify-center gap-1.5 py-2 px-2 text-[11px] sm:text-xs rounded-sm transition-all duration-300 hover:brightness-125 hover:-translate-y-0.5 text-center font-medium"
                       style={{
                         backgroundColor: 'rgba(10,30,40,0.85)',
                         border: '1px solid rgba(14,116,144,0.4)',
@@ -310,7 +311,7 @@ export default function ContactSection() {
                         fontFamily: 'Noto Sans Arabic'
                       }}
                     >
-                      <span>🚗</span>
+                      <Navigation className="w-3 h-3 text-cyan-400 stroke-[2]" />
                       <span>{app.name}</span>
                     </a>
                   ))}

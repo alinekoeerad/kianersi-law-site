@@ -23,7 +23,7 @@ dirs.forEach(dir => {
   const dirPath = path.resolve(dir);
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, { recursive: true });
-    console.log(`✅ پوشه ساخته شد: ${dir}`);
+    console.log(`[+] پوشه ساخته شد: ${dir}`);
   }
 });
 
@@ -32,8 +32,8 @@ files.forEach(file => {
   const filePath = path.resolve(file);
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, '', 'utf8');
-    console.log(`✅ فایل ساخته شد: ${file}`);
+    console.log(`[+] فایل ساخته شد: ${file}`);
   }
 });
 
-console.log('🎉 تمامی فایل‌ها و پوشه‌ها با موفقیت ایجاد شدند! حالا می‌توانید کدها را کپی کنید.');
+console.log('[OK] تمامی فایل‌ها و پوشه‌ها با موفقیت ایجاد شدند!');

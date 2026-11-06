@@ -1,4 +1,5 @@
 // Import necessary UI components
+import { Phone, MapPin } from 'lucide-react';
 import { SectionLabel, OrnamentDivider, StatCard } from './SharedUI';
 import { useSiteData } from '../context/SiteDataContext';
 import { trackEvent } from '../utils/analytics';
@@ -56,7 +57,7 @@ export default function HeroSection() {
                   className="flex items-center justify-center gap-2 px-5 py-3 text-xs md:text-sm font-semibold rounded-sm transition-all duration-300 hover:brightness-110 shadow-lg text-center"
                   style={{ backgroundColor: '#0e7490', color: '#ffffff', fontFamily: 'Noto Sans Arabic' }}
                 >
-                  <span>📞</span>
+                  <Phone className="w-4 h-4 stroke-[2.2]" />
                   <span>تماس و مشاوره فوری: {general.phone}</span>
                 </a>
                 
@@ -65,7 +66,7 @@ export default function HeroSection() {
                   className="flex items-center justify-center gap-2 px-4 py-3 text-xs md:text-sm font-medium rounded-sm transition-all duration-300 hover:bg-cyan-900/40 text-center"
                   style={{ border: '1px solid rgba(14,116,144,0.6)', color: '#7dd3fc', fontFamily: 'Noto Sans Arabic' }}
                 >
-                  <span>📍</span>
+                  <MapPin className="w-4 h-4 stroke-[2.2]" />
                   <span>نشانی دفتر و اطلاعات تماس</span>
                 </a>
               </div>

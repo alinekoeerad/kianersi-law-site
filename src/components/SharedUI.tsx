@@ -13,7 +13,9 @@ export const OrnamentDivider = ({ className = '' }: { className?: string }) => (
 
 // ─── Small Ornament ───────────────────────────────────────────────────────────
 export const SmallOrnament = () => (
-  <span className="inline-block mx-2" style={{ color: '#0e7490' }}>✦</span>
+  <svg className="inline-block mx-2 w-2.5 h-2.5 align-middle" viewBox="0 0 24 24" fill="#0e7490" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2l2.4 7.6H22l-6.2 4.5 2.4 7.6-6.2-4.5-6.2 4.5 2.4-7.6L2 9.6h7.6z"/>
+  </svg>
 );
 
 // ─── Section Label ────────────────────────────────────────────────────────────
