@@ -4,6 +4,7 @@ import { AnimSection, SectionLabel, OrnamentDivider } from './SharedUI';
 export default function ContactSection() {
   const [copied, setCopied] = useState(false);
   const [mapActive, setMapActive] = useState(false);
+  const [mapProvider, setMapProvider] = useState<'neshan' | 'osm'>('neshan');
 
   const fullAddress = 'کرج، بلوار ملاصدرا، بالاتر از دبیرستان سلام البرز، ساختمان وکلای صدرا، طبقه دوم، واحد ۸';
   const latitude = 35.8427497;
@@ -54,7 +55,7 @@ export default function ContactSection() {
     },
   ];
 
-  // Routing navigation apps
+  // Routing navigation apps (Waze removed, 3 primary maps)
   const navigationApps = [
     {
       name: 'نشان',
@@ -69,11 +70,6 @@ export default function ContactSection() {
     {
       name: 'Google Maps',
       href: `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
-      badge: ''
-    },
-    {
-      name: 'Waze',
-      href: `https://waze.com/ul?ll=${latitude},${longitude}&navigate=yes`,
       badge: ''
     }
   ];
@@ -215,19 +211,46 @@ export default function ContactSection() {
 
             </div>
 
-            {/* Embedded Live Google Maps Container */}
+            {/* Embedded Live Map Container */}
             <div className="rounded-sm overflow-hidden" style={{ backgroundColor: 'rgba(10, 30, 40, 0.75)', border: '1px solid rgba(14,116,144,0.3)' }}>
               
-              {/* Map Header */}
-              <div className="px-5 py-3 flex items-center justify-between flex-wrap gap-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)', backgroundColor: 'rgba(3,24,37,0.7)' }}>
+              {/* Map Header with Provider Switch */}
+              <div className="px-4 sm:px-5 py-3 flex items-center justify-between flex-wrap gap-2" style={{ borderBottom: '1px solid rgba(14,116,144,0.2)', backgroundColor: 'rgba(3,24,37,0.7)' }}>
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold" style={{ color: '#ffffff', fontFamily: 'Noto Naskh Arabic, serif' }}>
-                    نقشه موقعیت ساختمان وکلای صدرا در Google Maps
+                    نقشه موقعیت ساختمان وکلای صدرا
+                  </span>
+                  <span className="text-[11px] text-cyan-300 hidden sm:inline">
+                    (کرج، بلوار ملاصدرا)
                   </span>
                 </div>
-                <span className="text-[11px] text-cyan-300">
-                  کرج، بلوار ملاصدرا
-                </span>
+
+                <div className="flex items-center gap-1.5 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setMapProvider('neshan')}
+                    className="px-2.5 py-1 rounded-sm text-[11px] transition-all font-medium"
+                    style={{
+                      backgroundColor: mapProvider === 'neshan' ? '#0e7490' : 'rgba(2,15,26,0.6)',
+                      color: mapProvider === 'neshan' ? '#ffffff' : '#94a3b8',
+                      border: mapProvider === 'neshan' ? '1px solid #7dd3fc' : '1px solid rgba(14,116,144,0.25)'
+                    }}
+                  >
+                    نقشه نشان
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMapProvider('osm')}
+                    className="px-2.5 py-1 rounded-sm text-[11px] transition-all font-medium"
+                    style={{
+                      backgroundColor: mapProvider === 'osm' ? '#0e7490' : 'rgba(2,15,26,0.6)',
+                      color: mapProvider === 'osm' ? '#ffffff' : '#94a3b8',
+                      border: mapProvider === 'osm' ? '1px solid #7dd3fc' : '1px solid rgba(14,116,144,0.25)'
+                    }}
+                  >
+                    OpenStreetMap
+                  </button>
+                </div>
               </div>
 
               {/* Map Iframe with Touch Guard for Mobile */}
@@ -244,9 +267,13 @@ export default function ContactSection() {
                   </div>
                 )}
                 <iframe
-                  title="نقشه موقعیت دفتر وکالت محمدحسن کیان‌ارثی در گوگل مپ"
-                  src={`https://maps.google.com/maps?q=${latitude},${longitude}&hl=fa&z=16&output=embed`}
-                  className={`w-full h-full border-0 ${mapActive ? 'pointer-events-auto' : 'pointer-events-auto md:pointer-events-auto'}`}
+                  title="نقشه موقعیت دفتر وکالت محمدحسن کیان‌ارثی در کرج"
+                  src={
+                    mapProvider === 'neshan'
+                      ? `https://neshan.org/maps/iframe?lat=${latitude}&lng=${longitude}&zoom=16`
+                      : `https://www.openstreetmap.org/export/embed.html?bbox=50.9850,35.8380,50.9980,35.8475&layer=mapnik&marker=${latitude},${longitude}`
+                  }
+                  className="w-full h-full border-0 pointer-events-auto"
                   loading="lazy"
                   allowFullScreen
                 />
@@ -257,7 +284,7 @@ export default function ContactSection() {
                 <p className="text-xs section-label mb-3" style={{ color: '#7dd3fc' }}>
                   مسیریابی مستقیم با برنامه‌های نقشه و بلد:
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   {navigationApps.map((app) => (
                     <a
                       key={app.name}
