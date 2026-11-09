@@ -33,7 +33,7 @@ async function runComprehensiveTests() {
   // بخش ۱: ارزیابی فایل‌های زیرساختی، دارایی‌های وب و بسته نصبی (Deploy Bundle)
   // ══════════════════════════════════════════════════════════════════
   console.log('\n📦 [گروه ۱: فایل‌های زیرساختی، استاتیک و پکیج دیپلوی]');
-  
+
   const requiredDistFiles = [
     { file: 'index.html', label: 'باندل کامپایل‌شده وبسایت اصلی' },
     { file: 'site-data.json', label: 'پایگاه داده اصلی محتوا (JSON)' },
@@ -48,7 +48,8 @@ async function runComprehensiveTests() {
     { file: 'admin/index.php', label: 'رابط کاربری پنل مدیریت (admin/index.php)' },
     { file: 'admin/api.php', label: 'هسته ای‌پی‌آی پنل (admin/api.php)' },
     { file: 'admin/config.php', label: 'پیکربندی امنیتی ادمین' },
-    { file: 'admin/.htaccess', label: 'قوانین امنیتی و ضد نفوذ پوشه ادمین' }
+    { file: 'admin/.htaccess', label: 'قوانین امنیتی و ضد نفوذ پوشه ادمین' },
+    { file: 'index.php', label: 'تزریق‌کننده داینامیک متاتگ‌های سئو در روت (index.php)' }
   ];
 
   requiredDistFiles.forEach(rf => {
@@ -66,7 +67,7 @@ async function runComprehensiveTests() {
   // بخش ۲: متاتگ‌های سئو، شبکه‌های اجتماعی و داده‌های ساختاریافته وب اصلی
   // ══════════════════════════════════════════════════════════════════
   console.log('\n🔍 [گروه ۲: سئو، اسکیمای گوگل و پیش‌نمایش شبکه‌های اجتماعی وب اصلی]');
-  
+
   const indexHtml = fs.readFileSync(path.join(distDir, 'index.html'), 'utf8');
 
   assert(indexHtml.includes('lang="fa"') && indexHtml.includes('dir="rtl"'), 'سئو و ساختار', 'تعریف زبان فارسی (fa) و جهت راست‌به‌چپ (RTL) در سند HTML');
@@ -142,7 +143,7 @@ async function runComprehensiveTests() {
   // بخش ۴: اعتبارسنجی یکپارچگی داده‌های فایل site-data.json
   // ══════════════════════════════════════════════════════════════════
   console.log('\n📊 [گروه ۴: ساختار داده‌ها و پایگاه داده site-data.json]');
-  
+
   const siteDataRaw = fs.readFileSync(path.join(distDir, 'site-data.json'), 'utf8');
   const siteData = JSON.parse(siteDataRaw);
 
@@ -152,7 +153,7 @@ async function runComprehensiveTests() {
   assert(siteData.general.latitude && siteData.general.longitude, 'پایگاه داده', `مختصات جغرافیایی معتبر GPS: (${siteData.general.latitude}, ${siteData.general.longitude})`);
   assert(Array.isArray(siteData.categories) && siteData.categories.length >= 3, 'پایگاه داده', `تعداد دسته‌بندی‌های موضوعی (${siteData.categories.length} دسته)`);
   assert(Array.isArray(siteData.laws) && siteData.laws.length >= 8, 'پایگاه داده', `بانک قوانین معتبر (${siteData.laws.length} قانون تخصصی با متن کامل)`);
-  
+
   siteData.laws.forEach((law, idx) => {
     if (idx < 3) {
       assert(law.id && law.title && law.content, 'مفاد قوانین', `قانون شماره ${law.id}: «${law.title.substring(0, 30)}...» دارای متن کامل است.`);
@@ -190,7 +191,7 @@ async function runComprehensiveTests() {
         res.on('data', chunk => { resBody += chunk; });
         res.on('end', () => {
           let json = null;
-          try { json = JSON.parse(resBody); } catch (e) {}
+          try { json = JSON.parse(resBody); } catch (e) { }
           resolve({ status: res.statusCode, headers: res.headers, body: resBody, json });
         });
       });
@@ -206,6 +207,7 @@ async function runComprehensiveTests() {
     const webHome = await apiRequest('/');
     assert(webHome.status === 200, 'پاسخ‌دهی وب', 'صفحه اصلی سایت با موفقیت و کد وضعیت 200 لود شد.');
     assert(webHome.body.includes('محمدحسن کیان‌ارثی'), 'رندر وبسایت', 'محتوای صفحه اصلی دربرگیرنده نام و مشخصات وکیل است.');
+    assert(webHome.body.includes('og:image') && !webHome.body.includes('og:image" content="https://vakilkianersi.ir/images/lawyer-portrait.webp"'), 'سئو داینامیک اشتراک‌گذاری', 'متاتگ og:image به جای پرتره به تصویر اختصاصی پیش‌نمایش سئو اشاره دارد.');
 
     // ۲. امنیت: مسدودسازی دسترسی بدون احراز هویت
     const unauthGet = await apiRequest('/admin/api.php?action=get_data');
@@ -226,7 +228,7 @@ async function runComprehensiveTests() {
     // ۵. آزمون ورود موفق
     const correctLogin = await apiRequest('/admin/api.php?action=login', 'POST', { username: 'admin', password: 'Kianersi@1403' });
     assert(correctLogin.status === 200 && correctLogin.json.success, 'احراز هویت', 'ورود با اطلاعات مدیر با موفقیت انجام پذیرفت.');
-    
+
     const setCookie = correctLogin.headers['set-cookie'];
     assert(setCookie && setCookie.some(c => c.includes('local_admin_session=authenticated')), 'کوکی امنیتی', 'کوکی سشن امنیتی (local_admin_session) صادر گردید.');
     const authCookie = setCookie.map(c => c.split(';')[0]).join('; ');
@@ -243,7 +245,7 @@ async function runComprehensiveTests() {
     // گروه ۶: تب ۱ - تنظیمات عمومی، اطلاعات تماس و موقعیت مکانی
     // ══════════════════════════════════════════════════════════════════
     console.log('\n⚙️  [گروه ۶: تب ۱ پنل - تنظیمات عمومی، تماس و موقعیت مکانی]');
-    
+
     const initialDataRes = await apiRequest('/admin/api.php?action=get_data', 'GET', null, authHeaders);
     assert(initialDataRes.status === 200 && initialDataRes.json.data, 'دریافت داده‌ها', 'دریافت داده‌های کلی سایت از طریق get_data');
 
@@ -270,7 +272,7 @@ async function runComprehensiveTests() {
 
     // پیکسل آزمایشی شفاف 1x1 در فرمت PNG جهت تست آپلود
     const samplePixelBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAA=';
-    
+
     // ۱. آپلود تصویر پرتره
     const uploadLawyer = await apiRequest('/admin/api.php?action=upload_image', 'POST', {
       type: 'lawyer',
@@ -308,7 +310,7 @@ async function runComprehensiveTests() {
       category: { label: testCatLabel }
     }, authHeaders);
     assert(addCatRes.status === 200 && addCatRes.json.success, 'افزودن دسته‌بندی', 'دسته‌بندی جدید به ساختار موضوعی افزوده شد.');
-    
+
     const addedCat = addCatRes.json.categories.find(c => c.label === testCatLabel);
     const addedCatId = addedCat ? addedCat.id : null;
     assert(!!addedCatId, 'اعتبارسنجی شناسه', `شناسه دسته‌بندی با موفقیت تولید شد (${addedCatId})`);
@@ -324,7 +326,7 @@ async function runComprehensiveTests() {
       }
     }, authHeaders);
     assert(saveLawRes.status === 200 && saveLawRes.json.success, 'ثبت قانون جدید', 'قانون جدید با موفقیت به بانک قوانین افزوده گردید.');
-    
+
     const addedLaw = saveLawRes.json.laws.find(l => l.title === testLawTitle);
     const addedLawId = addedLaw ? addedLaw.id : null;
     assert(!!addedLawId, 'اعتبارسنجی قانون', `شناسه قانون جدید: ${addedLawId}`);
@@ -372,7 +374,7 @@ async function runComprehensiveTests() {
     // دریافت آی‌دی مدیر ایجادشده
     const updatedAdmins = await apiRequest('/admin/api.php?action=get_admins', 'GET', null, authHeaders);
     const createdAdminObj = updatedAdmins.json.admins.find(a => a.username === testAdminUser);
-    
+
     // حذف مدیر آزمایشی
     if (createdAdminObj) {
       const delAdminRes = await apiRequest('/admin/api.php?action=delete_admin', 'POST', { id: createdAdminObj.id }, authHeaders);

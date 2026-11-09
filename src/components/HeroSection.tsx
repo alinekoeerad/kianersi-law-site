@@ -86,13 +86,24 @@ export default function HeroSection() {
           {/* Center Column: Lawyer's portrait and name plate */}
           <div className="md:col-span-4 order-1 md:order-2 flex justify-center md:block">
             <div className="relative editorial-frame mx-auto max-w-[320px] md:max-w-[380px]">
-              <img 
-                src={general.lawyerImage || "./images/lawyer-portrait.webp"} 
-                alt="محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج و متخصص دعاوی آب و اراضی" 
-                title="محمدحسن کیان‌ارثی وکیل دادگستری کرج"
-                className="w-full object-cover h-[360px] md:h-[520px]"
-                style={{ objectPosition: 'center top', filter: 'saturate(0.9) contrast(1.05)' }} 
-              />
+              {general.lawyerImage ? (
+                <img 
+                  src={general.lawyerImage} 
+                  alt="محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج و متخصص دعاوی آب و اراضی" 
+                  title="محمدحسن کیان‌ارثی وکیل دادگستری کرج"
+                  loading="eager"
+                  decoding="sync"
+                  className="w-full object-cover h-[360px] md:h-[520px]"
+                  style={{ objectPosition: 'center top', filter: 'saturate(0.9) contrast(1.05)' }} 
+                />
+              ) : (
+                <div 
+                  className="w-full h-[360px] md:h-[520px] bg-slate-900/60 animate-pulse flex items-center justify-center"
+                  style={{ minHeight: '360px' }}
+                >
+                  <div className="w-8 h-8 rounded-full border-2 border-cyan-500/20 border-t-cyan-400 animate-spin" />
+                </div>
+              )}
               
               {/* Gradient overlay for text readability */}
               <div className="absolute bottom-0 right-0 left-0 p-5 pt-16" 

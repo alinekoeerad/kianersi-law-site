@@ -1,3 +1,6 @@
+# ─── Directory Index Priority ──────────────────────────────────
+DirectoryIndex index.php index.html
+
 # ─── Disable Directory Browsing ────────────────────────────────
 Options -Indexes
 
@@ -21,10 +24,10 @@ ServerSignature Off
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
+  RewriteRule ^index\.(html|php)$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . /index.php [L]
 </IfModule>
 
 # ─── Browser Caching (Max Performance) ─────────────────────────

@@ -64,9 +64,9 @@ export const defaultSiteData: SiteData = {
     baleUrl: 'https://ble.ir/Mohamadhasankianersi',
     rubika: '@Mka12345666',
     rubikaUrl: 'https://rubika.ir/Mka12345666',
-    lawyerImage: './images/lawyer-portrait.webp',
+    lawyerImage: '',
     logoImage: './logo.webp',
-    seoImage: './images/lawyer-portrait.webp',
+    seoImage: '',
     seoTitle: 'محمدحسن کیان‌ارثی | وکیل پایه یک دادگستری کرج - دعاوی تخصصی آب و اراضی',
     seoDescription: 'دفتر وکالت محمدحسن کیان‌ارثی؛ وکیل پایه یک دادگستری در کرج و تهران با ۲۰+ سال سابقه تخصصی در دعاوی حقوق آب، چاه‌های کشاورزی، حریم رودخانه، کمیسیون‌ها و دیوان عدالت اداری. مشاوره: ۰۹۱۲۷۶۹۸۸۶۴',
     seoKeywords: 'محمدحسن کیان‌ارثی, محمد حسن کیان ارثی, وکیل کیان ارثی, وکیل پایه یک دادگستری کرج, وکیل دعاوی آب کرج, وکیل چاه کشاورزی البرز, وکیل کمیسیون آب‌های زیرزمینی, وکیل حریم رودخانه, وکیل دیوان عدالت اداری کرج',
@@ -81,10 +81,53 @@ export const defaultSiteData: SiteData = {
   laws: lawsDatabase
 };
 
+// Helper function to resolve initial state synchronously with 0ms delay (prevents flash of old images)
+function getInitialSiteData(): SiteData {
+  if (typeof window !== 'undefined') {
+    // 1. First priority: Server-injected data in HTML (instant SSR hydration)
+    const injected = (window as unknown as { __INITIAL_SITE_DATA__?: SiteData }).__INITIAL_SITE_DATA__;
+    if (injected && injected.general) {
+      return {
+        general: { ...defaultSiteData.general, ...injected.general },
+        categories: Array.isArray(injected.categories) && injected.categories.length > 0 
+          ? injected.categories 
+          : defaultSiteData.categories,
+        laws: Array.isArray(injected.laws) && injected.laws.length > 0 
+          ? injected.laws 
+          : defaultSiteData.laws
+      };
+    }
+
+    // 2. Second priority: LocalStorage cached state from previous session
+    try {
+      const cached = localStorage.getItem('kianersi_cached_site_data');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (parsed && parsed.general) {
+          return {
+            general: { ...defaultSiteData.general, ...parsed.general },
+            categories: Array.isArray(parsed.categories) && parsed.categories.length > 0 
+              ? parsed.categories 
+              : defaultSiteData.categories,
+            laws: Array.isArray(parsed.laws) && parsed.laws.length > 0 
+              ? parsed.laws 
+              : defaultSiteData.laws
+          };
+        }
+      }
+    } catch {
+      // Ignore localStorage read errors
+    }
+  }
+
+  // 3. Fallback to default bundled data
+  return defaultSiteData;
+}
+
 const SiteDataContext = createContext<SiteData>(defaultSiteData);
 
 export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<SiteData>(defaultSiteData);
+  const [data, setData] = useState<SiteData>(getInitialSiteData);
 
   useEffect(() => {
     // Fetch dynamic data from site-data.json if present (cache-busted)
@@ -96,13 +139,21 @@ export const SiteDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       .then(json => {
         if (json && json.laws && Array.isArray(json.laws) && json.general) {
           const gen = { ...defaultSiteData.general, ...json.general };
-          setData({
+          const updatedData: SiteData = {
             general: gen,
             categories: Array.isArray(json.categories) && json.categories.length > 0 
               ? json.categories 
               : defaultSiteData.categories,
             laws: json.laws
-          });
+          };
+          setData(updatedData);
+
+          // Save to localStorage for instant 0ms mount on subsequent page loads
+          try {
+            localStorage.setItem('kianersi_cached_site_data', JSON.stringify(updatedData));
+          } catch {
+            // Ignore quota errors
+          }
 
           // Dynamically update document title and meta tags if provided
           if (gen.seoTitle) {

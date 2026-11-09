@@ -20,6 +20,59 @@ function getSiteData() {
   }
 }
 
+// Helper to inject SEO meta tags & instant hydration data into HTML
+function injectSeoAndInitialData(html, siteData) {
+  if (!siteData || !siteData.general) return html;
+  const gen = siteData.general;
+  const title = gen.seoTitle || '';
+  const desc = gen.seoDescription || '';
+  const keywords = gen.seoKeywords || '';
+  const rawImage = gen.seoImage || gen.lawyerImage || './preview.webp';
+  const cleanImage = rawImage.replace(/^\.\//, '').replace(/^\//, '');
+  const imageUrl = `https://vakilkianersi.ir/${cleanImage}`;
+
+  if (title) {
+    html = html.replace(/<title>[\s\S]*?<\/title>/i, `<title>${title}</title>`);
+    html = html.replace(/<meta\s+property=["']og:title["']\s+content=["'][^"']*["']/i, `<meta property="og:title" content="${title}"`);
+    html = html.replace(/<meta\s+name=["']twitter:title["']\s+content=["'][^"']*["']/i, `<meta name="twitter:title" content="${title}"`);
+  }
+  if (desc) {
+    html = html.replace(/<meta\s+name=["']description["']\s+content=["'][^"']*["']/i, `<meta name="description" content="${desc}"`);
+    html = html.replace(/<meta\s+property=["']og:description["']\s+content=["'][^"']*["']/i, `<meta property="og:description" content="${desc}"`);
+    html = html.replace(/<meta\s+name=["']twitter:description["']\s+content=["'][^"']*["']/i, `<meta name="twitter:description" content="${desc}"`);
+  }
+  if (keywords) {
+    html = html.replace(/<meta\s+name=["']keywords["']\s+content=["'][^"']*["']/i, `<meta name="keywords" content="${keywords}"`);
+  }
+  if (imageUrl) {
+    html = html.replace(/<meta\s+property=["']og:image["']\s+content=["'][^"']*["']/i, `<meta property="og:image" content="${imageUrl}"`);
+    html = html.replace(/<meta\s+name=["']twitter:image["']\s+content=["'][^"']*["']/i, `<meta name="twitter:image" content="${imageUrl}"`);
+  }
+
+  const initialScript = `<script id="initial-site-data">window.__INITIAL_SITE_DATA__ = ${JSON.stringify(siteData)};</script>`;
+  if (html.includes('id="initial-site-data"')) {
+    html = html.replace(/<script id="initial-site-data">[\s\S]*?<\/script>/i, initialScript);
+  } else if (html.includes('</head>')) {
+    html = html.replace('</head>', `    ${initialScript}\n  </head>`);
+  }
+
+  return html;
+}
+
+function syncHtmlFile(data) {
+  const p1 = path.join(DIST_DIR, 'index.html');
+  const p2 = path.join(PUBLIC_DIR, 'index.html');
+  [p1, p2].forEach(p => {
+    if (fs.existsSync(p)) {
+      try {
+        let html = fs.readFileSync(p, 'utf8');
+        html = injectSeoAndInitialData(html, data);
+        fs.writeFileSync(p, html, 'utf8');
+      } catch (e) {}
+    }
+  });
+}
+
 // Helper to save site data to both dist and public
 function saveSiteData(data) {
   const json = JSON.stringify(data, null, 2);
@@ -27,6 +80,7 @@ function saveSiteData(data) {
   const p2 = path.join(PUBLIC_DIR, 'site-data.json');
   if (fs.existsSync(DIST_DIR)) fs.writeFileSync(p1, json, 'utf8');
   if (fs.existsSync(PUBLIC_DIR)) fs.writeFileSync(p2, json, 'utf8');
+  syncHtmlFile(data);
 }
 
 // Helper to get auth credentials & multi-admin support
@@ -614,9 +668,16 @@ const server = http.createServer(async (req, res) => {
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
   try {
-    const fileContent = fs.readFileSync(filePath);
+    let fileContent = fs.readFileSync(filePath);
     res.setHeader('Content-Type', contentType);
-    if (ext === '.json' || ext === '.html') {
+    if (ext === '.html') {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      const siteData = getSiteData();
+      const injectedHtml = injectSeoAndInitialData(fileContent.toString('utf8'), siteData);
+      res.end(injectedHtml);
+      return;
+    }
+    if (ext === '.json') {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     }
     res.end(fileContent);
