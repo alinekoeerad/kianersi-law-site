@@ -11,7 +11,17 @@ ServerSignature Off
 <IfModule mod_mime.c>
   AddType image/webp .webp
   AddType font/woff2 .woff2
+  AddType text/markdown .txt
+  AddType application/json .json
 </IfModule>
+
+<Files "llms.txt">
+  ForceType "text/markdown; charset=utf-8"
+</Files>
+
+<Files "ai-catalog.json">
+  ForceType "application/json; charset=utf-8"
+</Files>
 
 # ─── Force HTTPS ────────────────────────────────────────────────
 <IfModule mod_rewrite.c>

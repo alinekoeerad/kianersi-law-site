@@ -64,6 +64,13 @@ if ($siteData && isset($siteData['general'])) {
         $html = preg_replace('/<meta\s+name=["\']twitter:image["\']\s+content=["\'][^"\']*["\']/i', '<meta name="twitter:image" content="' . $esc_img . '"', $html);
     }
 
+    // Dynamically update the LCP preload image tag to match the active lawyer portrait
+    $lawyer_img = $gen['lawyerImage'] ?? './images/lawyer-portrait.webp';
+    if (!empty($lawyer_img)) {
+        $clean_lawyer = htmlspecialchars($lawyer_img, ENT_QUOTES, 'UTF-8');
+        $html = preg_replace('/<link\s+rel=["\']preload["\']\s+as=["\']image["\']\s+href=["\'][^"\']*["\']/i', '<link rel="preload" as="image" href="' . $clean_lawyer . '"', $html);
+    }
+
     // Embed initial data synchronously into window.__INITIAL_SITE_DATA__
     // This guarantees 0ms instantaneous client mount with NO image flickering
     $initial_script = '<script>window.__INITIAL_SITE_DATA__ = ' . json_encode($siteData, JSON_UNESCAPED_UNICODE) . ';</script>';

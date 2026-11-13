@@ -34,15 +34,17 @@ export default function App() {
     <SiteDataProvider>
       <div className="min-h-screen paper-texture bg-deep w-full max-w-full" style={{ color: '#ffffff' }}>
         <Navbar />
-        <HeroSection />
+        <main id="main-content" role="main">
+          <HeroSection />
 
-        <Suspense fallback={<SectionLoader />}>
-          <AboutSection />
-          <ExpertiseSection />
-          <DistinguishingSection />
-          <LawsSection />
-          <ContactSection />
-        </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <AboutSection />
+            <ExpertiseSection />
+            <DistinguishingSection />
+            <LawsSection />
+            <ContactSection />
+          </Suspense>
+        </main>
 
         <Footer />
         <BackToTop />

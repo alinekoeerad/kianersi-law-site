@@ -92,7 +92,10 @@ export default function HeroSection() {
                   alt="محمدحسن کیان‌ارثی وکیل پایه یک دادگستری کرج و متخصص دعاوی آب و اراضی" 
                   title="محمدحسن کیان‌ارثی وکیل دادگستری کرج"
                   loading="eager"
-                  decoding="sync"
+                  fetchPriority="high"
+                  decoding="async"
+                  width={380}
+                  height={520}
                   className="w-full object-cover h-[360px] md:h-[520px]"
                   style={{ objectPosition: 'center top', filter: 'saturate(0.9) contrast(1.05)' }} 
                 />

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/spec/v1/schema.json",
+  "name": "دفتر وکالت محمدحسن کیان‌ارثی",
+  "description": "پایگاه رسمی وکیل پایه یک دادگستری کرج متخصص دعاوی آب و دیوان عدالت اداری",
+  "url": "https://vakilkianersi.ir/",
+  "resources": [
+    {
+      "name": "قوانین آب و کشاورزی",
+      "type": "documentation",
+      "url": "https://vakilkianersi.ir/#laws",
+      "description": "متن قوانین و آیین‌نامه‌های تخصصی آب، چاه‌ها و حریم رودخانه‌ها"
+    },
+    {
+      "name": "مشاوره و تماس با وکیل",
+      "type": "contact",
+      "url": "https://vakilkianersi.ir/#contact",
+      "description": "شماره تلفن مستقیم و نشانی دفتر وکالت کیان‌ارثی در کرج"
+    }
+  ]
+}
+

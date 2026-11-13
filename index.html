@@ -40,10 +40,17 @@
     <meta name="twitter:image" content="https://vakilkianersi.ir/images/seo-preview-1794004288.webp" />
     <meta name="twitter:image:alt" content="محمدحسن کیان‌ارثی وکیل دادگستری" />
 
-    <!-- Web Fonts -->
+    <!-- Preload Hero Portrait Image for instant LCP discovery -->
+    <link rel="preload" as="image" href="./images/lawyer-portrait.webp" fetchpriority="high" type="image/webp" />
+
+    <!-- Asynchronous Web Fonts to prevent render blocking (Google Fonts LCP Optimization) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" />
+    </noscript>
 
     <!-- Structured Data Schemas (JSON-LD) - B1, B3, B4 -->
     <script type="application/ld+json">

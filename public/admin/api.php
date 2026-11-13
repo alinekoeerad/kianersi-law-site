@@ -414,9 +414,21 @@ if ($action === 'upload_image') {
             $w = imagesx($img);
             $h = imagesy($img);
 
-            // Scale down if image is abnormally huge (> 2400px)
-            if ($w > 2400 || $h > 2400) {
-                $max_dim = 2400;
+            // Responsive Smart Resizing based on image type for ultra-fast mobile loading
+            $max_dim = 900;
+            $quality = 82;
+            if ($type === 'logo') {
+                $max_dim = 256;
+                $quality = 85;
+            } elseif ($type === 'seo') {
+                $max_dim = 1200;
+                $quality = 82;
+            } elseif ($type === 'lawyer') {
+                $max_dim = 900;
+                $quality = 82;
+            }
+
+            if ($w > $max_dim || $h > $max_dim) {
                 $scale = min($max_dim / $w, $max_dim / $h);
                 $new_w = (int)round($w * $scale);
                 $new_h = (int)round($h * $scale);
@@ -436,8 +448,8 @@ if ($action === 'upload_image') {
                 imagesavealpha($img, true);
             }
 
-            // Save WebP with 92% quality (Visually lossless, lightweight footprint)
-            if (imagewebp($img, $target_path, 92)) {
+            // Save WebP with optimized quality
+            if (imagewebp($img, $target_path, $quality)) {
                 $converted = true;
             }
             imagedestroy($img);
